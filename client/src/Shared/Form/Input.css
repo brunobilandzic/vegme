@@ -1,0 +1,12 @@
+.password__input {
+    position: relative;
+}
+
+.togglePassword:hover {
+    cursor: pointer;
+}
+
+.togglePassword {
+    position: absolute;
+    right: 20px
+}
