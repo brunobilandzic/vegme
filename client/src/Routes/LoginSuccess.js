@@ -1,0 +1,26 @@
+import React, { useEffect } from 'react'
+import propTypes from "prop-types";
+import { connect } from "react-redux";
+
+import {loadUser} from "../Shared/Redux/actions/auth.js"
+
+function LoginSuccess(props) {
+    useEffect(() => {
+        props.loadUser()
+    }, [])
+  
+    return (
+      <>
+        <p>Hellp {props.user.username}</p>
+        {JSON.stringify(props.user)}
+      </>
+    );
+}
+LoginSuccess.propTypes = {
+    user:  propTypes.object,
+    loadUser: propTypes.func.isRequired
+}
+const mapStateToProps = state => ({
+    user: state.auth.user
+})
+export default connect(mapStateToProps, {loadUser})(LoginSuccess)

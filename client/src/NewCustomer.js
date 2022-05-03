@@ -51,7 +51,7 @@ export default function NewCustomer() {
     formData.append("password", formState.inputs.password.value);
     formData.append("role", "CUSTOMER");
     const response = await sendRequest(
-      "http://localhost:5000/auth/local",
+      "http://localhost:5000/auth/local/signup",
       "POST",
       formData
     );

@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { ADMINISTRATOR } from "../Shared/Constants/Roles";
 import NotAccessible from "./NotAccessible";
 
 
 function OperatorShield(props) {
   return (
-    <>{props.user === "operator" ? props.children : <NotAccessible />} </>
+    <>{props.user?.roleNames.includes(ADMINISTRATOR) ? props.children : <NotAccessible />} </>
   )
 }
 

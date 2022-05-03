@@ -4,14 +4,12 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const {CUSTOMER} = require("../constants/roles.js");
 const { addToCustomerRole } = require("../controllers/customer");
 passport.serializeUser((user, done) => {
-  console.log("serialize", user)
   done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
-  console.log("dseserialite", id)
-  const user = await BaseUser.findById(id)
-  return done(null, user)
+passport.deserializeUser(async (user, done) => {
+  const existingUser = await BaseUser.findById(user._id)
+  return done(null, existingUser)
 });
 
 passport.use(new GoogleStrategy({
@@ -21,8 +19,6 @@ passport.use(new GoogleStrategy({
     proxy: true,
   },
   async (req,  accessToken, refreshToken, profile, cb) => {
-    console.log("in c1")
-    console.log("in def callback", profile)
     const existingUser = await BaseUser.findOne({googleId: profile.id})
     if(existingUser) return cb(null,existingUser)
 

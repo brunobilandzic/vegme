@@ -1,9 +1,14 @@
 import React from "react";
+import {useNavigate} from "react-router-dom"
+import { Button } from "react-bootstrap";
+import Modal from "./Shared/UserInterface/Modal.js"
 import { useForm } from "./Shared/CustomHooks/form-hook";
+import { useHttpClient } from "./Shared/CustomHooks/http-hook";
 import Input from "./Shared/Form/Input";
 import { VALIDATOR_MIN_LENGTH, VALIDATOR_REQUIRED } from "./util/validators";
 
 export default function Login() {
+  const [sendRequest, error, clearError] = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
       username: {
@@ -17,27 +22,56 @@ export default function Login() {
     },
     false
   );
+  const navigate = useNavigate()
+  const onLogin =async (e)=> {
+    e.preventDefault()
+    let formData = new FormData()
+
+    formData.append("username", formState.inputs.username.value)
+    formData.append("password", formState.inputs.password.value)
+
+    const response = await sendRequest("http://localhost:5000/auth/local/login", "POST", formData)
+
+    if(!error) navigate("/auth/success")
+  }
   return (
     <>
-      <Input
-        onInput={inputHandler}
-        element="input"
-        type="text"
-        placeholder="Username"
-        id="username"
-        label="Username"
-        validators={[VALIDATOR_REQUIRED()]}
-      />
-      <Input
-        onInput={inputHandler}
-        className="password__input"
-        element="input"
-        type="password"
-        label="Password"
-        placeholder="Password"
-        id="password"
-        validators={[VALIDATOR_MIN_LENGTH(6)]}
-      />
+    <Modal
+          show={error}
+          content={error}
+          header="Error"
+          footer={
+            <Button variant="warning" onClick={clearError}>
+              Cancel
+            </Button>
+          }
+          onCancel={clearError}
+        ></Modal>
+
+      <form onSubmit={onLogin}>
+        <Input
+          onInput={inputHandler}
+          element="input"
+          type="text"
+          placeholder="Username"
+          id="username"
+          label="Username"
+          validators={[VALIDATOR_REQUIRED()]}
+        />
+        <Input
+          onInput={inputHandler}
+          className="password__input"
+          element="input"
+          type="password"
+          label="Password"
+          placeholder="Password"
+          id="password"
+          validators={[VALIDATOR_MIN_LENGTH(6)]}
+        />
+        <Button type="submit" disabled={!formState.isValid}>
+          Login
+        </Button>
+      </form>
     </>
   );
 }
