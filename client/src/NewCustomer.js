@@ -82,7 +82,6 @@ export default function NewCustomer() {
           onCancel={clearError}
         ></Modal>
       }
-      <p>a</p>
       {JSON.stringify(user)}
       <form onSubmit={handleNewCustomerSubmit}>
         <Input
