@@ -11,8 +11,9 @@ function LoginSuccess(props) {
   
     return (
       <>
-        <p>Hellp {props.user.username}</p>
+        <p>Hellp</p>
         {JSON.stringify(props.user)}
+
       </>
     );
 }

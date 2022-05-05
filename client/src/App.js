@@ -1,13 +1,12 @@
-import './App.css';
+import "./App.css";
 
-import NavBar from './Navigation/NavBar';
-import Router from './Routes/Router';
+import NavBar from "./Navigation/NavBar";
+import Router from "./Routes/Router";
 
 function App() {
   return (
     <>
-    <NavBar />
-    <Router />
+      <Router navbar={<NavBar />} />
     </>
   );
 }

@@ -9,13 +9,14 @@ import NewCustomer from "../NewCustomer";
 import NewRestaurantOwner from "../NewRestaurantOwner";
 import CustomerShield from "./CustomerShield";
 import OperatorShield from "./OperatorShield";
-
+import { Container } from "react-bootstrap";
 
 function Router(props) {
   return (
     <>
-      <div className="container">
-        <BrowserRouter>
+      <BrowserRouter>
+      {props.navbar}
+        <Container>
           <Routes>
             <Route
               path="/customer/new"
@@ -38,8 +39,8 @@ function Router(props) {
             <Route path="/auth/failure">Failed to log in</Route>
             <Route path="/" element={<Login />}></Route>
           </Routes>
-        </BrowserRouter>
-      </div>
+        </Container>
+      </BrowserRouter>
     </>
   );
 }
