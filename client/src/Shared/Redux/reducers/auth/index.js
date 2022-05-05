@@ -1,4 +1,4 @@
-import { LOG_IN_THE_USER } from "../../types";
+import { LOGOUT, LOG_IN_THE_USER } from "../../types";
 const initialState = {
   user: null,
 };
@@ -9,7 +9,11 @@ export default function authReducer(state = initialState, action) {
         ...state,
         user: action.payload,
       };
-
+    case LOGOUT:
+       return {
+         ...state,
+         user: null
+       }
     default:
       return state;
   }

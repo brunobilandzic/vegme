@@ -10,6 +10,8 @@ import NewRestaurantOwner from "../NewRestaurantOwner";
 import CustomerShield from "./CustomerShield";
 import OperatorShield from "./OperatorShield";
 import { Container } from "react-bootstrap";
+import AdministratorShield from "./AdministratorShield";
+import NewOperator from "../NewOperator";
 
 function Router(props) {
   return (
@@ -18,6 +20,13 @@ function Router(props) {
       {props.navbar}
         <Container>
           <Routes>
+          <Route path="/operators/new" element={
+            <AdministratorShield>
+              <NewOperator />
+            </AdministratorShield>
+          }>
+
+          </Route>
             <Route
               path="/customer/new"
               element={
@@ -27,7 +36,7 @@ function Router(props) {
               }
             ></Route>
             <Route
-              path="/restaurantowner/new"
+              path="/restaurantowners/new"
               element={
                 <OperatorShield>
                   <NewRestaurantOwner />
@@ -35,6 +44,7 @@ function Router(props) {
               }
             ></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<NewCustomer />}></Route>
             <Route path="/auth/success" element={<LoginSuccess />}></Route>
             <Route path="/auth/failure">Failed to log in</Route>
             <Route path="/" element={<Login />}></Route>

@@ -14,6 +14,7 @@ const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/user.js")
 const restaurantRoutes = require("./routes/restaurant.js")
 const adminRoutes = require("./routes/admin.js")
+const operatorRoutes = require("./routes/operator.js")
 const app = express();
 app.use(cookieSession({ maxAge: 24 * 60 * 60 * 1000, keys: ["cookie key"] }));
 
@@ -30,8 +31,9 @@ app.use("/api/customers", customerRoutes);
 app.use("/api/restaurantowners", restaurantOwnerRoutes);
 app.use("/api/restaurants", restaurantRoutes)
 app.use("/auth", authRoutes);
-app.use("/api/admin", adminRoutes)
+app.use("/api/admins", adminRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/operators", operatorRoutes)
 
 app.use((error, req, res, next) => {
   if (res.headerSent) return next(error);

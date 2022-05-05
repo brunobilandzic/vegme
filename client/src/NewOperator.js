@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { OPERATOR } from "./Shared/Constants/Roles";
 import { useForm } from "./Shared/CustomHooks/form-hook";
-import Input from "./Shared/Form/Input";
+import { useHttpClient } from "./Shared/CustomHooks/http-hook";
 import { Button } from "react-bootstrap";
 import {
   VALIDATOR_REQUIRED,
@@ -8,11 +9,9 @@ import {
   VALIDATOR_MIN_LENGTH,
   VALIDATOR_SAME_AS,
 } from "./util/validators";
-import { useHttpClient } from "./Shared/CustomHooks/http-hook.js";
+import Input from "./Shared/Form/Input";
 import Modal from "./Shared/UserInterface/Modal";
-import { CUSTOMER } from "./Shared/Constants/Roles";
-
-export default function NewCustomer() {
+export default function NewOperator() {
   const [formState, inputHandler] = useForm(
     {
       name: {
@@ -37,15 +36,16 @@ export default function NewCustomer() {
 
   const [sendRequest, error, clearError] = useHttpClient();
 
-  const handleNewCustomerSubmit = async (e) => {
+  const handleNewOperatorSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData();
 
     formData.append("name", formState.inputs.name.value);
+    formData.append("username", formState.inputs.username.value);
     formData.append("password", formState.inputs.password.value);
-    formData.append("role", CUSTOMER);
+    formData.append("role", OPERATOR);
     const response = await sendRequest(
-      "http://localhost:5000/auth/local/signup",
+      "http://localhost:5000/api/operators",
       "POST",
       formData
     );
@@ -66,7 +66,7 @@ export default function NewCustomer() {
           onCancel={clearError}
         ></Modal>
       }
-      <form onSubmit={handleNewCustomerSubmit}>
+      <form onSubmit={handleNewOperatorSubmit}>
         <Input
           onInput={inputHandler}
           element="input"
@@ -84,15 +84,6 @@ export default function NewCustomer() {
           id="username"
           label="Username"
           validators={[VALIDATOR_REQUIRED()]}
-        />
-        <Input
-          onInput={inputHandler}
-          element="input"
-          type="email"
-          placeholder="Email"
-          label="Email"
-          id="email"
-          validators={[VALIDATOR_EMAIL()]}
         />
         <Input
           onInput={inputHandler}
@@ -117,11 +108,6 @@ export default function NewCustomer() {
           Submit
         </Button>
       </form>
-      <a href="http://localhost:5000/auth/google" target="_blank">
-        Authorize with google
-      </a>{" "}
-      <br />
-      <a href="http://localhost:5000/auth/test">Test</a>
     </>
   );
 }

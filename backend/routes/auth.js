@@ -26,6 +26,13 @@ router.get(
   }
 );
 
+router.get("/logout", (req, res) => {
+  console.log("in logout")
+  console.log(req.logout)
+  req.logout()
+  res.send("logout")
+})
+
 router.post("/local/signup", upload.none(), createNewUser);
 
 router.post("/local/login", upload.none(), async (req, res, next) => {

@@ -30,6 +30,10 @@ const roleObject = {
   const adminRoleUserObject = {
     user: { type: mongoose.Types.ObjectId, ref: "User", required: true, unique: true }
   }
+
+  const operatorRoleUserObject = {
+    user: { type: mongoose.Types.ObjectId, ref: "User", required: true, unique: true }
+  }
   
 const baseUserSchema = new mongoose.Schema(baseUserObject)
 baseUserSchema.plugin(PassportLocalMongoose)
@@ -39,10 +43,13 @@ const Role = mongoose.model("Role", new mongoose.Schema(roleObject))
 const CustomerRoleUser = mongoose.model("CustomerRoleUser",new mongoose.Schema(customerRoleUserObject) )
 const RestaurantOwnerRoleUser = mongoose.model("RestaurantOwnerRoleUser", new mongoose.Schema(restaurantOwnerRoleUserObject))
 const AdminRoleUser = mongoose.model("AdminRoleUser", new mongoose.Schema(adminRoleUserObject))
+const OperatorRoleUser = mongoose.model("OperatorRoleUser", new mongoose.Schema(operatorRoleUserObject))
+
 module.exports = {
     BaseUser,
     Role,
     CustomerRoleUser,
     RestaurantOwnerRoleUser,
-    AdminRoleUser
+    AdminRoleUser,
+    OperatorRoleUser
 };

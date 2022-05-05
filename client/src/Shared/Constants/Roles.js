@@ -1,2 +1,3 @@
 export const CUSTOMER = "CUSTOMER"
 export const ADMINISTRATOR = "ADMINISTRATOR"
+export const OPERATOR = "OPERATOR"

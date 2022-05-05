@@ -8,12 +8,9 @@ const getAllAdmins = async (req, res, next) => {
 
   try {
     adminIds = await AdminRoleUser.find();
-    console.log(adminIds);
     adminIds = adminIds.map((ai) =>
       mongoose.Types.ObjectId(ai.user).toString()
     );
-    console.log("hello");
-    console.log(adminIds);
     admins = await BaseUser.find({ _id: { $in: adminIds } });
   } catch (error) {
     return next(new HttpError("Cannot find admins."));
@@ -30,7 +27,6 @@ const createAdmin = async (req, res, next) => {
       req.body.password
     );
     await user.save();
-    console.log(user);
     adminRoleUser = await addToAdmin(user.id);
   } catch (error) {
     return next(new HttpError("Cannot add user to admin role."));
@@ -45,7 +41,6 @@ const addToAdmin = async (userId) => {
     sess.startTransaction();
     let user = await BaseUser.findById(userId);
     user.roleNames.push(ADMINISTRATOR);
-    console.log(user);
     adminRoleUser = new AdminRoleUser({ user: userId });
 
     await user.save({ session: sess });

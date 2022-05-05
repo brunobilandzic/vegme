@@ -8,6 +8,9 @@ export default function LoginNavList() {
       <LinkContainer to="/login">
         <NavLink>Login</NavLink>
       </LinkContainer>
+      <LinkContainer to="/signup">
+        <NavLink>Sign up</NavLink>
+      </LinkContainer>
     </>
   )
 }
