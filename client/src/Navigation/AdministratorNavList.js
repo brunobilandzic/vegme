@@ -3,7 +3,7 @@ import { NavLink } from "react-bootstrap";
 
 import { LinkContainer } from "react-router-bootstrap";
 
-export default function OperatorNavList() {
+export default function AdministratorNavList() {
   return (
     <>
       <LinkContainer to="restaurantowner/new">

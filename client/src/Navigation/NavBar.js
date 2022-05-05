@@ -4,13 +4,17 @@ import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse'
 import NavbarToggle from 'react-bootstrap/esm/NavbarToggle'
 import { connect } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
+import { ADMINISTRATOR, CUSTOMER } from '../Shared/Constants/Roles'
 import CustomerNavList from './CustomerNavList'
-import OperatorNavList from './OperatorNavList'
+import AdministratorNavList from './AdministratorNavList'
+import LoginNavList from './LoginNavList'
 
 
  function NavBar(props) {
   const getNavLinks = () => {
-    return props.user === "customer" ? <CustomerNavList /> : <OperatorNavList />
+    if(props.user?.roleNames.includes(CUSTOMER)) return <CustomerNavList />
+    if(props.user?.roleNames.includes(ADMINISTRATOR)) return <AdministratorNavList />
+    else return <LoginNavList />
   }
   return (
     <>

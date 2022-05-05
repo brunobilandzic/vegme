@@ -29,6 +29,7 @@ router.get(
 router.post("/local/signup", upload.none(), createNewUser);
 
 router.post("/local/login", upload.none(), async (req, res, next) => {
+  console.log(req.body)
   const user = await BaseUser.findOne({username: req.body.username})
   if(!user) return  next(new HttpError("User with that username does not exist."))
   passport.authenticate("local", { failureRedirect: "/auth/loginfail" })(
