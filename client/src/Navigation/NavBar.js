@@ -4,19 +4,21 @@ import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { ADMINISTRATOR, CUSTOMER, OPERATOR } from "../Shared/Constants/Roles";
+import { ADMINISTRATOR, CUSTOMER, OPERATOR, RESTAURANT_OWNER} from "../Shared/Constants/Roles";
 import CustomerNavList from "./CustomerNavList";
 import AdministratorNavList from "./AdministratorNavList";
 import LoginNavList from "./LoginNavList";
 import OperatorNavLinks from "./OperatorNavLinks";
 import {logout} from "../Shared/Redux/actions/auth"
 import propTypes from "prop-types";
+import RestaurantOwnerNavList from "./RestaurantOwnerNavList";
 function NavBar(props) {
   const getNavLinks = () => {
     if (props.user?.roleNames.includes(CUSTOMER)) return <CustomerNavList />;
     if (props.user?.roleNames.includes(ADMINISTRATOR))
       return <AdministratorNavList />;
     if (props.user?.roleNames.includes(OPERATOR)) return <OperatorNavLinks />;
+    if(props.user?.roleNames.includes(RESTAURANT_OWNER)) return <RestaurantOwnerNavList />
     else return <LoginNavList />;
   };
 

@@ -8,7 +8,7 @@ import Input from "./Shared/Form/Input";
 import { VALIDATOR_MIN_LENGTH, VALIDATOR_REQUIRED } from "./util/validators";
 
 export default function Login() {
-  const [sendRequest, error, clearError] = useHttpClient();
+  const [sendRequest, error, clearError, setError] = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
       username: {

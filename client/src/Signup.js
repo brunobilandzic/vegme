@@ -12,7 +12,7 @@ import { useHttpClient } from "./Shared/CustomHooks/http-hook.js";
 import Modal from "./Shared/UserInterface/Modal";
 import { CUSTOMER } from "./Shared/Constants/Roles";
 
-export default function NewCustomer() {
+export default function Signup() {
   const [formState, inputHandler] = useForm(
     {
       name: {
@@ -35,7 +35,7 @@ export default function NewCustomer() {
     false
   );
 
-  const [sendRequest, error, clearError] = useHttpClient();
+  const [sendRequest, error, clearError, setError] = useHttpClient();
 
   const handleNewCustomerSubmit = async (e) => {
     e.preventDefault();
@@ -53,19 +53,17 @@ export default function NewCustomer() {
 
   return (
     <>
-      {
-        <Modal
-          show={error}
-          content={error}
-          header="Error"
-          footer={
-            <Button variant="warning" onClick={clearError}>
-              Cancel
-            </Button>
-          }
-          onCancel={clearError}
-        ></Modal>
-      }
+      <Modal
+        show={error}
+        content={error}
+        header="Error"
+        footer={
+          <Button variant="warning" onClick={clearError}>
+            Cancel
+          </Button>
+        }
+        onCancel={clearError}
+      ></Modal>
       <form onSubmit={handleNewCustomerSubmit}>
         <Input
           onInput={inputHandler}
@@ -112,7 +110,7 @@ export default function NewCustomer() {
           placeholder="Repeat Password"
           id="repeatPassword"
           validators={[VALIDATOR_SAME_AS(formState.inputs.password?.value)]}
-        />
+        /><br></br>
         <Button type="submit" disabled={!formState.isValid}>
           Submit
         </Button>

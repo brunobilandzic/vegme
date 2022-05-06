@@ -26,7 +26,7 @@ const useHttpClient = () => {
     []
   );
 
-  return [sendRequest, error, clearError];
+  return [sendRequest, error, clearError, setError];
 };
 
 module.exports = { useHttpClient };

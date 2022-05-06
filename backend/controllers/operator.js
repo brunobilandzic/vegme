@@ -6,12 +6,8 @@ const { OPERATOR } = require("../constants/roles.js");
 
 const createNewOperator = async (req, res, next) => {
   let createdOperatorRoleUser, user;
-  console.log("in create")
   try {
     user = await BaseUser.register(req.body, req.body.password);
-    console.log(user)
-    await user.save();
-
     createdOperatorRoleUser = await addToOperatorRole(user.id);
   } catch (error) {
     return next(new HttpError("Cannot create operator."));
@@ -20,7 +16,6 @@ const createNewOperator = async (req, res, next) => {
 };
 
 const addToOperatorRole = async (userId) => {
-    console.log("in add")
   let operatorRoleUser;
   try {
     const sess = await mongoose.startSession();
@@ -28,9 +23,7 @@ const addToOperatorRole = async (userId) => {
     let user = await BaseUser.findById(userId);
     
     user.roleNames.push(OPERATOR);
-    console.log(user.roleNames)
     operatorRoleUser = new OperatorRoleUser({ user: userId });
-    console.log(operatorRoleUser)
     await user.save({ session: sess });
     await operatorRoleUser.save({ session: sess });
 

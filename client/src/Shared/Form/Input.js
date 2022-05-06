@@ -20,7 +20,7 @@ const inputHandler = (state, action) => {
 
 export default function Input(props) {
   const [inputState, dispatch] = useReducer(inputHandler, {
-    value: "",
+    value: props.value || "",
     isValid: false,
     isTouched: false,
   });

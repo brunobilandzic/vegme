@@ -2,7 +2,7 @@ const url = require("url");
 const { PaginatedList } = require("../helpers/pagination");
 const HttpError = require("../errors/http-error");
 const { RestaurantOwnerRoleUser, BaseUser } = require("../models/user");
-const { default: mongoose } = require("mongoose");
+const mongoose= require("mongoose");
 const { RESTAURANT_OWNER } = require("../constants/roles");
 
 const getAllRestaurantOwners = async (req, res, next) => {
@@ -27,9 +27,12 @@ const getAllRestaurantOwners = async (req, res, next) => {
 };
 
 const createRestaurantOwner = async (req, res, next) => {
-  let newRestaurantOwnerRoleUser;
+  let newRestaurantOwnerRoleUser, user;
+  console.log(req.body)
   try {
-    newRestaurantOwnerRoleUser = await addToRestaurantOwnerRole(req.body.user);
+    user = await BaseUser.register(req.body, req.body.password)
+    console.log(user)
+    newRestaurantOwnerRoleUser = await addToRestaurantOwnerRole(user.id);
   } catch (error) {
     return next(new HttpError("Cannot add the user to restaurant owner role."));
   }
@@ -39,6 +42,7 @@ const createRestaurantOwner = async (req, res, next) => {
 
 const addToRestaurantOwnerRole = async (userId) => {
   let newRestaurantOwnerRoleUser;
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();

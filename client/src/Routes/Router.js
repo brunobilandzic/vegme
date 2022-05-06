@@ -1,38 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import propTypes from "prop-types";
-import { connect } from "react-redux";
+
 
 import Login from "../Login";
 import LoginSuccess from "./LoginSuccess";
-import NewCustomer from "../NewCustomer";
 import NewRestaurantOwner from "../NewRestaurantOwner";
-import CustomerShield from "./CustomerShield";
 import OperatorShield from "./OperatorShield";
 import { Container } from "react-bootstrap";
 import AdministratorShield from "./AdministratorShield";
 import NewOperator from "../NewOperator";
+import Signup from "../Signup";
+import NewRestaurant from "../NewRestaurant";
+import RestaurantOwnerShield from "./RestaurantOwnerShield";
 
-function Router(props) {
+export default function Router(props) {
   return (
     <>
       <BrowserRouter>
-      {props.navbar}
+        {props.navbar}
         <Container>
           <Routes>
-          <Route path="/operators/new" element={
-            <AdministratorShield>
-              <NewOperator />
-            </AdministratorShield>
-          }>
-
-          </Route>
             <Route
-              path="/customer/new"
+              path="/operators/new"
               element={
-                <CustomerShield>
-                  <NewCustomer />
-                </CustomerShield>
+                <AdministratorShield>
+                  <NewOperator />
+                </AdministratorShield>
               }
             ></Route>
             <Route
@@ -43,8 +36,16 @@ function Router(props) {
                 </OperatorShield>
               }
             ></Route>
+            <Route
+              path="/restaurants/new"
+              element={
+                <RestaurantOwnerShield>
+                  <NewRestaurant />
+                </RestaurantOwnerShield>
+              }
+            ></Route>
             <Route path="/login" element={<Login />}></Route>
-            <Route path="/signup" element={<NewCustomer />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
             <Route path="/auth/success" element={<LoginSuccess />}></Route>
             <Route path="/auth/failure">Failed to log in</Route>
             <Route path="/" element={<Login />}></Route>
@@ -55,12 +56,4 @@ function Router(props) {
   );
 }
 
-Router.propTypes = {
-  user: propTypes.object,
-};
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-});
-
-export default connect(mapStateToProps, {})(Router);

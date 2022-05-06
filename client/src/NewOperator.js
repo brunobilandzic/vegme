@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { OPERATOR } from "./Shared/Constants/Roles";
 import { useForm } from "./Shared/CustomHooks/form-hook";
 import { useHttpClient } from "./Shared/CustomHooks/http-hook";
@@ -12,7 +12,7 @@ import {
 import Input from "./Shared/Form/Input";
 import Modal from "./Shared/UserInterface/Modal";
 export default function NewOperator() {
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, clearForm] = useForm(
     {
       name: {
         value: "",
@@ -34,7 +34,7 @@ export default function NewOperator() {
     false
   );
 
-  const [sendRequest, error, clearError] = useHttpClient();
+  const [sendRequest, error, clearError, setError] = useHttpClient();
 
   const handleNewOperatorSubmit = async (e) => {
     e.preventDefault();
@@ -49,23 +49,23 @@ export default function NewOperator() {
       "POST",
       formData
     );
+
   };
 
   return (
     <>
-      {
-        <Modal
-          show={error}
-          content={error}
-          header="Error"
-          footer={
-            <Button variant="warning" onClick={clearError}>
-              Cancel
-            </Button>
-          }
-          onCancel={clearError}
-        ></Modal>
-      }
+      <Modal
+        show={error}
+        content={error}
+        header="Error"
+        footer={
+          <Button variant="warning" onClick={clearError}>
+            Cancel
+          </Button>
+        }
+        onCancel={clearError}
+      ></Modal>
+
       <form onSubmit={handleNewOperatorSubmit}>
         <Input
           onInput={inputHandler}
@@ -103,7 +103,7 @@ export default function NewOperator() {
           placeholder="Repeat Password"
           id="repeatPassword"
           validators={[VALIDATOR_SAME_AS(formState.inputs.password?.value)]}
-        />
+        /><br></br>
         <Button type="submit" disabled={!formState.isValid}>
           Submit
         </Button>

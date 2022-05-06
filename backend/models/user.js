@@ -24,7 +24,7 @@ const roleObject = {
   
   const restaurantOwnerRoleUserObject = {
     user: { type: mongoose.Types.ObjectId, ref: "User", required: true, unique: true },
-    restaurant: { type: mongoose.Types.ObjectId, ref: "Restaurant" },
+    restaurants:[ { type: mongoose.Types.ObjectId, ref: "Restaurant" }]
   };
   
   const adminRoleUserObject = {

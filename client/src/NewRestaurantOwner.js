@@ -4,13 +4,14 @@ import { useHttpClient } from "./Shared/CustomHooks/http-hook";
 import { Button } from "react-bootstrap";
 import Input from "./Shared/Form/Input";
 import {
-    VALIDATOR_REQUIRED,
-    VALIDATOR_EMAIL,
-    VALIDATOR_MIN_LENGTH,
-    VALIDATOR_SAME_AS,
-  } from "./util/validators";
+  VALIDATOR_REQUIRED,
+  VALIDATOR_EMAIL,
+  VALIDATOR_MIN_LENGTH,
+  VALIDATOR_SAME_AS,
+} from "./util/validators";
+import Modal from "./Shared/UserInterface/Modal";
 export default function NewRestaurantOwner() {
-    const [response, setResponse]= useState()
+  const [response, setResponse] = useState();
   const [formState, inputHandler] = useForm(
     {
       name: {
@@ -37,7 +38,7 @@ export default function NewRestaurantOwner() {
     false
   );
 
-  const [sendRequest] = useHttpClient();
+  const [sendRequest, error, clearError, setError] = useHttpClient();
 
   const handleNewCustomerSubmit = async (e) => {
     e.preventDefault();
@@ -53,12 +54,12 @@ export default function NewRestaurantOwner() {
       "POST",
       formData
     );
-    console.log(response)
-    setResponse(response)
+    console.log(response);
+    setResponse(response);
   };
   return (
     <>
-    {typeof response ? JSON.stringify(response): null}
+
       <form onSubmit={handleNewCustomerSubmit}>
         <Input
           onInput={inputHandler}
@@ -105,6 +106,7 @@ export default function NewRestaurantOwner() {
           id="repeatPassword"
           validators={[VALIDATOR_SAME_AS(formState.inputs.password?.value)]}
         />
+        <br></br>
         <Button type="submit" disabled={!formState.isValid}>
           Submit
         </Button>
