@@ -8,6 +8,6 @@ const router = express.Router()
 
 router.route("/")
     .get( getAllRestaurantOwners)
-    .post( requireAdministrator, upload.none(), createRestaurantOwner)
+    .post(  upload.none(), createRestaurantOwner)
 
 module.exports = router

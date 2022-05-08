@@ -8,6 +8,9 @@ export default function RestaurantOwnerNavList() {
           <LinkContainer to="/restaurants/new">
               <NavLink>New restaurant</NavLink>
           </LinkContainer>
+          <LinkContainer to="/meals/new">
+              <NavLink>New meal</NavLink>
+          </LinkContainer>
       </>
   )
 }

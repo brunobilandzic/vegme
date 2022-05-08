@@ -8,7 +8,6 @@ const loadUser =  () => async dispatch => {
 }
 
 const logout  =() => async dispatch => {
-    console.log("logout")
     const response = await axios.get("http://localhost:5000/auth/logout", {withCredentials: true}) 
 
     dispatch({type: LOGOUT})

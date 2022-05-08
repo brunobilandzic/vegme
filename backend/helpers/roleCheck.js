@@ -14,6 +14,7 @@ const requireCustomer = async (req, res, next) => {
 }
 
 const requireRestaurantOwner = async (req, res, next) => {
+    console.log("in require")
     return isInRole(req.user.id, RESTAURANT_OWNER) ? next() :  res.status(401).json({message: "You have to be a restaurant owner to access this."})
 
 }

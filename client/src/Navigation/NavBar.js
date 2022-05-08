@@ -10,7 +10,7 @@ import AdministratorNavList from "./AdministratorNavList";
 import LoginNavList from "./LoginNavList";
 import OperatorNavLinks from "./OperatorNavLinks";
 import {logout} from "../Shared/Redux/actions/auth"
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import RestaurantOwnerNavList from "./RestaurantOwnerNavList";
 function NavBar(props) {
   const getNavLinks = () => {
@@ -49,7 +49,7 @@ function NavBar(props) {
   );
 }
 NavBar.propTypes = {
-  logout: propTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   user: state.auth.user

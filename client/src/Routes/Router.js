@@ -12,6 +12,7 @@ import NewOperator from "../NewOperator";
 import Signup from "../Signup";
 import NewRestaurant from "../NewRestaurant";
 import RestaurantOwnerShield from "./RestaurantOwnerShield";
+import NewMeal from "../NewMeal";
 
 export default function Router(props) {
   return (
@@ -44,6 +45,16 @@ export default function Router(props) {
                 </RestaurantOwnerShield>
               }
             ></Route>
+            <Route
+              path="/meals/new"
+              element={
+                <RestaurantOwnerShield>
+                  <NewMeal />
+                </RestaurantOwnerShield>
+              }
+            >
+
+            </Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/auth/success" element={<LoginSuccess />}></Route>

@@ -17,6 +17,9 @@ const formHandler = (state, action) => {
         },
         isValid: formIsValid,
       };
+    case "CLEAR_FORM":
+      Object.keys(state.inputs).forEach(key => state.inputs[key].value = "")
+      return state
     default:
       return state;
   }
@@ -28,6 +31,10 @@ const useForm = (initialInputs, initialValidity) => {
     isValid: initialValidity,
   });
 
+  const clearForm = useCallback(() => {
+    dispatch({ type: "CLEAR_FORM" });
+  }, []);
+
   const inputHandler = useCallback((value, id, isValid) => {
     dispatch({
       type: "INPUT_CHANGE",
@@ -37,7 +44,7 @@ const useForm = (initialInputs, initialValidity) => {
     });
   });
 
-  return [formState, inputHandler];
+  return [formState, inputHandler, clearForm];
 };
 
 module.exports = { useForm };

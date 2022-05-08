@@ -28,13 +28,14 @@ const getAllCustomers = async (req, res, next) => {
 };
 
 const createCustomer = async (req, res, next) => {
-let createdCustomerRoleUser
+  let createdCustomerRoleUser;
   try {
-     createdCustomerRoleUser = await addToCustomerRole(req.body.user);
+    let user = await BaseUser.register(req.body, req.body.password);
+    createdCustomerRoleUser = await addToCustomerRole(user.id);
   } catch (error) {
-   return next(new HttpError("Cannot add that user to the customer role.")) 
+    return next(new HttpError("Cannot add that user to the customer role."));
   }
- 
+
   res.json(createdCustomerRoleUser);
 };
 
@@ -53,12 +54,12 @@ const addToCustomerRole = async (userId) => {
 
     await sess.commitTransaction();
   } catch (error) {
-    throw (new HttpError("Cannot add user to the customer role."));
+    throw new HttpError("Cannot add user to the customer role.");
   }
   return createdCustomerRoleUser;
 };
 module.exports = {
   getAllCustomers,
   createCustomer,
-  addToCustomerRole
+  addToCustomerRole,
 };

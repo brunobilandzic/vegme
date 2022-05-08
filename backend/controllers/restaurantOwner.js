@@ -28,10 +28,8 @@ const getAllRestaurantOwners = async (req, res, next) => {
 
 const createRestaurantOwner = async (req, res, next) => {
   let newRestaurantOwnerRoleUser, user;
-  console.log(req.body)
   try {
     user = await BaseUser.register(req.body, req.body.password)
-    console.log(user)
     newRestaurantOwnerRoleUser = await addToRestaurantOwnerRole(user.id);
   } catch (error) {
     return next(new HttpError("Cannot add the user to restaurant owner role."));

@@ -7,7 +7,7 @@ require("dotenv").config();
 const cors = require("cors");
 
 
-
+const mealRoutes = require("./routes/meal.js")
 const customerRoutes = require("./routes/customer.js");
 const restaurantOwnerRoutes = require("./routes/restaurantOwner.js");
 const authRoutes = require("./routes/auth.js");
@@ -34,6 +34,7 @@ app.use("/auth", authRoutes);
 app.use("/api/admins", adminRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/operators", operatorRoutes)
+app.use("/api/meals", mealRoutes)
 
 app.use((error, req, res, next) => {
   if (res.headerSent) return next(error);
