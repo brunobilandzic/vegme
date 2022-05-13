@@ -47,7 +47,6 @@ function NewMeal(props) {
 
     clearForm();
   };
-  const logState= () => console.log(formState)
   const selectRestaurantHandler = (e) => {
     setSelectedRestaurant(e.target.value);
   };
@@ -65,6 +64,7 @@ function NewMeal(props) {
         onCancel={clearError}
       ></Modal>
       <Button onClick={logState}>Log state</Button>
+      <Button onClick={clearState}>Clear state</Button>
       <form onSubmit={handleMealSubmit}>
         <Input
           onInput={inputHandler}
@@ -73,6 +73,7 @@ function NewMeal(props) {
           placeholder="Name"
           id="name"
           label="Name"
+          value={formState.inputs.name.value}
           validators={[VALIDATOR_REQUIRED()]}
         ></Input>
         <Input
@@ -82,6 +83,7 @@ function NewMeal(props) {
           placeholder="Ingredients"
           id="ingredients"
           label="Ingredients"
+          value={formState.inputs.ingredients.value}
           validators={[VALIDATOR_REQUIRED()]}
         ></Input>
         <label>Restaurant</label>
@@ -100,7 +102,7 @@ function NewMeal(props) {
               </option>
             ))}
         </FormControl>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={!formState.isValid}>Submit</Button>
       </form>
     </>
   );

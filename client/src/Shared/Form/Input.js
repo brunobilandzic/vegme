@@ -28,9 +28,6 @@ export default function Input(props) {
   const { onInput, id } = props;
   const { value, isValid } = inputState;
   const [viewPassword, setViewPassword] = useState(false)
-  useEffect(() => {
-    onInput(value, id, isValid);
-  }, [id, onInput, value, isValid]);
 
   const handleChange = (e) => {
     dispatch({
@@ -38,6 +35,7 @@ export default function Input(props) {
       value: e.target.value,
       validators: props.validators,
     });
+    onInput(e.target.value, id, isValid);
   };
 
   const handleTouch = (e) => {
@@ -76,7 +74,7 @@ export default function Input(props) {
           onChange={handleChange}
           onBlur={handleTouch}
           placeholder={props.placeholder}
-          value={inputState.value}
+          value={props.value}
         ></input>
       )
     ) : (
