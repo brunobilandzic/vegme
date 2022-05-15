@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, FormControl } from "react-bootstrap";
 import { useForm } from "./Shared/CustomHooks/form-hook";
 import { useHttpClient } from "./Shared/CustomHooks/http-hook";
@@ -6,15 +6,12 @@ import Input from "./Shared/Form/Input";
 import { loadAllRestaurants } from "./Shared/Redux/actions/restaurants";
 import Modal from "./Shared/UserInterface/Modal";
 import {
-  VALIDATOR_REQUIRED,
-  VALIDATOR_EMAIL,
-  VALIDATOR_MIN_LENGTH,
-  VALIDATOR_SAME_AS,
+  VALIDATOR_REQUIRED
 } from "./util/validators";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 function NewMeal(props) {
-  const [selectedRestaurant, setSelectedRestaurant] = useState();
+  const selectRestaurant = useRef()
   useEffect(() => {
     props.loadAllRestaurants();
   }, []);
@@ -27,18 +24,20 @@ function NewMeal(props) {
       value: "",
       isValid: false,
     },
-  });
+    restaurant: {
+      value: "",
+      isValid: false
+    }
+  }, false);
   const [sendRequest, error, clearError, setError] = useHttpClient();
   const handleMealSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedRestaurant) return setError("No restaurant selected.");
+   
     let formData = new FormData();
     formData.append("name", formState.inputs.name.value);
     formData.append("ingredients", formState.inputs.ingredients.value);
-    formData.append("restaurant", selectedRestaurant);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    formData.append("restaurant", formState.inputs.restaurant.value);
+
     const response = await sendRequest(
       "http://localhost:5000/api/meals",
       "POST",
@@ -46,10 +45,13 @@ function NewMeal(props) {
     );
 
     clearForm();
+    selectRestaurant.current.value = 0
   };
   const selectRestaurantHandler = (e) => {
-    setSelectedRestaurant(e.target.value);
+    inputHandler(e.target.value, "restaurant", true)
   };
+
+
   return (
     <>
       <Modal
@@ -63,8 +65,6 @@ function NewMeal(props) {
         }
         onCancel={clearError}
       ></Modal>
-      <Button onClick={logState}>Log state</Button>
-      <Button onClick={clearState}>Clear state</Button>
       <form onSubmit={handleMealSubmit}>
         <Input
           onInput={inputHandler}
@@ -91,6 +91,7 @@ function NewMeal(props) {
           as="select"
           defaultValue={0}
           onChange={selectRestaurantHandler}
+          ref={selectRestaurant}
         >
           <option value="0" hidden={true}>
             Select restaurant
