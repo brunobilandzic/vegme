@@ -14,10 +14,9 @@ const loadAllRestaurants = () => async (dispatch) => {
 };
 
 const loadAllRestaurantsWithPagination =
-  (pageNumber, pageSize, totalPages) => async (dispatch, getState) => {
+  (pageNumber, pageSize) => async (dispatch, getState) => {
     const cachedRestaurants =
-      getState().restaurants.restaurants[pageNumber + "-" + totalPages];
-    console.log(cachedRestaurants);
+      getState().restaurants.restaurants[pageNumber + "-" + pageSize];
     if (cachedRestaurants) return;
 
     const allRestaurantsWithPagination = await getAllPaginatedRestaurants(
@@ -45,9 +44,4 @@ const loadAllRestaurantsWithPagination =
     });
   };
 
-
-
-export {
-  loadAllRestaurants,
-  loadAllRestaurantsWithPagination,
-};
+export { loadAllRestaurants, loadAllRestaurantsWithPagination };

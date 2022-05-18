@@ -6,18 +6,23 @@ import propTypes from "prop-types";
 import { loadAllRestaurantsWithPagination } from "./Shared/Redux/actions/restaurants.js";
 import PaginationCustom from "./PaginationCustom.js";
 function RestaurantList(props) {
-  const { pageNumber, pageSize, totalItems,pagination, totalPages } = props;
+  const { pageNumber, pageSize, totalItems,pagination, totalPages, loadAllRestaurantsWithPagination } = props;
   useEffect(() => {
-    props.loadAllRestaurantsWithPagination(1, 5);
+    props.loadAllRestaurantsWithPagination(pageNumber, pageSize);
     console.log(pageNumber, pageSize, totalItems,pagination, totalPages)
   }, []);
 
+  const loadItems = (_pageNumber) => {
+    loadAllRestaurantsWithPagination(_pageNumber, pageSize)
+  }
+
   return (
     <>
-      {JSON.stringify(props[pageNumber + "-" + pageSize])}
+      {JSON.stringify(props.restaurants[pageNumber + "-" + pageSize])}
       {pagination && <PaginationCustom
         totalItems={totalItems}
         pageSize={pageSize}
+        loadItems={loadItems}
       ></PaginationCustom>}
     </>
   );

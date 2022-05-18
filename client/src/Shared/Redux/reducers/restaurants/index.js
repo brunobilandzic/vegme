@@ -18,7 +18,7 @@ export default function restaurantReducer(state = initialState, action) {
         ...state,
         restaurants: {
           ...state.restaurants,
-          [action.payload.pageNumber + "-" + action.payload.totalPages]:
+          [action.payload.pageNumber + "-" + action.payload.pageSize]:
             action.payload.items,
         },
         pagination: true,

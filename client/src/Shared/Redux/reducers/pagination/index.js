@@ -9,8 +9,8 @@ import {
 const initialState = {
     pageNumber: 1,
     pageSize: 5,
-    totalItems: 0,
-    totalPages: 20
+    totalItems: null,
+    totalPages: null
 }
 
 export default function paginationReducer(state = initialState, action) {
