@@ -2,7 +2,7 @@ const { PaginatedList } = require("../helpers/pagination");
 const url = require("url");
 const HttpError = require("../errors/http-error");
 const { Restaurant } = require("../models/restaurant.js");
-const  mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const { RestaurantOwnerRoleUser } = require("../models/user");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters");
 
@@ -12,25 +12,27 @@ const getAllPaginatedRestaurants = async (req, res, next) => {
   try {
     restaurantsWithPagination = await PaginatedList.getPaginatedResult(
       Restaurant.find(),
-      queryObject.pageNumber,
-      queryObject.pageSize
+      Number(queryObject.pageNumber),
+      Number(queryObject.pageSize)
     );
   } catch (error) {
     return next(new HttpError("Cannot find restaurants."));
   }
 
-  res.json(restaurantsWithPagination);
+  res.json({restaurantsWithPagination});
 };
 
-const getAllRestaurants = async (req,res,next) => {
+const getAllRestaurants = async (req, res, next) => {
   const queryObject = url.parse(req.url, true).query;
-  const allRestaurants = await Restaurant.find(extractFiltersFromQuery(queryObject))
+  const allRestaurants = await Restaurant.find(
+    extractFiltersFromQuery(queryObject)
+  );
 
-  res.json({allRestaurants})
-}
+  res.json({ allRestaurants });
+};
 
 const createRestaurant = async (req, res, next) => {
-  let newRestaurant, owner;
+  let newRestaurant
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -50,4 +52,5 @@ const createRestaurant = async (req, res, next) => {
 module.exports = {
   getAllRestaurants,
   createRestaurant,
+  getAllPaginatedRestaurants,
 };

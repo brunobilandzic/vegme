@@ -4,12 +4,17 @@ import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import NavbarToggle from "react-bootstrap/esm/NavbarToggle";
 import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { ADMINISTRATOR, CUSTOMER, OPERATOR, RESTAURANT_OWNER} from "../Shared/Constants/Roles";
+import {
+  ADMINISTRATOR,
+  CUSTOMER,
+  OPERATOR,
+  RESTAURANT_OWNER,
+} from "../Shared/Constants/Roles";
 import CustomerNavList from "./CustomerNavList";
 import AdministratorNavList from "./AdministratorNavList";
 import LoginNavList from "./LoginNavList";
 import OperatorNavLinks from "./OperatorNavLinks";
-import {logout} from "../Shared/Redux/actions/auth"
+import { logout } from "../Shared/Redux/actions/auth";
 import PropTypes from "prop-types";
 import RestaurantOwnerNavList from "./RestaurantOwnerNavList";
 function NavBar(props) {
@@ -18,15 +23,15 @@ function NavBar(props) {
     if (props.user?.roleNames.includes(ADMINISTRATOR))
       return <AdministratorNavList />;
     if (props.user?.roleNames.includes(OPERATOR)) return <OperatorNavLinks />;
-    if(props.user?.roleNames.includes(RESTAURANT_OWNER)) return <RestaurantOwnerNavList />
+    if (props.user?.roleNames.includes(RESTAURANT_OWNER))
+      return <RestaurantOwnerNavList />;
     else return <LoginNavList />;
   };
 
   const logoutClickHandler = async (e) => {
-    console.log("in logout comp")
-    e.preventDefault()
-   props.logout()
-  }
+    e.preventDefault();
+    props.logout();
+  };
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -36,10 +41,21 @@ function NavBar(props) {
           </LinkContainer>
           <NavbarToggle aria-controls="navbarLinks" />
           <NavbarCollapse id="navbarLinks">
-            <Nav className="me-auto">{getNavLinks()}</Nav>
+            <Nav className="me-auto">
+              {getNavLinks()}
+              <LinkContainer to="/restaurantslist">
+                <NavLink>Restaurant List</NavLink>
+              </LinkContainer>
+              <LinkContainer to="/pagination">
+                <NavLink>Pagination</NavLink>
+              </LinkContainer>
+            </Nav>
+
             {props.user && (
               <Nav>
-                  <NavLink href="#" onClick={logoutClickHandler}>Logout</NavLink>
+                <NavLink href="#" onClick={logoutClickHandler}>
+                  Logout
+                </NavLink>
               </Nav>
             )}
           </NavbarCollapse>
@@ -52,7 +68,7 @@ NavBar.propTypes = {
   logout: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
 });
 
-export default connect(mapStateToProps, {logout})(NavBar);
+export default connect(mapStateToProps, { logout })(NavBar);

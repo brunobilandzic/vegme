@@ -96,9 +96,10 @@ function NewMeal(props) {
           <option value="0" hidden={true}>
             Select restaurant
           </option>
-          {props.restaurants.length &&
+          
+          {props.restaurants?.length &&
             props.restaurants?.map((r) => (
-              <option value={r._id} key={r.id}>
+              <option value={r._id} key={r._id}>
                 {r.name}
               </option>
             ))}
@@ -111,11 +112,11 @@ function NewMeal(props) {
 
 NewMeal.propTypes = {
   loadAllRestaurants: propTypes.func.isRequired,
-  restaurants: propTypes.array,
+  allRestaurants: propTypes.array,
 };
 
 const mapStateToProps = (state) => ({
-  restaurants: state.restaurants.restaurants,
+  restaurants: state.restaurants.restaurants.all,
 });
 
 export default connect(mapStateToProps, { loadAllRestaurants })(NewMeal);

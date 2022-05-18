@@ -3,6 +3,7 @@ const multer = require("multer")
 const {
   createRestaurant,
   getAllRestaurants,
+  getAllPaginatedRestaurants,
 } = require("../controllers/restaurant");
 const { requireLogin, requireRestaurantOwner } = require("../helpers/roleCheck");
 
@@ -11,7 +12,11 @@ const upload = multer()
 
 router
   .route("/")
-  .get(getAllRestaurants)
+  .get(getAllPaginatedRestaurants)
   .post(requireLogin, requireRestaurantOwner, upload.none(), createRestaurant);
+
+
+router.route("/all").get(getAllRestaurants)
+
 
 module.exports = router;

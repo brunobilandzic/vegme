@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 import Login from "../Login";
 import LoginSuccess from "./LoginSuccess";
 import NewRestaurantOwner from "../NewRestaurantOwner";
@@ -11,8 +10,10 @@ import AdministratorShield from "./AdministratorShield";
 import NewOperator from "../NewOperator";
 import Signup from "../Signup";
 import NewRestaurant from "../NewRestaurant";
+import RestaurantList from "../RestaurantList";
 import RestaurantOwnerShield from "./RestaurantOwnerShield";
 import NewMeal from "../NewMeal";
+import PaginationCustom from "../PaginationCustom";
 
 export default function Router(props) {
   return (
@@ -52,13 +53,16 @@ export default function Router(props) {
                   <NewMeal />
                 </RestaurantOwnerShield>
               }
-            >
-
-            </Route>
+            ></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/auth/success" element={<LoginSuccess />}></Route>
             <Route path="/auth/failure">Failed to log in</Route>
+            <Route path="/restaurantslist" element={<RestaurantList />}></Route>
+            <Route
+              path="/pagination"
+              element={<PaginationCustom/>}
+            ></Route>
             <Route path="/" element={<Login />}></Route>
           </Routes>
         </Container>
@@ -66,5 +70,3 @@ export default function Router(props) {
     </>
   );
 }
-
-

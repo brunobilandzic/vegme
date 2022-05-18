@@ -1,5 +1,4 @@
 import axios from "axios"
-import { FaMarsDouble } from "react-icons/fa"
 import { LOGOUT, LOG_IN_THE_USER } from "../types"
 
 const loadUser =  () => async dispatch => {

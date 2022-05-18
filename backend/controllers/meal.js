@@ -46,5 +46,6 @@ const createMeal = async (req, res, next) => {
 
 module.exports = {
     getAllMeals,
-    createMeal
+    createMeal,
+    getAllPaginatedMeals
 }
