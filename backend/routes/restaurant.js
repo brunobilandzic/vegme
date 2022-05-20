@@ -4,6 +4,7 @@ const {
   createRestaurant,
   getAllRestaurants,
   getAllPaginatedRestaurants,
+  getSingleRestaurant,
 } = require("../controllers/restaurant");
 const { requireLogin, requireRestaurantOwner } = require("../helpers/roleCheck");
 
@@ -17,6 +18,6 @@ router
 
 
 router.route("/all").get(getAllRestaurants)
-
+router.route("/:restaurantId").get(getSingleRestaurant)
 
 module.exports = router;

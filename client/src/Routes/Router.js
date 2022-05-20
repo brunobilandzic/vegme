@@ -14,6 +14,7 @@ import RestaurantList from "../RestaurantList";
 import RestaurantOwnerShield from "./RestaurantOwnerShield";
 import NewMeal from "../NewMeal";
 import PaginationCustom from "../PaginationCustom";
+import RestaurantSingular from "../RestaurantSingular";
 
 export default function Router(props) {
   return (
@@ -59,6 +60,7 @@ export default function Router(props) {
             <Route path="/auth/success" element={<LoginSuccess />}></Route>
             <Route path="/auth/failure">Failed to log in</Route>
             <Route path="/restaurantslist" element={<RestaurantList />}></Route>
+            <Route path="/restaurant/:restaurantId" element={<RestaurantSingular />}></Route>
             <Route
               path="/pagination"
               element={<PaginationCustom/>}

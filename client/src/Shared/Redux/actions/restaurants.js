@@ -1,11 +1,13 @@
 const {
   getAllRestaurants,
   getAllPaginatedRestaurants,
+  getSingleRestaurant,
 } = require("../../Api/restaurants");
 const {
   LOAD_RESTAURANTS,
   LOAD_PAGINATED_RESTAURANTS,
   WRITE_PAGINATION,
+  LOAD_SINGLE_RESTAURANT,
 } = require("../types");
 
 const loadAllRestaurants = () => async (dispatch) => {
@@ -44,4 +46,15 @@ const loadAllRestaurantsWithPagination =
     });
   };
 
-export { loadAllRestaurants, loadAllRestaurantsWithPagination };
+const loadSingleRestaurant = (restaurantId) => async (dispatch, getState) => {
+  const cachedRestaurant = getState().restaurants.single[restaurantId];
+  if (cachedRestaurant) return;
+
+  const restaurant = await getSingleRestaurant(restaurantId)
+  dispatch({
+    type: LOAD_SINGLE_RESTAURANT,
+    payload: restaurant
+  })
+};
+
+export { loadAllRestaurants, loadAllRestaurantsWithPagination, loadSingleRestaurant };

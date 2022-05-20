@@ -5,25 +5,46 @@ import propTypes from "prop-types";
 
 import { loadAllRestaurantsWithPagination } from "./Shared/Redux/actions/restaurants.js";
 import PaginationCustom from "./PaginationCustom.js";
+import RestaurantItem from "./RestaurantItem.js";
 function RestaurantList(props) {
-  const { pageNumber, pageSize, totalItems,pagination, totalPages, loadAllRestaurantsWithPagination } = props;
+  const {
+    pageNumber,
+    pageSize,
+    totalItems,
+    pagination,
+    restaurants,
+    totalPages,
+    loadAllRestaurantsWithPagination,
+  } = props;
   useEffect(() => {
     props.loadAllRestaurantsWithPagination(pageNumber, pageSize);
-    console.log(pageNumber, pageSize, totalItems,pagination, totalPages)
+    console.log(pageNumber, pageSize, totalItems, pagination, totalPages);
   }, []);
 
   const loadItems = (_pageNumber) => {
-    loadAllRestaurantsWithPagination(_pageNumber, pageSize)
-  }
+    loadAllRestaurantsWithPagination(_pageNumber, pageSize);
+  };
+
+  const getPaginationKey = () => pageNumber + "-" + pageSize;
+
+  const getRestaurants = () => {
+    return(
+      restaurants[getPaginationKey()]?.map((restaurant) => (
+        <RestaurantItem restaurant={restaurant}></RestaurantItem>
+      ))
+    );
+  };
 
   return (
     <>
-      {JSON.stringify(props.restaurants[pageNumber + "-" + pageSize])}
-      {pagination && <PaginationCustom
-        totalItems={totalItems}
-        pageSize={pageSize}
-        loadItems={loadItems}
-      ></PaginationCustom>}
+      {getRestaurants()}
+      {pagination && (
+        <PaginationCustom
+          totalItems={totalItems}
+          pageSize={pageSize}
+          loadItems={loadItems}
+        ></PaginationCustom>
+      )}
     </>
   );
 }

@@ -11,7 +11,18 @@ const getAllPaginatedRestaurants = async (req, res, next) => {
   const queryObject = url.parse(req.url, true).query;
   try {
     restaurantsWithPagination = await PaginatedList.getPaginatedResult(
-      Restaurant.find(),
+      Restaurant.find()
+        .populate([
+          {
+            path: "meals",
+            select: "-_id -restaurant -__v",
+          },
+          {
+            path: "owner",
+            select: "name username -_id",
+          },
+        ])
+        .select("-__v"),
       Number(queryObject.pageNumber),
       Number(queryObject.pageSize)
     );
@@ -19,7 +30,7 @@ const getAllPaginatedRestaurants = async (req, res, next) => {
     return next(new HttpError("Cannot find restaurants."));
   }
 
-  res.json({restaurantsWithPagination});
+  res.json({ restaurantsWithPagination });
 };
 
 const getAllRestaurants = async (req, res, next) => {
@@ -32,7 +43,7 @@ const getAllRestaurants = async (req, res, next) => {
 };
 
 const createRestaurant = async (req, res, next) => {
-  let newRestaurant
+  let newRestaurant;
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -49,8 +60,31 @@ const createRestaurant = async (req, res, next) => {
   res.json(newRestaurant);
 };
 
+const getSingleRestaurant = async (req, res, next) => {
+  let restaurant;
+  try {
+    restaurant = await Restaurant.findById(req.params.restaurantId)
+      .populate([
+        {
+          path: "meals",
+          select: "-_id -restaurant -__v",
+        },
+        {
+          path: "owner",
+          select: "name username -_id",
+        },
+      ])
+      .select("-__v");
+  } catch (error) {
+    return next(new HttpError("Cannot find restaurant."));
+  }
+
+  res.json({ restaurant });
+};
+
 module.exports = {
   getAllRestaurants,
   createRestaurant,
   getAllPaginatedRestaurants,
+  getSingleRestaurant,
 };

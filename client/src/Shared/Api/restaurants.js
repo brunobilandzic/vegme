@@ -9,9 +9,19 @@ const getAllRestaurants = async () => {
 };
 
 const getAllPaginatedRestaurants = async (pageNumber = 1, pageSize = 5) => {
-  const response = await axios.get(`http://localhost:5000/api/restaurants?pageNumber=${pageNumber}&pageSize=${pageSize}`, {
-    withCredentials: true,
-  });
-  return response.data.restaurantsWithPagination
+  const response = await axios.get(
+    `http://localhost:5000/api/restaurants?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data.restaurantsWithPagination;
 };
-module.exports = { getAllRestaurants, getAllPaginatedRestaurants };
+
+const getSingleRestaurant = async (restaurantId) => {
+  const response = await axios.get(
+    `http://localhost:5000/api/restaurants/${restaurantId}`
+  );
+  return response.data.restaurant;
+};
+module.exports = { getAllRestaurants, getAllPaginatedRestaurants, getSingleRestaurant };

@@ -1,8 +1,13 @@
-import { LOAD_PAGINATED_RESTAURANTS, LOAD_RESTAURANTS } from "../../types";
+import {
+  LOAD_PAGINATED_RESTAURANTS,
+  LOAD_RESTAURANTS,
+  LOAD_SINGLE_RESTAURANT,
+} from "../../types";
 
 const initialState = {
   restaurants: {},
   pagination: false,
+  single: {},
 };
 
 export default function restaurantReducer(state = initialState, action) {
@@ -22,6 +27,14 @@ export default function restaurantReducer(state = initialState, action) {
             action.payload.items,
         },
         pagination: true,
+      };
+    case LOAD_SINGLE_RESTAURANT:
+      return {
+        ...state,
+        single: {
+          ...state.single,
+          [action.payload._id]: action.payload,
+        },
       };
     default:
       return state;
