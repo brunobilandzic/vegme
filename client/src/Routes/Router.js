@@ -1,20 +1,20 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Login from "../Login";
+import Login from "../Components/Authorization/Login";
 import LoginSuccess from "./LoginSuccess";
-import NewRestaurantOwner from "../NewRestaurantOwner";
+import NewRestaurantOwner from "../Components/Authorization/NewRestaurantOwner";
 import OperatorShield from "./OperatorShield";
 import { Container } from "react-bootstrap";
 import AdministratorShield from "./AdministratorShield";
-import NewOperator from "../NewOperator";
-import Signup from "../Signup";
-import NewRestaurant from "../NewRestaurant";
-import RestaurantList from "../RestaurantList";
+import NewOperator from "../Components/Authorization/NewOperator";
+import Signup from "../Components/Authorization/Signup";
+import NewRestaurant from "../Components/Restaurant/NewRestaurant";
+import RestaurantList from "../Components/Restaurant/RestaurantList";
 import RestaurantOwnerShield from "./RestaurantOwnerShield";
-import NewMeal from "../NewMeal";
-import PaginationCustom from "../PaginationCustom";
-import RestaurantSingular from "../RestaurantSingular";
+import NewMeal from "../Components/Meals/NewMeal";
+import PaginationCustom from "../Shared/Components/PaginationCustom";
+import RestaurantSingular from "../Components/Restaurant/RestaurantSingular";
 
 export default function Router(props) {
   return (

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "./Shared/CustomHooks/form-hook";
-import Input from "./Shared/Form/Input";
+import { useForm } from "../../Shared/CustomHooks/form-hook";
+import Input from "../../Shared/Form/Input";
 import { Button } from "react-bootstrap";
 import {
   VALIDATOR_REQUIRED,
   VALIDATOR_EMAIL,
   VALIDATOR_MIN_LENGTH,
   VALIDATOR_SAME_AS,
-} from "./util/validators";
-import { useHttpClient } from "./Shared/CustomHooks/http-hook.js";
-import Modal from "./Shared/UserInterface/Modal";
-import { CUSTOMER } from "./Shared/Constants/Roles";
+} from "../../util/validators";
+import { useHttpClient } from "../../Shared/CustomHooks/http-hook.js";
+import Modal from "../../Shared/UserInterface/Modal";
+import { CUSTOMER } from "../../Shared/Constants/Roles";
 
 export default function Signup() {
   const [formState, inputHandler] = useForm(

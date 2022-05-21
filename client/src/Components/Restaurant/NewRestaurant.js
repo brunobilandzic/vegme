@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import propTypes from "prop-types";
-import { useForm } from "./Shared/CustomHooks/form-hook";
-import Input from "./Shared/Form/Input";
-import { VALIDATOR_REQUIRED } from "./util/validators";
+import { useForm } from "../../Shared/CustomHooks/form-hook";
+import Input from "../../Shared/Form/Input";
+import { VALIDATOR_REQUIRED } from "../../util/validators";
 import { Button } from "react-bootstrap";
-import { useHttpClient } from "./Shared/CustomHooks/http-hook";
-import Modal from "./Shared/UserInterface/Modal";
+import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
+import Modal from "../../Shared/UserInterface/Modal";
 
 function NewRestaurant(props) {
   const [sendRequest, error, clearError, setError] = useHttpClient();

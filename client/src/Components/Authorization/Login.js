@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import Modal from "./Shared/UserInterface/Modal.js";
-import { useForm } from "./Shared/CustomHooks/form-hook";
-import { useHttpClient } from "./Shared/CustomHooks/http-hook";
-import Input from "./Shared/Form/Input";
-import { VALIDATOR_MIN_LENGTH, VALIDATOR_REQUIRED } from "./util/validators";
+import Modal from "../../Shared/UserInterface/Modal.js";
+import { useForm } from "../../Shared/CustomHooks/form-hook";
+import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
+import Input from "../../Shared/Form/Input";
+import { VALIDATOR_MIN_LENGTH, VALIDATOR_REQUIRED } from "../../util/validators";
 
 export default function Login() {
   const [sendRequest, error, clearError, setError] = useHttpClient();

@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 
 import propTypes from "prop-types";
 
-import { loadAllRestaurantsWithPagination } from "./Shared/Redux/actions/restaurants.js";
-import PaginationCustom from "./PaginationCustom.js";
+import { loadAllRestaurantsWithPagination } from "../../Shared/Redux/actions/restaurants.js";
+import PaginationCustom from "../../Shared/Components/PaginationCustom.js";
 import RestaurantItem from "./RestaurantItem.js";
 function RestaurantList(props) {
   const {

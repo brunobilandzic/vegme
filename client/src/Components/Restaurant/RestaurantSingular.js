@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
-import { loadSingleRestaurant } from "./Shared/Redux/actions/restaurants.js";
-import MealItem from "./MealItem.js";
+import { loadSingleRestaurant } from "../../Shared/Redux/actions/restaurants.js";
+import MealItem from "../Meals/MealItem.js";
 
 function RestaurantSingular(props) {
   const { single, loadSingleRestaurant } = props;

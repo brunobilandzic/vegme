@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MealList from "./MealList";
-import { isArrayNullOrEmpty } from "./util/helper";
+import MealList from "../Meals/MealList";
+import { isArrayNullOrEmpty } from "../../util/helper";
 
 export default function RestaurantItem({ restaurant }) {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { isArrayNullOrEmpty } from "./util/helper";
+import { isArrayNullOrEmpty } from "../../util/helper";
 
 export default function MealItem({ meal }) {
   return (

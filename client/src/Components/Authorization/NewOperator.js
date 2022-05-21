@@ -1,28 +1,24 @@
-import React, { useState } from "react";
-import { useForm } from "./Shared/CustomHooks/form-hook";
-import { useHttpClient } from "./Shared/CustomHooks/http-hook";
+import React, { useEffect, useRef, useState } from "react";
+import { OPERATOR } from "../../Shared/Constants/Roles";
+import { useForm } from "../../Shared/CustomHooks/form-hook";
+import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
 import { Button } from "react-bootstrap";
-import Input from "./Shared/Form/Input";
 import {
   VALIDATOR_REQUIRED,
   VALIDATOR_EMAIL,
   VALIDATOR_MIN_LENGTH,
   VALIDATOR_SAME_AS,
-} from "./util/validators";
-import Modal from "./Shared/UserInterface/Modal";
-export default function NewRestaurantOwner() {
-  const [response, setResponse] = useState();
-  const [formState, inputHandler] = useForm(
+} from "../../util/validators";
+import Input from "../../Shared/Form/Input";
+import Modal from "../../Shared/UserInterface/Modal";
+export default function NewOperator() {
+  const [formState, inputHandler, clearForm] = useForm(
     {
       name: {
         value: "",
         isValid: false,
       },
       username: {
-        value: "",
-        isValid: false,
-      },
-      email: {
         value: "",
         isValid: false,
       },
@@ -40,27 +36,37 @@ export default function NewRestaurantOwner() {
 
   const [sendRequest, error, clearError, setError] = useHttpClient();
 
-  const handleNewCustomerSubmit = async (e) => {
+  const handleNewOperatorSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData();
 
     formData.append("name", formState.inputs.name.value);
     formData.append("username", formState.inputs.username.value);
-    formData.append("email", formState.inputs.email.value);
     formData.append("password", formState.inputs.password.value);
-
+    formData.append("role", OPERATOR);
     const response = await sendRequest(
-      "http://localhost:5000/api/restaurantowner",
+      "http://localhost:5000/api/operators",
       "POST",
       formData
     );
-    console.log(response);
-    setResponse(response);
+
   };
+
   return (
     <>
+      <Modal
+        show={error}
+        content={error}
+        header="Error"
+        footer={
+          <Button variant="warning" onClick={clearError}>
+            Cancel
+          </Button>
+        }
+        onCancel={clearError}
+      ></Modal>
 
-      <form onSubmit={handleNewCustomerSubmit}>
+      <form onSubmit={handleNewOperatorSubmit}>
         <Input
           onInput={inputHandler}
           element="input"
@@ -81,15 +87,7 @@ export default function NewRestaurantOwner() {
         />
         <Input
           onInput={inputHandler}
-          element="input"
-          type="email"
-          placeholder="Email"
-          label="Email"
-          id="email"
-          validators={[VALIDATOR_EMAIL()]}
-        />
-        <Input
-          onInput={inputHandler}
+          className="password__input"
           element="input"
           type="password"
           label="Password"
@@ -105,8 +103,7 @@ export default function NewRestaurantOwner() {
           placeholder="Repeat Password"
           id="repeatPassword"
           validators={[VALIDATOR_SAME_AS(formState.inputs.password?.value)]}
-        />
-        <br></br>
+        /><br></br>
         <Button type="submit" disabled={!formState.isValid}>
           Submit
         </Button>
