@@ -1,7 +1,7 @@
 import React from "react";
 import propTypes from "prop-types"
 import { connect } from "react-redux";
-import { RESTAURANT_OWNER } from "../Shared/Constants/Roles";
+import { RESTAURANT_OWNER } from "../../Shared/Constants/Roles";
 import NotAccessible from "./NotAccessible";
 
 function RestaurantOwnerShield(props) {

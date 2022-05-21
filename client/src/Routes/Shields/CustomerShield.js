@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { CUSTOMER } from "../Shared/Constants/Roles";
+import { CUSTOMER } from "../../Shared/Constants/Roles";
 import NotAccessible from "./NotAccessible";
 
 function CustomerShield(props) {

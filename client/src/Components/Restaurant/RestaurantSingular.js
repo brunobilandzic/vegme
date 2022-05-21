@@ -4,11 +4,13 @@ import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { loadSingleRestaurant } from "../../Shared/Redux/actions/restaurants.js";
 import MealItem from "../Meals/MealItem.js";
+import { isArrayNullOrEmpty } from "../../util/helper.js";
 
 function RestaurantSingular(props) {
   const { single, loadSingleRestaurant } = props;
   const { restaurantId } = useParams();
   const restaurant = single[restaurantId];
+
   useEffect(() => {
     loadSingleRestaurant(restaurantId);
   }, []);
@@ -19,7 +21,14 @@ function RestaurantSingular(props) {
   return (
     <>
       <h1>{restaurant?.name}</h1>
-      <div className="meal-list-container"><div className="meals-display-header">Meals</div>{getMeals()}</div>
+      {isArrayNullOrEmpty(single[restaurantId]?.meals) ? (
+        <div>No meals</div>
+      ) : (
+        <div className="meal-list-container">
+          <div className="meals-display-header">Meals</div>
+          {getMeals()}
+        </div>
+      )}
     </>
   );
 }

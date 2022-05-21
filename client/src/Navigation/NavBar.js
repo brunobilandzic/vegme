@@ -10,13 +10,13 @@ import {
   OPERATOR,
   RESTAURANT_OWNER,
 } from "../Shared/Constants/Roles";
-import CustomerNavList from "./CustomerNavList";
-import AdministratorNavList from "./AdministratorNavList";
-import LoginNavList from "./LoginNavList";
-import OperatorNavLinks from "./OperatorNavLinks";
+import CustomerNavList from "./RoleNavLinks/CustomerNavList";
+import AdministratorNavList from "./RoleNavLinks/AdministratorNavList";
+import LoginNavList from "./RoleNavLinks/LoginNavList";
+import OperatorNavLinks from "./RoleNavLinks/OperatorNavLinks";
 import { logout } from "../Shared/Redux/actions/auth";
 import PropTypes from "prop-types";
-import RestaurantOwnerNavList from "./RestaurantOwnerNavList";
+import RestaurantOwnerNavList from "./RoleNavLinks/RestaurantOwnerNavList";
 function NavBar(props) {
   const getNavLinks = () => {
     if (props.user?.roleNames.includes(CUSTOMER)) return <CustomerNavList />;
@@ -45,9 +45,6 @@ function NavBar(props) {
               {getNavLinks()}
               <LinkContainer to="/restaurantslist">
                 <NavLink>Restaurant List</NavLink>
-              </LinkContainer>
-              <LinkContainer to="/pagination">
-                <NavLink>Pagination</NavLink>
               </LinkContainer>
             </Nav>
 

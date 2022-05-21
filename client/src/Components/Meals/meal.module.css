@@ -1,0 +1,12 @@
+.mealItem {
+    display: flex;
+    justify-content: space-between;
+}
+
+.addIcon {
+    padding: 0.2rem;
+}
+
+.addIcon:hover {
+    cursor: pointer;
+}

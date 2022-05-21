@@ -1,9 +1,9 @@
 import React from "react";
 import MealItem from "./MealItem";
 
-export default function MealList({ mealList }) {
+export default function MealList({ mealList, inCart }) {
   const getMealList = () => {
-    return mealList.map((meal) => <MealItem meal={meal}></MealItem>);
+    return mealList.map((meal) => <MealItem inCart meal={meal}></MealItem>);
   };
   return (
     <>
