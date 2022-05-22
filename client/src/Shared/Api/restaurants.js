@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 
 const getAllRestaurants = async () => {
   const response = await axios.get(
-    "http://localhost:5000/api/restaurants/all",
+    `${process.env.REACT_APP_ROOT_URL}restaurants/all`,
     { withCredentials: true }
   );
   return response.data.allRestaurants;
@@ -10,7 +10,7 @@ const getAllRestaurants = async () => {
 
 const getAllPaginatedRestaurants = async (pageNumber = 1, pageSize = 5) => {
   const response = await axios.get(
-    `http://localhost:5000/api/restaurants?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+    `${process.env.REACT_APP_ROOT_URL}restaurants?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     {
       withCredentials: true,
     }
@@ -20,8 +20,12 @@ const getAllPaginatedRestaurants = async (pageNumber = 1, pageSize = 5) => {
 
 const getSingleRestaurant = async (restaurantId) => {
   const response = await axios.get(
-    `http://localhost:5000/api/restaurants/${restaurantId}`
+    `${process.env.REACT_APP_ROOT_URL}restaurants/${restaurantId}`
   );
   return response.data.restaurant;
 };
-module.exports = { getAllRestaurants, getAllPaginatedRestaurants, getSingleRestaurant };
+module.exports = {
+  getAllRestaurants,
+  getAllPaginatedRestaurants,
+  getSingleRestaurant,
+};
