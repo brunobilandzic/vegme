@@ -36,7 +36,7 @@ app.use(bodyParser.json())
 app.use("/api/customers", customerRoutes);
 app.use("/api/restaurantowners", restaurantOwnerRoutes);
 app.use("/api/restaurants", restaurantRoutes)
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/admins", adminRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/operators", operatorRoutes)
