@@ -53,4 +53,4 @@ const useForm = (initialInputs, initialValidity) => {
   return [formState, inputHandler, clearForm];
 };
 
-module.exports = { useForm };
+export{ useForm };

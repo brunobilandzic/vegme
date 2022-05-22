@@ -29,4 +29,4 @@ const useHttpClient = () => {
   return [sendRequest, error, clearError, setError];
 };
 
-module.exports = { useHttpClient };
+export { useHttpClient };

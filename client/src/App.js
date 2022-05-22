@@ -9,7 +9,8 @@ import Router from "./Routes/Router";
 function App() {
   const [response, setResponse] = useState();
   const testCert = async (e) => {
-    const response = await axios.get("https://localhost:5000");
+    console.log(process.env.NODE_ENV)
+    const response = await axios.get(process.env.REACT_APP_ROOT_URL);
     console.log(response.data);
     setResponse(response.data);
   };
