@@ -5,6 +5,8 @@ const cookieSession = require("cookie-session");
 const passport = require("passport");
 require("dotenv").config();
 const cors = require("cors");
+var fs = require("fs");
+var https = require("https");
 
 
 const mealRoutes = require("./routes/meal.js")
@@ -16,6 +18,10 @@ const restaurantRoutes = require("./routes/restaurant.js")
 const adminRoutes = require("./routes/admin.js")
 const operatorRoutes = require("./routes/operator.js")
 const app = express();
+const httpsConfiguration = {
+  key: fs.readFileSync("../server.key"),
+  cert: fs.readFileSync("../server.cert")
+}
 app.use(cookieSession({ maxAge: 24 * 60 * 60 * 1000, keys: ["cookie key"] }));
 
 require("./authentification/passport-google.js")
@@ -44,11 +50,13 @@ app.use((error, req, res, next) => {
   
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello, this is root route.")
+})
+
 mongoose
   .connect(process.env.MONGOOSE_CONNECTION_STRING)
   .then(() =>
-    app.listen(5000, () => {
-      console.log("listening on 5000");
-    })
+    https.createServer(httpsConfiguration, app).listen(process.env.PORT || 5000, () => {console.log(`Server running on port ${process.env.PORT || 5000}. Go to https://localhost:5000/.`)})
   )
   .catch((err) => console.log(err));
