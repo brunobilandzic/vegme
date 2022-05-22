@@ -27,16 +27,13 @@ router.get(
 );
 
 router.get("/logout", (req, res) => {
-  console.log("in logout")
-  console.log(req.logout)
   req.logout()
-  res.send("logout")
+  res.json({"logout": true})
 })
 
 router.post("/local/signup", upload.none(), createNewUser);
 
 router.post("/local/login", upload.none(), async (req, res, next) => {
-  console.log(req.body)
   const user = await BaseUser.findOne({username: req.body.username})
   if(!user) return  next(new HttpError("User with that username does not exist."))
   passport.authenticate("local", { failureRedirect: "/auth/loginfail" })(
@@ -52,9 +49,8 @@ router.get("/loginfail", (req, res, next) => {
   return next(new HttpError("Password incorrect"));
 });
 
-router.get("/test", requireLogin, (req, res) => {
+router.get("/getuser", requireLogin, (req, res) => {
   res.json(req.user);
-  console.log(req.user.id);
 });
 
 module.exports = router;

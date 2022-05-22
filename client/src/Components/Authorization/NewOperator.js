@@ -45,7 +45,7 @@ export default function NewOperator() {
     formData.append("password", formState.inputs.password.value);
     formData.append("role", OPERATOR);
     const response = await sendRequest(
-      "http://localhost:5000/api/operators",
+      process.env.REACT_APP_ROOT_URL + "api/operators",
       "POST",
       formData
     );

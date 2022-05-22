@@ -39,7 +39,7 @@ function NewMeal(props) {
     formData.append("restaurant", formState.inputs.restaurant.value);
 
     const response = await sendRequest(
-      "http://localhost:5000/api/meals",
+      process.env.REACT_APP_ROOT_URL + "api/meals",
       "POST",
       formData
     );

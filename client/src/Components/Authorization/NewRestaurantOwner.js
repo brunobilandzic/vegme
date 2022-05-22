@@ -50,7 +50,7 @@ export default function NewRestaurantOwner() {
     formData.append("password", formState.inputs.password.value);
 
     const response = await sendRequest(
-      "http://localhost:5000/api/restaurantowner",
+      process.env.REACT_APP_ROOT_URL + "api/restaurantowners",
       "POST",
       formData
     );

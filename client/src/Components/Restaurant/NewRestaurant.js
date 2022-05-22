@@ -25,7 +25,7 @@ function NewRestaurant(props) {
     const formData = new FormData()
     formData.append("name", formState.inputs.name.value)
 
-    const response = await sendRequest("http://localhost:5000/api/restaurants", "POST", formData)
+    const response = await sendRequest(process.env.REACT_APP_ROOT_URL + "api/restaurants", "POST", formData)
   }
 
   return (

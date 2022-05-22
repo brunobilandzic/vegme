@@ -45,7 +45,7 @@ export default function Signup() {
     formData.append("password", formState.inputs.password.value);
     formData.append("role", CUSTOMER);
     const response = await sendRequest(
-      "http://localhost:5000/auth/local/signup",
+      process.env.REACT_APP_ROOT_URL + "auth/local/signup",
       "POST",
       formData
     );

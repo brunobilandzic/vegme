@@ -31,7 +31,7 @@ export default function Login() {
     formData.append("password", formState.inputs.password.value);
 
     const response = await sendRequest(
-      "http://localhost:5000/auth/local/login",
+      process.env.REACT_APP_ROOT_URL + "auth/local/login",
       "POST",
       formData
     );

@@ -10,7 +10,7 @@ const useHttpClient = () => {
       try {
         switch (method) {
           case "GET":
-            response = await axios.get(url, { headers: headers, withCredentials: true});
+            response = await axios.get(url, { withCredentials: true});
             break;
           case "POST":
             response = await axios.post(url, body, {withCredentials: true});
