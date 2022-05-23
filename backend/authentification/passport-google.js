@@ -2,7 +2,7 @@ const passport = require("passport");
 const { BaseUser } = require("../models/user");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const {CUSTOMER} = require("../constants/roles.js");
-const { addToCustomerRole } = require("../controllers/regular");
+const { addToRegularRole } = require("../controllers/regular");
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -15,7 +15,7 @@ passport.deserializeUser(async (user, done) => {
 passport.use(new GoogleStrategy({
     clientID: "870331288511-q9g9hrh58tarrinlek1f7t1r319m4b5m.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:5000/auth/google/callback",
+    callbackURL: "https://localhost:5000/api/auth/google/callback",
     proxy: true,
   },
   async (req,  accessToken, refreshToken, profile, cb) => {
@@ -29,7 +29,7 @@ passport.use(new GoogleStrategy({
     })
 
     await newUser.save()
-    await addToCustomerRole(newUser.id)
+    await addToRegularRole(newUser.id)
 
     return cb(null,newUser)
   }

@@ -72,7 +72,7 @@ export default function Login() {
           id="password"
           validators={[VALIDATOR_MIN_LENGTH(6)]}
         />
-        <a href="http://localhost:5000/auth/google" target="_blank">
+        <a href={`${process.env.REACT_APP_ROOT_URL}auth/google`} target="_blank">
           Authorize with google
         </a><br></br>
         <Button type="submit" disabled={!formState.isValid}>
