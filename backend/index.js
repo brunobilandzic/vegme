@@ -17,6 +17,8 @@ const userRoutes = require("./routes/user.js")
 const restaurantRoutes = require("./routes/restaurant.js")
 const adminRoutes = require("./routes/admin.js")
 const operatorRoutes = require("./routes/operator.js")
+const orderRoutes = require("./routes/order")
+
 const app = express();
 const httpsConfiguration = {
   key: fs.readFileSync("../server.key"),
@@ -41,6 +43,7 @@ app.use("/api/admins", adminRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/operators", operatorRoutes)
 app.use("/api/meals", mealRoutes)
+app.use("/api/orders", orderRoutes)
 
 app.use((error, req, res, next) => {
   if (res.headerSent) return next(error);

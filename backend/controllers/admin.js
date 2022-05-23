@@ -22,10 +22,7 @@ const getAllAdmins = async (req, res, next) => {
 const createAdmin = async (req, res, next) => {
   let adminRoleUser, user;
   try {
-    user =  await BaseUser.register(
-      req.body,
-      req.body.password
-    );
+    user = await BaseUser.register(req.body, req.body.password);
     await user.save();
     adminRoleUser = await addToAdmin(user.id);
   } catch (error) {
@@ -40,8 +37,8 @@ const addToAdmin = async (userId) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     let user = await BaseUser.findById(userId);
-    user.roleNames.push(ADMINISTRATOR);
     adminRoleUser = new AdminRoleUser({ user: userId });
+    user.roles.push({ name: ADMINISTRATOR, id: adminRoleUser.id });
 
     await user.save({ session: sess });
     await adminRoleUser.save({ session: sess });

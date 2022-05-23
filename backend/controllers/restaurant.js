@@ -47,11 +47,11 @@ const createRestaurant = async (req, res, next) => {
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
-    newRestaurant = new Restaurant({ name: req.body.name, owner: req.user.id });
-    const owner = await RestaurantOwnerRoleUser.findOne({ user: req.user.id });
-    owner.restaurants.push(newRestaurant.id);
+    const restaurantOwnerRoleUser = await RestaurantOwnerRoleUser.findOne({user: req.user.id})
+    newRestaurant = new Restaurant({ name: req.body.name, owner: restaurantOwnerRoleUser.id });
+    restaurantOwnerRoleUser.restaurants.push(newRestaurant.id);
     await newRestaurant.save({ session: sess });
-    await owner.save({ session: sess });
+    await restaurantOwnerRoleUser.save({ session: sess });
 
     await sess.commitTransaction();
   } catch (error) {

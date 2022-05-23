@@ -14,7 +14,7 @@ const upload = multer()
 router
   .route("/")
   .get(getAllPaginatedRestaurants)
-  .post(requireLogin, requireRestaurantOwner, upload.none(), createRestaurant);
+  .post(upload.none(), createRestaurant);
 
 
 router.route("/all").get(getAllRestaurants)

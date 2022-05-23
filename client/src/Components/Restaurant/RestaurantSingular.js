@@ -16,7 +16,7 @@ function RestaurantSingular(props) {
   }, []);
   const getMeals = () =>
     single[restaurantId]?.meals.map((meal) => (
-      <MealItem meal={meal}></MealItem>
+      <MealItem key={meal._id} meal={meal}></MealItem>
     ));
   return (
     <>

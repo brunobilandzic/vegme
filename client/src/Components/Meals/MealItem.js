@@ -10,7 +10,13 @@ import {
   removeMealFromCart,
 } from "../../Shared/Redux/actions/meals";
 
-function MealItem({ meal, mealsInCart, addMealToCart, removeMealFromCart, inCart }) {
+function MealItem({
+  meal,
+  mealsInCart,
+  addMealToCart,
+  removeMealFromCart,
+  inCart,
+}) {
   const handleMealAddClick = (e) => {
     isMealInCart() ? removeMealFromCart(meal) : addMealToCart(meal);
   };
@@ -29,12 +35,12 @@ function MealItem({ meal, mealsInCart, addMealToCart, removeMealFromCart, inCart
         {!isArrayNullOrEmpty(meal.ingredients) && (
           <>
             <IngredientList ingredients={meal.ingredients}></IngredientList>
-            {!inCart && (
-              <div onClick={handleMealAddClick} className={mealStyles.addIcon}>
-                {getIcon()}
-              </div>
-            )}
           </>
+        )}
+        {!inCart && (
+          <div onClick={handleMealAddClick} className={mealStyles.addIcon}>
+            {getIcon()}
+          </div>
         )}
       </div>
     </>

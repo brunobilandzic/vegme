@@ -45,8 +45,9 @@ const addToRestaurantOwnerRole = async (userId) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     const user = await BaseUser.findById(userId);
-    user.roleNames.push(RESTAURANT_OWNER);
     newRestaurantOwnerRoleUser = new RestaurantOwnerRoleUser({user: userId});
+    user.roles.push({name: RESTAURANT_OWNER, id: newRestaurantOwnerRoleUser.id});
+   
     await newRestaurantOwnerRoleUser.save({ session: sess });
     await user.save({ session: sess });
     await sess.commitTransaction();

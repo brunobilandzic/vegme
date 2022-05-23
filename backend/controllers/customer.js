@@ -45,13 +45,14 @@ const addToCustomerRole = async (userId) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     const user = await BaseUser.findById(userId);
-    user.roleNames.push(CUSTOMER);
-
+    
     createdCustomerRoleUser = new CustomerRoleUser({ user: userId });
+    user.roles.push({name: CUSTOMER, id: createdCustomerRoleUser.id})
+    
 
     await user.save({ session: sess });
     await createdCustomerRoleUser.save({ session: sess });
-
+    
     await sess.commitTransaction();
   } catch (error) {
     throw new HttpError("Cannot add user to the customer role.");

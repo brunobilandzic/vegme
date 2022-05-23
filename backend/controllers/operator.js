@@ -21,9 +21,9 @@ const addToOperatorRole = async (userId) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     let user = await BaseUser.findById(userId);
-    
-    user.roleNames.push(OPERATOR);
     operatorRoleUser = new OperatorRoleUser({ user: userId });
+    user.roles.push({name: OPERATOR, id: operatorRoleUser.id});
+
     await user.save({ session: sess });
     await operatorRoleUser.save({ session: sess });
 
