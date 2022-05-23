@@ -6,7 +6,7 @@ import NotAccessible from "./NotAccessible";
 function AdministratorShield(props) {
   return (
     <>
-      {props.user?.roleNames.includes(ADMINISTRATOR) ? (
+      {props.user?.roles.map(r => r.name).includes(ADMINISTRATOR) ? (
         props.children
       ) : (
         <NotAccessible />

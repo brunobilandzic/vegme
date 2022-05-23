@@ -6,25 +6,21 @@ import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import {
   ADMINISTRATOR,
-  CUSTOMER,
+  REGULAR,
   OPERATOR,
-  RESTAURANT_OWNER,
 } from "../Shared/Constants/Roles";
-import CustomerNavList from "./RoleNavLinks/CustomerNavList";
 import AdministratorNavList from "./RoleNavLinks/AdministratorNavList";
 import LoginNavList from "./RoleNavLinks/LoginNavList";
-import OperatorNavLinks from "./RoleNavLinks/OperatorNavLinks";
 import { logout } from "../Shared/Redux/actions/auth";
 import PropTypes from "prop-types";
-import RestaurantOwnerNavList from "./RoleNavLinks/RestaurantOwnerNavList";
+import RegularNavList from "./RoleNavLinks/RegularNavList";
+import OperatorNavList from "./RoleNavLinks/OperatorNavList";
 function NavBar(props) {
   const getNavLinks = () => {
-    if (props.user?.roles.map(role => role.name).includes(CUSTOMER)) return <CustomerNavList />;
+    if (props.user?.roles.map(role => role.name).includes(REGULAR)) return <RegularNavList />;
     if (props.user?.roles.map(role => role.name).includes(ADMINISTRATOR))
       return <AdministratorNavList />;
-    if (props.user?.roles.map(role => role.name).includes(OPERATOR)) return <OperatorNavLinks />;
-    if (props.user?.roles.map(role => role.name).includes(RESTAURANT_OWNER))
-      return <RestaurantOwnerNavList />;
+    if (props.user?.roles.map(role => role.name).includes(OPERATOR)) return <OperatorNavList />
     else return <LoginNavList />;
   };
 

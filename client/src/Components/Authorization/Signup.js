@@ -10,8 +10,6 @@ import {
 } from "../../util/validators";
 import { useHttpClient } from "../../Shared/CustomHooks/http-hook.js";
 import Modal from "../../Shared/UserInterface/Modal";
-import { CUSTOMER } from "../../Shared/Constants/Roles";
-
 export default function Signup() {
   const [formState, inputHandler] = useForm(
     {
@@ -43,7 +41,6 @@ export default function Signup() {
 
     formData.append("name", formState.inputs.name.value);
     formData.append("password", formState.inputs.password.value);
-    formData.append("role", CUSTOMER);
     const response = await sendRequest(
       process.env.REACT_APP_ROOT_URL + "auth/local/signup",
       "POST",

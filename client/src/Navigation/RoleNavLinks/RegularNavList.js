@@ -2,11 +2,11 @@ import React from "react";
 import { NavLink } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-export default function OperatorNavLinks() {
+export default function RegularNavList() {
   return (
     <>
-      <LinkContainer to="/restaurantowners/new">
-        <NavLink>New restaurant owner</NavLink>
+      <LinkContainer to="/cart">
+        <NavLink>Cart</NavLink>
       </LinkContainer>
     </>
   );

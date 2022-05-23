@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, FormControl } from "react-bootstrap";
 import { useForm } from "../../Shared/CustomHooks/form-hook";
 import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
 import Input from "../../Shared/Form/Input";
-import { loadAllRestaurants } from "../../Shared/Redux/actions/restaurants";
 import Modal from "../../Shared/UserInterface/Modal";
 import {
   VALIDATOR_REQUIRED
@@ -12,9 +11,6 @@ import propTypes from "prop-types";
 import { connect } from "react-redux";
 function NewMeal(props) {
   const selectRestaurant = useRef()
-  useEffect(() => {
-    props.loadAllRestaurants();
-  }, []);
   const [formState, inputHandler, clearForm] = useForm({
     name: {
       value: "",
@@ -23,10 +19,6 @@ function NewMeal(props) {
     ingredients: {
       value: "",
       isValid: false,
-    },
-    restaurant: {
-      value: "",
-      isValid: false
     }
   }, false);
   const [sendRequest, error, clearError, setError] = useHttpClient();
@@ -36,7 +28,6 @@ function NewMeal(props) {
     let formData = new FormData();
     formData.append("name", formState.inputs.name.value);
     formData.append("ingredients", formState.inputs.ingredients.value);
-    formData.append("restaurant", formState.inputs.restaurant.value);
 
     const response = await sendRequest(
       process.env.REACT_APP_ROOT_URL + "api/meals",
@@ -86,24 +77,6 @@ function NewMeal(props) {
           value={formState.inputs.ingredients.value}
           validators={[VALIDATOR_REQUIRED()]}
         ></Input>
-        <label>Restaurant</label>
-        <FormControl
-          as="select"
-          defaultValue={0}
-          onChange={selectRestaurantHandler}
-          ref={selectRestaurant}
-        >
-          <option value="0" hidden={true}>
-            Select restaurant
-          </option>
-          
-          {props.restaurants?.length &&
-            props.restaurants?.map((r) => (
-              <option value={r._id} key={r._id}>
-                {r.name}
-              </option>
-            ))}
-        </FormControl>
         <Button type="submit" disabled={!formState.isValid}>Submit</Button>
       </form>
     </>
@@ -111,7 +84,6 @@ function NewMeal(props) {
 }
 
 NewMeal.propTypes = {
-  loadAllRestaurants: propTypes.func.isRequired,
   allRestaurants: propTypes.array,
 };
 
@@ -119,4 +91,4 @@ const mapStateToProps = (state) => ({
   restaurants: state.restaurants.restaurants.all,
 });
 
-export default connect(mapStateToProps, { loadAllRestaurants })(NewMeal);
+export default connect(mapStateToProps, {  })(NewMeal);

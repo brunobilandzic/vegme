@@ -6,7 +6,7 @@ import NotAccessible from "./NotAccessible";
 function OperatorShield(props) {
   return (
     <>
-      {props.user?.roleNames.includes(OPERATOR) ? (
+      {props.user?.roles.map(r => r.name).includes(OPERATOR) ? (
         props.children
       ) : (
         <NotAccessible />
