@@ -2,7 +2,7 @@ const passport = require("passport");
 const { BaseUser } = require("../models/user");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const {CUSTOMER} = require("../constants/roles.js");
-const { addToCustomerRole } = require("../controllers/customer");
+const { addToCustomerRole } = require("../controllers/regular");
 passport.serializeUser((user, done) => {
   done(null, user);
 });

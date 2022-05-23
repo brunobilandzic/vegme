@@ -1,7 +1,6 @@
 const { PaginatedList } = require("../helpers/pagination.js");
 const HttpError = require("../errors/http-error.js");
 const { Meal } = require("../models/meal.js");
-const { Restaurant } = require("../models/restaurant.js");
 const mongoose = require("mongoose");
 const url = require("url");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");

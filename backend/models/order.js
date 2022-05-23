@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const orderObject = {
     remark: { type: String },
     deliveryAddress: { type: String, required: true },
-    customer: { type: mongoose.Types.ObjectId, ref: "CustomerRole", required: true},
+    ordered_by: { type: mongoose.Types.ObjectId, ref: "RegularRoleUser", required: true},
     meals: [{ type: mongoose.Types.ObjectId, ref: "Meal"}],
   };
 const orderSchema = new mongoose.Schema(orderObject)

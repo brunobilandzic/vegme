@@ -7,6 +7,6 @@ const upload = multer();
 router
   .route("/")
   .get(getAllPaginatedMeals)
-  .post( upload.none(), createMeal);
+  .post(upload.none(), createMeal);
 
 module.exports = router;

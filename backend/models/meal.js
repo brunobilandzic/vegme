@@ -10,7 +10,6 @@ const mealTypes = {
 const mealObject = {
   name: { type: String, required: true },
   ingredients: [String],
-  restaurant: { type: mongoose.Types.ObjectId, ref: "Restaurant" },
   orders: [{ type: mongoose.Types.ObjectId }],
   category: {
     type: String,

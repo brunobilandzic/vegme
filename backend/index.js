@@ -10,11 +10,9 @@ var https = require("https");
 
 
 const mealRoutes = require("./routes/meal.js")
-const customerRoutes = require("./routes/customer.js");
-const restaurantOwnerRoutes = require("./routes/restaurantOwner.js");
+const regularRoutes = require("./routes/regular.js");
 const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/user.js")
-const restaurantRoutes = require("./routes/restaurant.js")
 const adminRoutes = require("./routes/admin.js")
 const operatorRoutes = require("./routes/operator.js")
 const orderRoutes = require("./routes/order")
@@ -30,14 +28,13 @@ require("./authentification/passport-google.js")
 require("./authentification/passport-local.js")
 
 app.use(cors({ origin: "https://localhost:3000", credentials: true }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser.json())
 
-app.use("/api/customers", customerRoutes);
-app.use("/api/restaurantowners", restaurantOwnerRoutes);
-app.use("/api/restaurants", restaurantRoutes)
+app.use("/api/regulars", regularRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admins", adminRoutes)
 app.use("/api/users", userRoutes)
