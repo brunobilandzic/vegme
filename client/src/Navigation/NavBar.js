@@ -19,11 +19,11 @@ import PropTypes from "prop-types";
 import RestaurantOwnerNavList from "./RoleNavLinks/RestaurantOwnerNavList";
 function NavBar(props) {
   const getNavLinks = () => {
-    if (props.user?.roleNames.includes(CUSTOMER)) return <CustomerNavList />;
-    if (props.user?.roleNames.includes(ADMINISTRATOR))
+    if (props.user?.roles.map(role => role.name).includes(CUSTOMER)) return <CustomerNavList />;
+    if (props.user?.roles.map(role => role.name).includes(ADMINISTRATOR))
       return <AdministratorNavList />;
-    if (props.user?.roleNames.includes(OPERATOR)) return <OperatorNavLinks />;
-    if (props.user?.roleNames.includes(RESTAURANT_OWNER))
+    if (props.user?.roles.map(role => role.name).includes(OPERATOR)) return <OperatorNavLinks />;
+    if (props.user?.roles.map(role => role.name).includes(RESTAURANT_OWNER))
       return <RestaurantOwnerNavList />;
     else return <LoginNavList />;
   };
