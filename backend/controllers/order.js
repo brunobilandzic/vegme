@@ -3,7 +3,7 @@ const HttpError = require("../errors/http-error.js");
 const { Order } = require("../models/order.js");
 const { default: mongoose } = require("mongoose");
 const { Meal } = require("../models/meal.js");
-const { CustomerRoleUser } = require("../models/user.js");
+const { CustomerRoleUser, RegularRoleUser } = require("../models/user.js");
 
 const getAllOrders = async (req, res, next) => {
   let ordersWithPagination;
@@ -30,10 +30,13 @@ const createOrder = async (req, res, next) => {
       await meal.save({session: sess})
       
     });
-    const customer = await CustomerRoleUser.findOne({user: req.user.id})
-    console.log(customer)
-    customer.orders.push(newOrder.id)
-    newOrder.customer = customer.id
+    const client = await RegularRoleUser.findOne({user: req.user.id})
+    console.log(client)
+    client.orders.push(newOrder.id)
+    newOrder.ordered_by = customer.id
+    const preparer = await RegularRoleUser.findOne({user: req.body.preparer})
+    preparer.offers.push(newOrder.id)
+    await preparer.save({session: sess})
     await customer.save({session: sess})
     await newOrder.save({ session: sess });
     await sess.commitTransaction()
