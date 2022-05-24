@@ -11,6 +11,7 @@ const mealObject = {
   name: { type: String, required: true },
   ingredients: [String],
   orders: [{ type: mongoose.Types.ObjectId }],
+  cook: {type: mongoose.Types.ObjectId},
   category: {
     type: String,
     enum: Object.values(mealTypes),

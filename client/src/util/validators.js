@@ -9,7 +9,9 @@ const VALIDATOR_REQUIRED = () => ({type: TYPE_REQUIRED})
 const VALIDATOR_MIN_LENGTH = val => ({type: TYPE_MIN_LENGTH, value: val})
 const VALIDATOR_MAX_LENGTH = val => ({type: TYPE_MAX_LENGTH, value: val})
 const VALIDATOR_EMAIL = () => ({type: TYPE_REQUIRE_EMAIL})
-const VALIDATOR_SAME_AS = val => ({type: TYPE_SAME_AS, value: val})
+const VALIDATOR_SAME_AS = val => {
+    return ({type: TYPE_SAME_AS, value: val})
+}
 
 const valid = (value, validators) => {
     let isValid=true
@@ -19,7 +21,7 @@ const valid = (value, validators) => {
                  isValid = isValid &&  value.trim().length > 0
                  break
             case TYPE_MIN_LENGTH:
-                 isValid = isValid &&value.trim().length >= validator.value
+                 isValid = isValid && value.trim().length >= validator.value
                 break
             case TYPE_MAX_LENGTH:
                  isValid =isValid && value.trim().lenght <= validator.value
@@ -28,7 +30,8 @@ const valid = (value, validators) => {
                 isValid = isValid &&/^\S+@\S+\.\S+$/.test(value)
                 break
             case TYPE_SAME_AS:
-                isValid = isValid && value == validator.value
+                isValid = isValid && value === validator.value
+                break
         }
     })
     return isValid

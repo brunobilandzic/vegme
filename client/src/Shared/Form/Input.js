@@ -26,7 +26,6 @@ export default function Input(props) {
   });
 
   const { onInput, id } = props;
-  const { value, isValid } = inputState;
   const [viewPassword, setViewPassword] = useState(false)
 
   const handleChange = (e) => {
@@ -35,7 +34,8 @@ export default function Input(props) {
       value: e.target.value,
       validators: props.validators,
     });
-    onInput(e.target.value, id, isValid);
+
+    onInput(e.target.value, id, valid(e.target.value, props.validators));
   };
 
   const handleTouch = (e) => {
@@ -49,7 +49,6 @@ export default function Input(props) {
     setViewPassword(prevState => !prevState)
     passwordRef.current.type = passwordRef.current.type === "password" ? "text": "password"
   }
-  
   const elementToRender =
     props.element === "input" ? (
       props.type === "password" && props.id != "repeatPassword" ? (

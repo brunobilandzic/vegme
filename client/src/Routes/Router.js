@@ -8,9 +8,12 @@ import { Container } from "react-bootstrap";
 import AdministratorShield from "./Shields/AdministratorShield";
 import NewOperator from "../Components/Authorization/NewOperator";
 import Signup from "../Components/Authorization/Signup"
-import NewMeal from "../Components/Meals/NewMeal";
+import NewMeal from "../Components/Meals/Meals/NewMeal";
 import CustomerShield from "./Shields/RegularShield";
-import Cart from "../Components/Cart/Cart";
+import Cart from "../Components//Meals/Cart/Cart";
+import RegularShield from "./Shields/RegularShield";
+import NewOffer from "../Components/Meals/Offers/NewOffer";
+import Offers from "../Components/Meals/Offers/Offers";
 
 export default function Router(props) {
   return (
@@ -31,6 +34,14 @@ export default function Router(props) {
               path="/meals/new"
               element={
                   <NewMeal />
+              }
+            ></Route>
+            <Route
+              path="/offers"
+              element={
+                <RegularShield>
+                  <Offers />
+                </RegularShield>
               }
             ></Route>
             <Route path="/login" element={<Login />}></Route>

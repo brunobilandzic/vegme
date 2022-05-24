@@ -1,6 +1,6 @@
 import React from "react";
-import { isArrayNullOrEmpty } from "../../util/helper";
-import IngredientList from "./Ingredients/IngredientList";
+import { isArrayNullOrEmpty } from "../../../util/helper";
+import IngredientList from "../Ingredients/IngredientList";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import propTypes from "prop-types";
 import mealStyles from "./meal.module.css";
@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import {
   addMealToCart,
   removeMealFromCart,
-} from "../../Shared/Redux/actions/meals";
+} from "../../../Shared/Redux/actions/meals";
 
 function MealItem({
   meal,

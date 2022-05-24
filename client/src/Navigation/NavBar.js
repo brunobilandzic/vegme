@@ -39,9 +39,6 @@ function NavBar(props) {
           <NavbarCollapse id="navbarLinks">
             <Nav className="me-auto">
               {getNavLinks()}
-              <LinkContainer to="/restaurantslist">
-                <NavLink>Restaurant List</NavLink>
-              </LinkContainer>
             </Nav>
 
             {props.user && (

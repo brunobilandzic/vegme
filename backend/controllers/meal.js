@@ -4,6 +4,7 @@ const { Meal } = require("../models/meal.js");
 const mongoose = require("mongoose");
 const url = require("url");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
+const { RegularRoleUser } = require("../models/user.js");
 
 const getAllPaginatedMeals = async (req, res, next) => {
   const queryObject = url.parse(req.url, true).query;
@@ -28,11 +29,11 @@ const createMeal = async (req, res, next) => {
     const sess = await mongoose.startSession()
     sess.startTransaction()
 
-    const restaurant = await Restaurant.findById(req.body.restaurant)
     newMeal = new Meal(req.body);
-    restaurant.meals.push(newMeal.id)
+    const cook = await RegularRoleUser.find({user: req.user.id})
+    cook.cooks.push(newMeal.id)
     await newMeal.save({session:sess});
-    await restaurant.save({session:sess})
+    await cook.save({session:sess})
 
     await sess.commitTransaction()
   } catch (error) {

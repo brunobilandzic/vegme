@@ -10,6 +10,7 @@ import {
 } from "../../util/validators";
 import { useHttpClient } from "../../Shared/CustomHooks/http-hook.js";
 import Modal from "../../Shared/UserInterface/Modal";
+import { useNavigate } from "react-router-dom";
 export default function Signup() {
   const [formState, inputHandler] = useForm(
     {
@@ -32,20 +33,21 @@ export default function Signup() {
     },
     false
   );
-
+    const navgate = useNavigate()
   const [sendRequest, error, clearError, setError] = useHttpClient();
-
   const handleNewCustomerSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData();
 
     formData.append("name", formState.inputs.name.value);
     formData.append("password", formState.inputs.password.value);
+    formData.append("username", formState.inputs.username.value)
     const response = await sendRequest(
       process.env.REACT_APP_ROOT_URL + "auth/local/signup",
       "POST",
       formData
     );
+    navgate("/auth/success")
   };
 
   return (
@@ -79,15 +81,6 @@ export default function Signup() {
           id="username"
           label="Username"
           validators={[VALIDATOR_REQUIRED()]}
-        />
-        <Input
-          onInput={inputHandler}
-          element="input"
-          type="email"
-          placeholder="Email"
-          label="Email"
-          id="email"
-          validators={[VALIDATOR_EMAIL()]}
         />
         <Input
           onInput={inputHandler}

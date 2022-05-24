@@ -5,8 +5,8 @@ import { LinkContainer } from "react-router-bootstrap";
 export default function RegularNavList() {
   return (
     <>
-      <LinkContainer to="/cart">
-        <NavLink>Cart</NavLink>
+      <LinkContainer to="/offers">
+        <NavLink>Offers</NavLink>
       </LinkContainer>
     </>
   );

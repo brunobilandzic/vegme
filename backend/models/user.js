@@ -14,6 +14,7 @@ const baseUserObject = {
   const regularRoleUserObject = {
     user: { type: mongoose.Types.ObjectId, ref: "BaseUser", required: true, unique: true },
     orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
+    cooks: [{type: mongoose.Types.ObjectId, ref:"Meal"}],
     offers:  [{ type: mongoose.Types.ObjectId, ref: "Order" }]
   }
 

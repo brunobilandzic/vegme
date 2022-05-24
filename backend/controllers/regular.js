@@ -53,7 +53,7 @@ const addToRegularRole = async (userId) => {
   } catch (error) {
     throw new HttpError("Cannot add user to the customer role.");
   }
-  return createdCustomerRoleUser;
+  return createdRegularRoleUser;
 };
 
 module.exports = {
