@@ -44,6 +44,14 @@ export default function Router(props) {
                 </RegularShield>
               }
             ></Route>
+            <Route
+              path="/offers/new"
+              element= {
+                <RegularShield>
+                  <NewOffer />
+                </RegularShield>
+              }
+            ></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/auth/success" element={<LoginSuccess />}></Route>
