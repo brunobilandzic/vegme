@@ -3,11 +3,11 @@ import propTypes from "prop-types";
 import { connect } from "react-redux";
 import MealList from "../Meals/MealList";
 import {Button} from "react-bootstrap"
-function Cart({ mealsInCart }) {
+function Cart({ orderedMeals }) {
   return (
     <>
       <div>Cart</div>
-      <MealList mealList={mealsInCart} inCart></MealList>
+      <MealList mealList={orderedMeals}></MealList>
       <Button>Order</Button>
     </>
   );
@@ -18,7 +18,7 @@ Cart.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  mealsInCart: state.cart.meals,
+  orderedMeals: state.cart.orderedMeals,
 });
 
 export default connect(mapStateToProps, {})(Cart);

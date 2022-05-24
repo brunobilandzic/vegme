@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { Button, FormControl } from "react-bootstrap";
+import React, {useRef} from "react";
+import { Button } from "react-bootstrap";
 import { useForm } from "../../../Shared/CustomHooks/form-hook";
 import { useHttpClient } from "../../../Shared/CustomHooks/http-hook";
 import Input from "../../../Shared/Form/Input";
@@ -9,6 +9,7 @@ import {
 } from "../../../util/validators";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
+import mealStyles from "./meal.module.css";
 function NewMeal(props) {
   const selectRestaurant = useRef()
   const [formState, inputHandler, clearForm] = useForm({
@@ -30,18 +31,13 @@ function NewMeal(props) {
     formData.append("ingredients", formState.inputs.ingredients.value);
 
     const response = await sendRequest(
-      process.env.REACT_APP_ROOT_URL + "api/meals",
+      process.env.REACT_APP_ROOT_URL + "meals",
       "POST",
       formData
     );
 
     clearForm();
-    selectRestaurant.current.value = 0
   };
-  const selectRestaurantHandler = (e) => {
-    inputHandler(e.target.value, "restaurant", true)
-  };
-
 
   return (
     <>
@@ -84,11 +80,10 @@ function NewMeal(props) {
 }
 
 NewMeal.propTypes = {
-  allRestaurants: propTypes.array,
 };
 
 const mapStateToProps = (state) => ({
-  restaurants: state.restaurants.restaurants.all,
+  
 });
 
 export default connect(mapStateToProps, {  })(NewMeal);

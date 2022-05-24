@@ -30,7 +30,7 @@ const createMeal = async (req, res, next) => {
     sess.startTransaction()
 
     newMeal = new Meal(req.body);
-    const cook = await RegularRoleUser.find({user: req.user.id})
+    const cook = await RegularRoleUser.findOne({user: req.user.id})
     cook.cooks.push(newMeal.id)
     await newMeal.save({session:sess});
     await cook.save({session:sess})
@@ -40,7 +40,7 @@ const createMeal = async (req, res, next) => {
     return next(new HttpError("Cannot create meal."));
   }
 
-  res.json({newMeal});
+  res.json(newMeal);
 };
 
 

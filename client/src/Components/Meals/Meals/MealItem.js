@@ -15,7 +15,7 @@ function MealItem({
   mealsInCart,
   addMealToCart,
   removeMealFromCart,
-  inCart,
+  showAdd,
 }) {
   const handleMealAddClick = (e) => {
     isMealInCart() ? removeMealFromCart(meal) : addMealToCart(meal);
@@ -37,7 +37,7 @@ function MealItem({
             <IngredientList ingredients={meal.ingredients}></IngredientList>
           </>
         )}
-        {!inCart && (
+        {showAdd && (
           <div onClick={handleMealAddClick} className={mealStyles.addIcon}>
             {getIcon()}
           </div>

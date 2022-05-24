@@ -17,7 +17,6 @@ const getAllUsers = async (req, res, next) => {
 };
 
 const createNewUser = async (req, res, next) => {
-  console.log(req.body)
   let createdUser;
   try {
     createdUser = await BaseUser.register(req.body, req.body.password);

@@ -8,6 +8,9 @@ export default function RegularNavList() {
       <LinkContainer to="/offers">
         <NavLink>Offers</NavLink>
       </LinkContainer>
+      <LinkContainer to="/meals">
+        <NavLink>Meals</NavLink>
+      </LinkContainer>
     </>
   );
 }
