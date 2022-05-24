@@ -11,7 +11,7 @@ import {
 } from "../Shared/Constants/Roles";
 import AdministratorNavList from "./RoleNavLinks/AdministratorNavList";
 import LoginNavList from "./RoleNavLinks/LoginNavList";
-import { logout } from "../Shared/Redux/actions/auth";
+import { logout } from "../Shared/Redux//auth/authActions.js";
 import PropTypes from "prop-types";
 import RegularNavList from "./RoleNavLinks/RegularNavList";
 import OperatorNavList from "./RoleNavLinks/OperatorNavList";

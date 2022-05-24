@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import {
   addMealToCart,
   removeMealFromCart,
-} from "../../../Shared/Redux/actions/meals";
+} from "../../../Shared/Redux/cart/cartActions.js";
 
 function MealItem({
   meal,

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {loadUser} from "../Shared/Redux/actions/auth.js"
+import {loadUser} from "../Shared/Redux/auth/authActions.js"
 
 function LoginSuccess(props) {
     useEffect(() => {

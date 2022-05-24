@@ -8,7 +8,7 @@ import {
   updatePageSize,
   updateTotalItems,
   updateTotalPages,
-} from "../Redux/actions/pagination.js";
+} from "../Redux/pagination/paginationActions.js";
 
 function PaginationCustom(props) {
   const {
