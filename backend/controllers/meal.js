@@ -16,26 +16,26 @@ const getAllPaginatedMeals = async (req, res, next) => {
   res.json({ mealsWithPagination });
 };
 
-
 const getAllMeals = async (req, res, next) => {
   const queryObject = url.parse(req.url, true).query;
-  const allMeals = await Meal.find(extractFiltersFromQuery(queryObject))
-  res.json({allMeals})
-}
+  const allMeals = await Meal.find(extractFiltersFromQuery(queryObject));
+  res.json({ allMeals });
+};
 
 const createMeal = async (req, res, next) => {
-  let newMeal
+  let newMeal;
   try {
-    const sess = await mongoose.startSession()
-    sess.startTransaction()
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
 
     newMeal = new Meal(req.body);
-    const cook = await RegularRoleUser.findOne({user: req.user.id})
-    cook.cooks.push(newMeal.id)
-    await newMeal.save({session:sess});
-    await cook.save({session:sess})
+    newMeal.cook = req.user.id;
+    const cook = await RegularRoleUser.findOne({ user: req.user.id });
+    cook.cooks.push(newMeal.id);
+    await newMeal.save({ session: sess });
+    await cook.save({ session: sess });
 
-    await sess.commitTransaction()
+    await sess.commitTransaction();
   } catch (error) {
     return next(new HttpError("Cannot create meal."));
   }
@@ -43,9 +43,14 @@ const createMeal = async (req, res, next) => {
   res.json(newMeal);
 };
 
+const getAllMealsForCook = async  (req,res,next) => {
+  const allMeals = await Meal.find({cook: req.params.cook})
+  res.json(allMeals)
+}
 
 module.exports = {
-    getAllMeals,
-    createMeal,
-    getAllPaginatedMeals
-}
+  getAllMeals,
+  createMeal,
+  getAllPaginatedMeals,
+  getAllMealsForCook
+};

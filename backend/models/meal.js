@@ -8,9 +8,10 @@ const mealTypes = {
 };
 
 const mealObject = {
-  name: { type: String, required: true },
+  name: { type: String},
   ingredients: [String],
-  orders: [{ type: mongoose.Types.ObjectId }],
+  orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
+  offers: [{ type: mongoose.Types.ObjectId, ref: "Offer" }],
   cook: {type: mongoose.Types.ObjectId},
   category: {
     type: String,

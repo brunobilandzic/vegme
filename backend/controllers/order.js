@@ -17,18 +17,20 @@ const getAllOrders = async (req, res, next) => {
 };
 
 const createOrder = async (req, res, next) => {
+  console.log(req.body)
   let newOrder;
   try {
     const sess = await mongoose.startSession();
-   
-    sess.startTransaction()
 
     newOrder = new Order(req.body);
-    req.body.meals.forEach(async (mealId) => {
+    req.body.meals?.forEach(async (mealId) => {
+      console.log("r")
       const meal = await Meal.findById(mealId);
       meal.orders.push(newOrder.id)
-      await meal.save({session: sess})
-      
+      await sess.withTransaction(async () => {
+        await meal.save()
+      })
+      console.log(meal)
     });
     const client = await RegularRoleUser.findOne({user: req.user.id})
     console.log(client)
@@ -36,6 +38,7 @@ const createOrder = async (req, res, next) => {
     newOrder.ordered_by = customer.id
     const preparer = await RegularRoleUser.findOne({user: req.body.preparer})
     preparer.offers.push(newOrder.id)
+
     await preparer.save({session: sess})
     await customer.save({session: sess})
     await newOrder.save({ session: sess });

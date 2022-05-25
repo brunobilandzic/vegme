@@ -7,8 +7,7 @@ const orderObject = {
     preparer: {type: mongoose.Types.ObjectId, ref: "RegularRoleUser"},
     meals: [{ type: mongoose.Types.ObjectId, ref: "Meal"}],
   };
-const orderSchema = new mongoose.Schema(orderObject)
 
- const Order =  mongoose.model("Order", orderSchema)
+const Order =  mongoose.model("Order", new mongoose.Schema(orderObject))
 
- module.exports = {Order}
+module.exports = {Order}

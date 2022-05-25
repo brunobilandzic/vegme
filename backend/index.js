@@ -16,6 +16,7 @@ const userRoutes = require("./routes/user.js")
 const adminRoutes = require("./routes/admin.js")
 const operatorRoutes = require("./routes/operator.js")
 const orderRoutes = require("./routes/order")
+const offerRoutes = require("./routes/offer.js")
 
 const app = express();
 const httpsConfiguration = {
@@ -41,6 +42,7 @@ app.use("/api/users", userRoutes)
 app.use("/api/operators", operatorRoutes)
 app.use("/api/meals", mealRoutes)
 app.use("/api/orders", orderRoutes)
+app.use("/api/offers", offerRoutes)
 
 app.use((error, req, res, next) => {
   if (res.headerSent) return next(error);
