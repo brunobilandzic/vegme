@@ -1,56 +1,46 @@
 const { PaginatedList } = require("../helpers/pagination.js");
-const HttpError = require("../errors/http-error.js");
 const { Meal } = require("../models/meal.js");
-const mongoose = require("mongoose");
 const url = require("url");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { RegularRoleUser } = require("../models/user.js");
 
-const getAllPaginatedMeals = async (req, res, next) => {
+const getAllPaginatedMeals = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   const mealsWithPagination = await PaginatedList.getPaginatedResult(
     Meal.find(extractFiltersFromQuery(queryObject)),
     queryObject.pageNumber,
     queryObject.pageSize
   );
-  res.json({ mealsWithPagination });
+  res.json(mealsWithPagination);
 };
 
-const getAllMeals = async (req, res, next) => {
+const getAllMeals = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   const allMeals = await Meal.find(extractFiltersFromQuery(queryObject));
   res.json({ allMeals });
 };
 
-const createMeal = async (req, res, next) => {
-  let newMeal;
-  try {
-    const sess = await mongoose.startSession();
-    sess.startTransaction();
-
-    newMeal = new Meal(req.body);
-    newMeal.cook = req.user.id;
-    const cook = await RegularRoleUser.findOne({ user: req.user.id });
-    cook.cooks.push(newMeal.id);
-    await newMeal.save({ session: sess });
-    await cook.save({ session: sess });
-
-    await sess.commitTransaction();
-  } catch (error) {
-    return next(new HttpError("Cannot create meal."));
-  }
+const createMeal = async (req, res) => {
+  let newMeal = new Meal(req.body);
+  console.log(newMeal)
+  console.log(req.body)
+  newMeal.cook = req.user.id;
+  const cook = await RegularRoleUser.findOne({ user: req.user.id });
+  cook.cooks.push(newMeal.id);
+  await newMeal.save();
+  await cook.save();
 
   res.json(newMeal);
 };
 
-const getAllMealsForCook = async  (req,res,next) => {
-  const allMeals = await Meal.find({cook: req.params.cook})
-  res.json(allMeals)
-}
+const getAllMealsForCook = async (req, res) => {
+  const allMeals = await Meal.find({ cook: req.params.cook });
+  res.json(allMeals);
+};
 
 module.exports = {
   getAllMeals,
   createMeal,
   getAllPaginatedMeals,
-  getAllMealsForCook
+  getAllMealsForCook,
 };
