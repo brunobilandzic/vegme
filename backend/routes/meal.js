@@ -1,14 +1,16 @@
 const express = require("express");
-const { createMeal, getAllPaginatedMeals, getAllMealsForCook } = require("../controllers/meal");
-const {requireRestaurantOwner} = require("../helpers/roleCheck.js");
+const { createMeal, getAllPaginatedMeals, getAllMealsForCook, toggleOfferMeal } = require("../controllers/meal");
 const router = express.Router();
 const multer = require("multer");
+const { requireLogin, requireCook } = require("../helpers/roleCheck");
 const upload = multer();
 router
   .route("/")
   .get(getAllPaginatedMeals)
-  .post(upload.none(), createMeal);
+  .post(requireLogin, requireCook, upload.none(), createMeal);
 
 router.get("/cook/:cook", getAllMealsForCook)
+
+router.post("/toggleoffer/:meal", toggleOfferMeal)
 
 module.exports = router;

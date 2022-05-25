@@ -5,11 +5,16 @@ const { AdminRoleUser, BaseUser } = require("../models/user");
 
 const getAllAdmins = async (req, res) => {
   const adminDocuments = await AdminRoleUser.find();
-  const adminIds = adminDocuments.map((ai) => mongoose.Types.ObjectId(ai.user).toString());
+  const adminIds = adminDocuments.map((ad) => mongoose.Types.ObjectId(ad.user).toString());
   const admins = await BaseUser.find({ _id: { $in: adminIds } });
 
   res.json(admins);
 };
+
+const getAllAdminRoles = async (req, res) => {
+  const allAdmins = await AdminRoleUser.find()
+  res.json(allAdmins)
+}
 
 const createAdmin = async (req, res, next) => {
   let user
@@ -38,4 +43,5 @@ const addToAdmin = async (userId) => {
 module.exports = {
   getAllAdmins,
   createAdmin,
+  getAllAdminRoles
 };

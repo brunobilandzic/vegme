@@ -1,31 +1,49 @@
-const { CUSTOMER, RESTAURANT_OWNER, ADINISTRATOR } = require("../constants/roles")
-const HttpError = require("../errors/http-error")
-const { BaseUser } = require("../models/user")
+const {
+  CUSTOMER,
+  RESTAURANT_OWNER,
+  ADINISTRATOR,
+  COOK,
+} = require("../constants/roles");
+const HttpError = require("../errors/http-error");
+const { BaseUser } = require("../models/user");
 
 const isInRole = async (userId, roleName) => {
-    const user = await BaseUser.findById(userId)
-    return user.roleNames.includes(roleName)
-}
+  const user = await BaseUser.findById(userId);
+  return user.roles.map(r => r.name).includes(roleName);
+};
 const requireLogin = (req, res, next) => {
-    return req.user ? next() : next(new HttpError("You have to log in to continue.", 401))
-  };
+  return req.user
+    ? next()
+    : next(new HttpError("You have to log in to continue.", 401));
+};
+
 const requireCustomer = async (req, res, next) => {
-   return isInRole(req.user.id,CUSTOMER) ? next() : res.status(401).json({message: "You have to be a customer to access this."})
-}
+  return isInRole(req.user.id, CUSTOMER)
+    ? next()
+    : res
+        .status(401)
+        .json({ message: "You have to be a customer to access this." });
+};
 
-const requireRestaurantOwner = async (req, res, next) => {
-    console.log("in require")
-    return isInRole(req.user.id, RESTAURANT_OWNER) ? next() :  res.status(401).json({message: "You have to be a restaurant owner to access this."})
-
-}
+const requireCook = async (req, res, next) => {
+  return isInRole(req.user.id, COOK)
+    ? next()
+    : res
+        .status(401)
+        .json({ message: "You have to be a cook to access this." });
+};
 
 const requireAdministrator = async (req, res, next) => {
-    return isInRole(req.user.id, ADINISTRATOR) ? next(): res.status(401).json({message: "You have to bee administrator to access this."})
-}
+  return isInRole(req.user.id, ADINISTRATOR)
+    ? next()
+    : res
+        .status(401)
+        .json({ message: "You have to bee administrator to access this." });
+};
 module.exports = {
-    isInRole,
-    requireCustomer,
-    requireRestaurantOwner,
-    requireLogin,
-    requireAdministrator
-}
+  isInRole,
+  requireCustomer,
+  requireCook,
+  requireLogin,
+  requireAdministrator,
+};

@@ -9,9 +9,9 @@ const mealTypes = {
 
 const mealObject = {
   name: { type: String},
-  ingredients: [String],
+  ingredients: [{name: {type: String}, allergen: {type: Boolean, default: false}}],
+  is_offered: {type: Boolean, default: false},
   orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
-  offers: [{ type: mongoose.Types.ObjectId, ref: "Offer" }],
   cook: {type: mongoose.Types.ObjectId},
   category: {
     type: String,

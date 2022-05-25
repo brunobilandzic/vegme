@@ -13,11 +13,13 @@ const baseUserObject = {
 
   const regularRoleUserObject = {
     user: { type: mongoose.Types.ObjectId, ref: "BaseUser", required: true, unique: true },
-    orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
-    cooks: [{type: mongoose.Types.ObjectId, ref:"Meal"}],
-    offers:  [{ type: mongoose.Types.ObjectId, ref: "Order" }]
+    orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }]
   }
 
+  const cookRoleUserObject = {
+    user: { type: mongoose.Types.ObjectId, ref: "BaseUser", required: true, unique: true },
+    cooks: [{type: mongoose.Types.ObjectId, ref:"Meal"}]
+  }
   
   const adminRoleUserObject = {
     user: { type: mongoose.Types.ObjectId, ref: "User", required: true, unique: true }
@@ -30,13 +32,14 @@ const baseUserObject = {
 const baseUserSchema = new mongoose.Schema(baseUserObject)
 baseUserSchema.plugin(PassportLocalMongoose)
 const BaseUser = mongoose.model("BaseUser", baseUserSchema)
-
+const CookRoleUser = new mongoose.model("CookRoleUser", new mongoose.Schema(cookRoleUserObject))
 const RegularRoleUser = new mongoose.model("RegularRoleUser",  new mongoose.Schema(regularRoleUserObject))
 const AdminRoleUser = mongoose.model("AdminRoleUser", new mongoose.Schema(adminRoleUserObject))
 const OperatorRoleUser = mongoose.model("OperatorRoleUser", new mongoose.Schema(operatorRoleUserObject))
 
 module.exports = {
     BaseUser,
+    CookRoleUser,
     RegularRoleUser,
     AdminRoleUser,
     OperatorRoleUser
