@@ -43,5 +43,6 @@ const addToAdmin = async (userId) => {
 module.exports = {
   getAllAdmins,
   createAdmin,
-  getAllAdminRoles
+  getAllAdminRoles,
+  addToAdmin
 };

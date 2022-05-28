@@ -1,49 +1,45 @@
-const {
-  CUSTOMER,
-  RESTAURANT_OWNER,
-  ADINISTRATOR,
-  COOK,
-} = require("../constants/roles");
+const { OPERATOR, ADINISTRATOR, COOK, REGULAR } = require("../constants/roles");
 const HttpError = require("../errors/http-error");
 const { BaseUser } = require("../models/user");
 
-const isInRole = async (userId, roleName) => {
+const isInRole = async (userId, roleName, next) => {
+  if (typeof userId === "undefined") {
+    return next(new HttpError("You have to log in to continue.", 401));
+  }
   const user = await BaseUser.findById(userId);
-  return user.roles.map(r => r.name).includes(roleName);
-};
-const requireLogin = (req, res, next) => {
-  return req.user
-    ? next()
-    : next(new HttpError("You have to log in to continue.", 401));
+
+  return user.roles.map((r) => r.name).includes(roleName);
 };
 
-const requireCustomer = async (req, res, next) => {
-  return isInRole(req.user.id, CUSTOMER)
+const requireRegular = async (req, res, next) => {
+  return isInRole(req.user?.id, REGULAR)
     ? next()
-    : res
-        .status(401)
-        .json({ message: "You have to be a customer to access this." });
+    : next(new HttpError("You have to be in regular role to access this.", 401)
+      );
+};
+
+const requireOperator = async (req, res, next) => {
+  return isInRole(req.user?.id, OPERATOR)
+    ? next()
+    : next(new HttpError("You have to be a operator to access this.", 401));
 };
 
 const requireCook = async (req, res, next) => {
-  return isInRole(req.user.id, COOK)
+  return isInRole(req.user?.id, COOK, next)
     ? next()
-    : res
-        .status(401)
-        .json({ message: "You have to be a cook to access this." });
+    : next(new HttpError("You have to be a cook to access this.", 401));
 };
 
 const requireAdministrator = async (req, res, next) => {
-  return isInRole(req.user.id, ADINISTRATOR)
+  return isInRole(req.user?.id, ADINISTRATOR)
     ? next()
-    : res
-        .status(401)
-        .json({ message: "You have to bee administrator to access this." });
+    : next(new HttpError("You have to be a coadministratorok to access this.", 401));
 };
+
 module.exports = {
   isInRole,
-  requireCustomer,
+  requireRegular,
   requireCook,
-  requireLogin,
   requireAdministrator,
+  requireOperator,
 };

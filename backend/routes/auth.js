@@ -49,8 +49,8 @@ router.get("/loginfail", (req, res, next) => {
   return next(new HttpError("Password incorrect"));
 });
 
-router.get("/getuser", requireLogin, (req, res) => {
-  res.json(req.user);
+router.get("/getuser", (req, res) => {
+  res.json(req.user)
 });
 
 module.exports = router;

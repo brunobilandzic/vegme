@@ -26,7 +26,13 @@ const createNewUser = async (req, res) => {
   });
 };
 
+const createNewUserManually = async (newUser) => {
+  let user = await BaseUser.register(newUser, newUser.password)
+  return user.id
+} 
+
 module.exports = {
   getAllUsers,
   createNewUser,
+  createNewUserManually
 };

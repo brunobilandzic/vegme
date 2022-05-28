@@ -12,7 +12,7 @@ const mealObject = {
   ingredients: [{name: {type: String}, allergen: {type: Boolean, default: false}}],
   is_offered: {type: Boolean, default: false},
   orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
-  cook: {type: mongoose.Types.ObjectId},
+  cook: {type: mongoose.Types.ObjectId, ref: "CookRoleUser"},
   category: {
     type: String,
     enum: Object.values(mealTypes),

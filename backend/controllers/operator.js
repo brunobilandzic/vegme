@@ -28,4 +28,5 @@ const addToOperatorRole = async (userId) => {
 
 module.exports = {
   createNewOperator,
+  addToOperatorRole
 };
