@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
-require("dotenv").config();
+const config = require("./config");
 const cors = require("cors");
 var fs = require("fs");
 var https = require("https");
@@ -53,7 +53,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(process.env.MONGOOSE_CONNECTION_STRING)
+  .connect(config.MONGO_CONNECTION_STRING)
   .then(() => {
     seedData();
     https

@@ -27,7 +27,7 @@ export default function Login() {
     e.preventDefault();
     let formData = new FormData();
 
-    formData.append("username", formState.inputs.username.value);
+    formData.append("credentials", formState.inputs.username.value);
     formData.append("password", formState.inputs.password.value);
 
     const response = await sendRequest(

@@ -2,6 +2,11 @@ const { PaginatedList } = require("../helpers/pagination.js");
 const { BaseUser } = require("../models/user.js");
 const passport = require("passport");
 const { addToRegularRole } = require("./regular.js");
+const {
+  sendVerificationMail,
+} = require("../helpers/mail.js");
+const HttpError = require("../errors/http-error.js");
+const { compareHashes } = require("../helpers/hashing.js");
 
 const getAllUsers = async (req, res) => {
   const usersWithPagination = await PaginatedList.getPaginatedResult(
@@ -11,12 +16,20 @@ const getAllUsers = async (req, res) => {
   res.json(usersWithPagination);
 };
 
-const createNewUser = async (req, res) => {
+const createNewUser = async (req, res, next) => {
   let user;
   try {
     user = await BaseUser.register(req.body, req.body.password);
+    sendVerificationMail(req.protocol, req.hostname, user);
   } catch (error) {
-    return next(new HttpError("User with that username already exists."));
+    return next(
+      new HttpError(
+        error.message === "undefined"
+          ? "User with that username already exists."
+          : error.message,
+        400
+      )
+    );
   }
 
   await addToRegularRole(user.id);
@@ -26,13 +39,24 @@ const createNewUser = async (req, res) => {
   });
 };
 
+const checkVerificationLink = async (req, res, next) => {
+  const user = await BaseUser.findOne({ username: req.params.username });
+  compareHashes(user, req.params.verification_hash)
+    ? (user.email_verified = true)
+    : (user.email_verified = false);
+
+  await user.save()
+  res.json({verified: user.email_verified})
+};
+
 const createNewUserManually = async (newUser) => {
-  let user = await BaseUser.register(newUser, newUser.password)
-  return user.id
-} 
+  let user = await BaseUser.register(newUser, newUser.password);
+  return user.id;
+};
 
 module.exports = {
   getAllUsers,
   createNewUser,
-  createNewUserManually
+  createNewUserManually,
+  checkVerificationLink
 };

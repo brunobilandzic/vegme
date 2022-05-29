@@ -11,7 +11,7 @@ const upload = multer();
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["profile"],
+    scope: ["profile", "email"],
   })
 );
 
@@ -27,16 +27,21 @@ router.get(
 );
 
 router.get("/logout", (req, res) => {
-  req.logout()
-  res.json({"logout": true})
-})
+  req.logout();
+  res.json({ logout: true });
+});
 
 router.post("/local/signup", upload.none(), createNewUser);
 
 router.post("/local/login", upload.none(), async (req, res, next) => {
-  const user = await BaseUser.findOne({username: req.body.username})
-  if(!user) return  next(new HttpError("User with that username does not exist."))
-  passport.authenticate("local", { failureRedirect: "/auth/loginfail" })(
+  req.body.email = req.body.credentials;
+  req.body.username = req.body.credentials;
+  const user = await BaseUser.findOne({
+    $or: [{ username: req.body.credentials }, { email: req.body.credentials }],
+  });
+  if (!user)
+    return next(new HttpError("User with that credentials does not exist."));
+  passport.authenticate("local", { failureRedirect: "/api/auth/loginfail" })(
     req,
     res,
     () => {
@@ -50,7 +55,7 @@ router.get("/loginfail", (req, res, next) => {
 });
 
 router.get("/getuser", (req, res) => {
-  res.json(req.user)
+  res.json(req.user);
 });
 
 module.exports = router;
