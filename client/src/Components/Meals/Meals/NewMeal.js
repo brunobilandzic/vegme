@@ -28,7 +28,6 @@ function NewMeal(props) {
    
     let formData = new FormData();
     formData.append("name", formState.inputs.name.value);
-    formData.append("ingredients", formState.inputs.ingredients.value);
 
     const response = await sendRequest(
       process.env.REACT_APP_ROOT_URL + "meals",
@@ -61,16 +60,6 @@ function NewMeal(props) {
           id="name"
           label="Name"
           value={formState.inputs.name.value}
-          validators={[VALIDATOR_REQUIRED()]}
-        ></Input>
-        <Input
-          onInput={inputHandler}
-          element="input"
-          type="text"
-          placeholder="Ingredients"
-          id="ingredients"
-          label="Ingredients"
-          value={formState.inputs.ingredients.value}
           validators={[VALIDATOR_REQUIRED()]}
         ></Input>
         <Button type="submit" disabled={!formState.isValid}>Submit</Button>

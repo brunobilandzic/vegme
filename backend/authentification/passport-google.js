@@ -19,10 +19,14 @@ passport.use(
       clientSecret: "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",
       callbackURL: "https://localhost:5000/api/auth/google/callback",
       proxy: true,
+      passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, cb) => {
       const existingUser = await BaseUser.findOne({ googleId: profile.id });
-      if (existingUser) return cb(null, existingUser);
+      if (existingUser) {
+        req.isLogin = true;
+        return cb(null, existingUser);
+      }
 
       const newUser = new BaseUser({
         name: profile.name.givenName,

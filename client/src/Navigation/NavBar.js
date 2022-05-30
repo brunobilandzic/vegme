@@ -8,19 +8,26 @@ import {
   ADMINISTRATOR,
   REGULAR,
   OPERATOR,
+  COOK,
 } from "../Shared/Constants/Roles";
 import AdministratorNavList from "./RoleNavLinks/AdministratorNavList";
 import LoginNavList from "./RoleNavLinks/LoginNavList";
 import { logout } from "../Shared/Redux//auth/authActions.js";
 import PropTypes from "prop-types";
 import RegularNavList from "./RoleNavLinks/RegularNavList";
+import CookNavList from "./RoleNavLinks/CookNavList.js";
 import OperatorNavList from "./RoleNavLinks/OperatorNavList";
+
 function NavBar(props) {
   const getNavLinks = () => {
-    if (props.user?.roles.map(role => role.name).includes(REGULAR)) return <RegularNavList />;
-    if (props.user?.roles.map(role => role.name).includes(ADMINISTRATOR))
+    if (props.user?.roles.map((role) => role.name).includes(REGULAR))
+      return <RegularNavList />;
+    if (props.user?.roles.map((role) => role.name).includes(ADMINISTRATOR))
       return <AdministratorNavList />;
-    if (props.user?.roles.map(role => role.name).includes(OPERATOR)) return <OperatorNavList />
+    if (props.user?.roles.map((role) => role.name).includes(OPERATOR))
+      return <OperatorNavList />;
+    if (props.user?.roles.map((role) => role.name).includes(COOK))
+      return <CookNavList />;
     else return <LoginNavList />;
   };
 
@@ -37,9 +44,7 @@ function NavBar(props) {
           </LinkContainer>
           <NavbarToggle aria-controls="navbarLinks" />
           <NavbarCollapse id="navbarLinks">
-            <Nav className="me-auto">
-              {getNavLinks()}
-            </Nav>
+            <Nav className="me-auto">{getNavLinks()}</Nav>
 
             {props.user && (
               <Nav>

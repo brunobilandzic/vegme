@@ -1,15 +1,15 @@
 const fs = require("fs");
 const { addToAdmin } = require("../../controllers/admin");
-const { addToCook, getAllCooks } = require("../../controllers/cook");
+const { addToCook } = require("../../controllers/cook");
 const { addToOperatorRole } = require("../../controllers/operator");
 const { addToRegularRole } = require("../../controllers/regular");
 const { createNewUserManually } = require("../../controllers/user");
 const { Meal } = require("../../models/meal");
 const { Order } = require("../../models/order");
 const {
-  AdminRoleUser,
   CookRoleUser,
   RegularRoleUser,
+  BaseUser,
 } = require("../../models/user");
 
 const readJsonData = (filename) => {
@@ -128,13 +128,14 @@ const seedMeals = async () => {
 
 const seedOrders = async () => {
   if (!(await RegularRoleUser.count())) return;
+  if (!(await Meal.count())) return;
   if (await Order.count()) return;
   const { orders } = await readJsonData("./helpers/seed/data.json");
   writeOrders(orders);
 };
 
 const seedUsers = async () => {
-  if (await AdminRoleUser.count()) return;
+  if (await BaseUser.count()) return;
 
   const { admins, cooks, operators, regulars } = await readJsonData(
     "./helpers/seed/data.json"

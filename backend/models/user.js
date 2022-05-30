@@ -11,6 +11,7 @@ username: { type: String, required: true, validate: /^\S*$/ },
   email: { type: String },
   email_verified: { type: Boolean, default: false },
   date_registered: { type: Date, default: Date.now() },
+  changed_username:  {type: Boolean, default: false},
   roles: [roleObject],
 };
 

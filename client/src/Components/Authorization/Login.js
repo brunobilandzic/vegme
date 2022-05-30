@@ -5,7 +5,7 @@ import Modal from "../../Shared/UserInterface/Modal.js";
 import { useForm } from "../../Shared/CustomHooks/form-hook";
 import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
 import Input from "../../Shared/Form/Input";
-import { VALIDATOR_MIN_LENGTH, VALIDATOR_REQUIRED } from "../../util/validators";
+import { VALIDATOR_MIN_LENGTH, VALIDATOR_NO_SPACE, VALIDATOR_REQUIRED } from "../../util/validators";
 
 export default function Login() {
   const [sendRequest, error, clearError, setError] = useHttpClient();
@@ -36,7 +36,7 @@ export default function Login() {
       formData
     );
 
-    if (!error) navigate("/auth/success");
+    if (!error) navigate("/");
   };
   return (
     <>
@@ -60,7 +60,7 @@ export default function Login() {
           placeholder="Username"
           id="username"
           label="Username"
-          validators={[VALIDATOR_REQUIRED()]}
+          validators={[VALIDATOR_NO_SPACE(), VALIDATOR_MIN_LENGTH(6)]}_
         />
         <Input
           onInput={inputHandler}

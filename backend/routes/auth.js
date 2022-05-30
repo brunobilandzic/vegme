@@ -18,11 +18,11 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "https://localhost:3000/auth/failure",
-    successRedirect: "https://localhost:3000/auth/success",
+    failureRedirect: "https://localhost:3000/auth/google/failure",
   }),
   (req, res) => {
-    res.send("Thank you for signin in!");
+    if (req.isLogin) return res.redirect("https://localhost:3000/auth/success");
+    else return res.redirect("https://localhost:3000/auth/google/username");
   }
 );
 

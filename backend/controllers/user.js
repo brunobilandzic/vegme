@@ -2,9 +2,7 @@ const { PaginatedList } = require("../helpers/pagination.js");
 const { BaseUser } = require("../models/user.js");
 const passport = require("passport");
 const { addToRegularRole } = require("./regular.js");
-const {
-  sendVerificationMail,
-} = require("../helpers/mail.js");
+const { sendVerificationMail } = require("../helpers/mail.js");
 const HttpError = require("../errors/http-error.js");
 const { compareHashes } = require("../helpers/hashing.js");
 
@@ -45,8 +43,8 @@ const checkVerificationLink = async (req, res, next) => {
     ? (user.email_verified = true)
     : (user.email_verified = false);
 
-  await user.save()
-  res.json({verified: user.email_verified})
+  await user.save();
+  res.json({ verified: user.email_verified });
 };
 
 const createNewUserManually = async (newUser) => {
@@ -54,9 +52,21 @@ const createNewUserManually = async (newUser) => {
   return user.id;
 };
 
+const updateUsername = async (req, res, next) => {
+  const user = await BaseUser.findById(req.user.id);
+  if (!user) return next(new HttpError("That user does not exist.", 404));
+
+  user.username = req.body.username;
+  user.changed_username = true;
+  
+  await user.save();
+  res.json(user);
+};
+
 module.exports = {
   getAllUsers,
   createNewUser,
   createNewUserManually,
-  checkVerificationLink
+  checkVerificationLink,
+  updateUsername,
 };
