@@ -1,6 +1,7 @@
 .mealItem {
     display: flex;
     justify-content: space-between;
+    margin: 1rem 0 3rem;
 }
 
 .addIcon {
@@ -9,4 +10,18 @@
 
 .addIcon:hover {
     cursor: pointer;
+}
+
+.ingredientsContainer {
+
+}
+
+.ingredientsTable {
+
+}
+
+.ingredientsTableItem {
+    padding: 0.5rem;
+    padding-bottom: 0.1rem;
+    padding-left: 0;
 }

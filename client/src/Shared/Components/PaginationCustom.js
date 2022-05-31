@@ -32,7 +32,7 @@ function PaginationCustom(props) {
         <PageItem
           onClick={() => {
             updatePageNumber(i+1)
-            loadItems(i + 1)
+            loadItems(i + 1, pageSize)
             
             }}
           active={i === pageNumber - 1}
@@ -46,20 +46,20 @@ function PaginationCustom(props) {
   };
   const handleFirst = () => {
     updatePageNumber(1);
-    loadItems(1)
+    loadItems(1, pageSize)
   };
   const handlePrevious = () => {
     updatePageNumber(pageNumber - 1);
-    loadItems(pageNumber -1)
+    loadItems(pageNumber -1, pageSize)
   };
 
   const handleNext = () => {
     updatePageNumber(pageNumber + 1);
-    loadItems(pageNumber + 1)
+    loadItems(pageNumber + 1, pageSize)
   };
   const handleLast = () => {
     updatePageNumber(totalPages);
-    loadItems(totalPages)
+    loadItems(totalPages, pageSize)
   };
   return (
     <div>

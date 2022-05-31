@@ -1,18 +1,37 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { connect } from 'react-redux'
+import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import PaginationCustom from "../../../Shared/Components/PaginationCustom";
 
-const BrowseMeals = (props) => {
+import { loadPaginatedMeals } from "../../../Shared/Redux/meals/mealsActions";
+import MealList from "./MealList";
+const BrowseMeals = ({ meals, loadPaginatedMeals, pageNumber, pageSize }) => {
+  useEffect(() => {
+    loadPaginatedMeals();
+  }, []);
   return (
-    <div>BrowseMeals</div>
-  )
-}
+    <>
+    <MealList meals={meals?.items[pageNumber + "-" + pageSize]} showAdd></MealList>
+      {meals?.pagination && <PaginationCustom loadItems={loadPaginatedMeals} />}
+    </>
+  );
+};
 
 BrowseMeals.propTypes = {
-}
+  loadPaginatedMeals: PropTypes.func.isRequired,
+  meals: PropTypes.object,
+  pageNumber: PropTypes.number,
+  pageSize: PropTypes.number
+};
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  meals: state.meals,
+  pageNumber: state.pagination.pageNumber,
+  pageSize: state.pagination.pageSize
+});
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  loadPaginatedMeals,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(BrowseMeals)
+export default connect(mapStateToProps, mapDispatchToProps)(BrowseMeals);

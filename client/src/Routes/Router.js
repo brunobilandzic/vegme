@@ -83,16 +83,15 @@ export default function Router(props) {
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/auth/success" element={<AuthSuccess />}></Route>
             <Route path="/auth/failure">Failed to log in</Route>
-            <Route path="/auth/google/username" element={<UsernamePrompt />}></Route>
-            <Route path="/auth/google/success" element={<GoogleAuthSuccess />}></Route>
             <Route
-              path="/cart"
-              element={
-                <CustomerShield>
-                  <Cart />
-                </CustomerShield>
-              }
+              path="/auth/google/username"
+              element={<UsernamePrompt />}
             ></Route>
+            <Route
+              path="/auth/google/success"
+              element={<GoogleAuthSuccess />}
+            ></Route>
+            <Route path="/cart" element={<Cart />}></Route>
             <Route path="/" element={<Login />}></Route>
           </Routes>
         </Container>

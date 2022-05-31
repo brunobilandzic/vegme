@@ -1,21 +1,14 @@
-import axios from "axios";
+import { loadUserFromServer, logoutUserFromServer } from "../../Api/auth";
 import { LOGOUT, LOG_IN_THE_USER } from "../types";
 
 const loadUser = () => async (dispatch, getState) => {
   if (getState().auth.is_logged_in) return;
-  let response = await axios.get(
-    process.env.REACT_APP_ROOT_URL + "auth/getuser",
-    { withCredentials: true }
-  );
-  dispatch({ type: LOG_IN_THE_USER, payload: response.data });
+  let responseData = await loadUserFromServer()
+  dispatch({ type: LOG_IN_THE_USER, payload:responseData });
 };
 
 const logout = () => async (dispatch) => {
-  const response = await axios.get(
-    process.env.REACT_APP_ROOT_URL + "auth/logout",
-    { withCredentials: true }
-  );
-
+  await logoutUserFromServer()
   dispatch({ type: LOGOUT });
 };
 

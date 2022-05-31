@@ -36,7 +36,7 @@ export default function Login() {
       formData
     );
 
-    if (!error) navigate("/");
+    if (!error) navigate("/auth/success");
   };
   return (
     <>

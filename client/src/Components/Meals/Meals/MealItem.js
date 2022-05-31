@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { isArrayNullOrEmpty } from "../../../util/helper";
 import IngredientList from "../Ingredients/IngredientList";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
@@ -12,13 +12,13 @@ import {
 
 function MealItem({
   meal,
-  mealsInCart,
+  orderedMeals,
   addMealToCart,
   removeMealFromCart,
   showAdd,
 }) {
   const handleMealAddClick = (e) => {
-    isMealInCart() ? removeMealFromCart(meal) : addMealToCart(meal);
+    isMealInCart() ? removeMealFromCart(meal._id) : addMealToCart(meal);
   };
 
   const getIcon = () => {
@@ -26,7 +26,7 @@ function MealItem({
   };
 
   const isMealInCart = () => {
-    return mealsInCart?.includes(meal);
+    return orderedMeals?.map(meal => meal._id).includes(meal._id);
   };
   return (
     <>
@@ -54,7 +54,7 @@ MealItem.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  mealsInCart: state.cart.meals,
+  orderedMeals: state.cart.orderedMeals,
 });
 
 export default connect(mapStateToProps, { addMealToCart, removeMealFromCart })(

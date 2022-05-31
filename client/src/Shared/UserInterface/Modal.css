@@ -58,3 +58,6 @@
     transition: all 200ms;
   }
   
+  .modal-footer-buttons > button  {
+    margin-right: 1rem;
+  }

@@ -7,10 +7,6 @@ import mealStyles from "./meal.module.css";
 const MealsMainPage = (props) => {
   return (
     <>
-        <Link to="/meals/new">New meal</Link>
-        <br></br>
-        <Link to="/mymeals">My meals</Link>
-        <br />
         <Link to="/meals/browse">Browse</Link>
     </>
   )
