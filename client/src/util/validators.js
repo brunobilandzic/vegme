@@ -16,7 +16,7 @@ const VALIDATOR_NO_SPACE = () => ({ type: TYPE_NO_SPACE });
 
 const valid = (value, validators) => {
   let isValid = true;
-  validators.forEach((validator) => {
+  validators?.forEach((validator) => {
     switch (validator.type) {
       case TYPE_REQUIRED:
         isValid = isValid && value.trim().length > 0;

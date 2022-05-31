@@ -1,12 +1,24 @@
 const express = require("express");
-const { requireLogin, requireCustomer } = require("../helpers/roleCheck");
 const multer = require("multer");
-const { createOrder, getAllOrders } = require("../controllers/order");
-const upload = multer()
-const router = express.Router()
+const {
+  createOrder,
+  getAllPaginatedOrdersForUser,
+  toggleOrderActive,
+  getAllPaginatedOrders,
+  getAllOrders
+} = require("../controllers/order");
+const { requireRegular } = require("../helpers/roleCheck");
+const upload = multer();
+const router = express.Router();
 
-router.route("/")
-    .get(getAllOrders)
-    .post(upload.none(), createOrder)
+router
+  .route("/")
+  .get(requireRegular, getAllOrders)
+  .post(requireRegular, upload.none(), createOrder);
 
-module.exports = router
+router.get("/my", requireRegular, getAllPaginatedOrdersForUser);
+router.get("/paginated", getAllPaginatedOrders)
+
+router.post("/toggleactive/:order", toggleOrderActive);
+
+module.exports = router;

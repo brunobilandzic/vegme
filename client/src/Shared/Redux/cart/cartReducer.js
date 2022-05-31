@@ -1,7 +1,8 @@
-import { ADD_MEAL_TO_CART, REMOVE_MEAL_FROM_CART } from "../types";
+import { ADD_MEAL_TO_CART, REMOVE_MEAL_FROM_CART, SEND_ORDER } from "../types";
 
 const initialState = {
-    orderedMeals: []
+    orderedMeals: [],
+    sentOrders: []
 }
 
 export default function cartReducer(state= initialState, action) {
@@ -16,6 +17,12 @@ export default function cartReducer(state= initialState, action) {
             return {
                 ...state,
                 orderedMeals: [...state.orderedMeals.filter(meal => meal._id != action.payload)]
+            }
+        case SEND_ORDER:
+            return {
+                ...state,
+                sentOrders: [...state.sentOrders, action.payload],
+                orderedMeals: []
             }
         default:
             return state;

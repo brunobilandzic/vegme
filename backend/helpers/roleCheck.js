@@ -12,14 +12,15 @@ const isInRole = async (userId, roleName, next) => {
 };
 
 const requireRegular = async (req, res, next) => {
-  return isInRole(req.user?.id, REGULAR)
+  return isInRole(req.user?.id, REGULAR, next)
     ? next()
-    : next(new HttpError("You have to be in regular role to access this.", 401)
+    : next(
+        new HttpError("You have to be in regular role to access this.", 401)
       );
 };
 
 const requireOperator = async (req, res, next) => {
-  return isInRole(req.user?.id, OPERATOR)
+  return isInRole(req.user?.id, OPERATOR, next)
     ? next()
     : next(new HttpError("You have to be a operator to access this.", 401));
 };
@@ -31,9 +32,11 @@ const requireCook = async (req, res, next) => {
 };
 
 const requireAdministrator = async (req, res, next) => {
-  return isInRole(req.user?.id, ADINISTRATOR)
+  return isInRole(req.user?.id, ADINISTRATOR, next)
     ? next()
-    : next(new HttpError("You have to be a coadministratorok to access this.", 401));
+    : next(
+        new HttpError("You have to be a coadministratorok to access this.", 401)
+      );
 };
 
 module.exports = {
