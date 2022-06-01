@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import PaginationCustom from "../../../Shared/Components/PaginationCustom";
+import PaginationCustom from "../../Shared/Components/PaginationCustom";
 
-import { loadPaginatedMeals } from "../../../Shared/Redux/meals/mealsActions";
+import { loadPaginatedMeals } from "../../Shared/Redux/meals/mealsActions";
 import MealList from "./MealList";
 const BrowseMeals = ({ meals, loadPaginatedMeals, pageNumber, pageSize }) => {
   useEffect(() => {

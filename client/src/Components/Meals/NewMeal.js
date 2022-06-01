@@ -1,12 +1,12 @@
 import React, {useRef} from "react";
 import { Button } from "react-bootstrap";
-import { useForm } from "../../../Shared/CustomHooks/form-hook";
-import { useHttpClient } from "../../../Shared/CustomHooks/http-hook";
-import Input from "../../../Shared/Form/Input";
-import Modal from "../../../Shared/UserInterface/Modal";
+import { useForm } from "../../Shared/CustomHooks/form-hook";
+import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
+import Input from "../../Shared/Form/Input";
+import Modal from "../../Shared/UserInterface/Modal";
 import {
   VALIDATOR_REQUIRED
-} from "../../../util/validators";
+} from "../../util/validators";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import mealStyles from "./meal.module.css";

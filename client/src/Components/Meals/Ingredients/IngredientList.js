@@ -1,6 +1,6 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-import mealStyles from "../Meals/meal.module.css";
+import mealStyles from "../meal.module.css";
 export default function IngredientList({ ingredients }) {
   const getIngredients = () => (
     <div className={mealStyles.ingredientsContainer}>

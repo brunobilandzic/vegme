@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
-import MealList from "../Meals/MealList";
-import { Button, Form, FormCheck } from "react-bootstrap";
+import MealList from "../MealList";
+import { Button, FormCheck } from "react-bootstrap";
 import Modal from "../../../Shared/UserInterface/Modal";
 import { sendOrder } from "../../../Shared/Redux/cart/cartActions";
 import { useForm } from "../../../Shared/CustomHooks/form-hook";

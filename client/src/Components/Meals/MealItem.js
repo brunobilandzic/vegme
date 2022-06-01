@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { isArrayNullOrEmpty } from "../../../util/helper";
-import IngredientList from "../Ingredients/IngredientList";
+import { isArrayNullOrEmpty } from "../../util/helper";
+import IngredientList from "./Ingredients/IngredientList";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import propTypes from "prop-types";
 import mealStyles from "./meal.module.css";
@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import {
   addMealToCart,
   removeMealFromCart,
-} from "../../../Shared/Redux/cart/cartActions.js";
+} from "../../Shared/Redux/cart/cartActions.js";
 
 function MealItem({
   meal,
@@ -26,7 +26,7 @@ function MealItem({
   };
 
   const isMealInCart = () => {
-    return orderedMeals?.map(meal => meal._id).includes(meal._id);
+    return orderedMeals?.map((meal) => meal._id).includes(meal._id);
   };
   return (
     <>
