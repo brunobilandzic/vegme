@@ -9,8 +9,8 @@ const getAllRegularUsers = async (req, res) => {
 
   const regularsPaginatedList = await PaginatedList.getPaginatedResult(
     RegularRoleUser.find(),
-    queryObject.pageNumber,
-    queryObject.pageSize
+    Number(queryObject.pageNumber),
+    Number(queryObject.pageSize)
   );
 
   res.status(200).json(regularsPaginatedList);

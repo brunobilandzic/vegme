@@ -21,6 +21,7 @@ import CookShield from "./Shields/CookShield";
 import UsernamePrompt from "../Components/Authorization/UsernamePrompt";
 import AuthSuccess from "../Components/Authorization/AuthSuccess";
 import GoogleAuthSuccess from "../Components/Authorization/GoogleAuthSuccess";
+import BrowseOrders from "../Components/Orders/BrowseOrders";
 
 export default function Router(props) {
   return (
@@ -60,6 +61,14 @@ export default function Router(props) {
               element={
                 <RegularShield>
                   <UserOrders />
+                </RegularShield>
+              }
+            ></Route>
+            <Route
+              path="/orders/my"
+              element={
+                <RegularShield>
+                  <BrowseOrders />
                 </RegularShield>
               }
             ></Route>

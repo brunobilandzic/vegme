@@ -8,11 +8,11 @@ import { connect } from "react-redux";
 import {
   addMealToCart,
   removeMealFromCart,
-} from "../../Shared/Redux/cart/cartActions.js";
+} from "../../Shared/Redux/meals/mealsActions";
 
 function MealItem({
   meal,
-  orderedMeals,
+  mealsToOrder,
   addMealToCart,
   removeMealFromCart,
   showAdd,
@@ -26,7 +26,7 @@ function MealItem({
   };
 
   const isMealInCart = () => {
-    return orderedMeals?.map((meal) => meal._id).includes(meal._id);
+    return mealsToOrder?.map((meal) => meal._id).includes(meal._id);
   };
   return (
     <>
@@ -48,13 +48,13 @@ function MealItem({
 }
 
 MealItem.propTypes = {
-  mealsInCart: propTypes.array,
+  mealsToOrder: propTypes.array,
   removeMealFromCart: propTypes.func.isRequired,
   addMealToCart: propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  orderedMeals: state.cart.orderedMeals,
+  mealsToOrder: state.meals.mealsToOrder,
 });
 
 export default connect(mapStateToProps, { addMealToCart, removeMealFromCart })(

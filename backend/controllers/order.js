@@ -18,8 +18,8 @@ const getAllPaginatedOrdersForUser = async (req, res) => {
       path: "meals",
       select: "-orders -__v",
     }),
-    queryObject.pageNumber,
-    queryObject.pageSize
+    Number(queryObject.pageNumber),
+    Number(queryObject.pageSize)
   );
 
   res.json(ordersWithPagination);
@@ -27,6 +27,7 @@ const getAllPaginatedOrdersForUser = async (req, res) => {
 
 const getAllPaginatedOrders = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
+  console.log(typeof queryObject.pageNumber)
   const ordersWithPagination = await PaginatedList.getPaginatedResult(
     Order.find(
       extractFiltersFromQuery(queryObject)
@@ -34,8 +35,8 @@ const getAllPaginatedOrders = async (req, res) => {
       path: "meals",
       select: "-orders -__v",
     }),
-    queryObject.pageNumber,
-    queryObject.pageSize
+    Number(queryObject.pageNumber),
+    Number(queryObject.pageSize)
   );
 
   res.json(ordersWithPagination);

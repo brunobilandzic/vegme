@@ -11,6 +11,9 @@ export default function RegularNavList() {
       <LinkContainer to="/cart">
         <NavLink>Cart</NavLink>
       </LinkContainer>
+      <LinkContainer to="/orders/my">
+        <NavLink>Orders</NavLink>
+      </LinkContainer>
     </>
   );
 }

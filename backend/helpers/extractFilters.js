@@ -1,4 +1,4 @@
-const extractFiltersFromQuery = (queryObject) => {
+const extractFiltersFromQuery = (queryObject, aditionalObject) => {
   const filtersObject = {};
   for (let key in queryObject) {
     if (!key.startsWith("filter")) continue;
@@ -6,7 +6,7 @@ const extractFiltersFromQuery = (queryObject) => {
     filtersObject[filterKey] = queryObject[key];
   }
 
-  return filtersObject;
+  return {...filtersObject, ...aditionalObject};
 };
 
 module.exports = { extractFiltersFromQuery };

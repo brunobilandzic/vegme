@@ -25,7 +25,7 @@ BrowseMeals.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  meals: state.meals,
+  meals: state.meals.browsing,
   pageNumber: state.pagination.pageNumber,
   pageSize: state.pagination.pageSize
 });

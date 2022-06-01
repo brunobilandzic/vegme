@@ -8,8 +8,8 @@ const getAllPaginatedMeals = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   const mealsWithPagination = await PaginatedList.getPaginatedResult(
     Meal.find(extractFiltersFromQuery(queryObject)),
-    queryObject.pageNumber,
-    queryObject.pageSize
+    Number(queryObject.pageNumber),
+    Number(queryObject.pageSize)
   );
   res.json(mealsWithPagination);
 };

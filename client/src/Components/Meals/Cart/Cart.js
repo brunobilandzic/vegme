@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import MealList from "../MealList";
 import { Button, FormCheck } from "react-bootstrap";
 import Modal from "../../../Shared/UserInterface/Modal";
-import { sendOrder } from "../../../Shared/Redux/cart/cartActions";
+import { sendOrder } from "../../../Shared/Redux/orders/ordersActions.js";
 import { useForm } from "../../../Shared/CustomHooks/form-hook";
 import Input from "../../../Shared/Form/Input";
 import { VALIDATOR_REQUIRED } from "../../../util/validators";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import cartStyles from "./cart.module.css";
-function Cart({ orderedMeals, sendOrder }) {
+function Cart({ mealsToOrder, sendOrder }) {
   const [showConfirmOrder, setShowConfirmOrder] = useState(false);
   let [isActive, setIsActive] = useState(false);
   const [formState, inputHandler] = useForm(
@@ -35,7 +35,7 @@ function Cart({ orderedMeals, sendOrder }) {
       formState.inputs.deliveryAddress.value,
       isActive
     );
-    setShowConfirmOrder(false)
+    setShowConfirmOrder(false);
   };
   const handleOrderCancel = (e) => {
     setShowConfirmOrder(false);
@@ -48,7 +48,7 @@ function Cart({ orderedMeals, sendOrder }) {
     <>
       <Modal
         show={showConfirmOrder}
-        content={`You will order ${orderedMeals?.length} meals. Please confirm that you are sure.`}
+        content={`You will order ${mealsToOrder?.length} meals. Please confirm that you are sure.`}
         header="Confirm"
         footer={
           <div className="modal-footer-buttons">
@@ -87,7 +87,7 @@ function Cart({ orderedMeals, sendOrder }) {
         <FormCheck onChange={handleActiveCheck} checked={isActive}></FormCheck>
       </div>
 
-      <MealList meals={orderedMeals}></MealList>
+      <MealList meals={mealsToOrder}></MealList>
       <Button disabled={!formState.isValid} onClick={handleOrderClick}>
         Order
       </Button>
@@ -96,12 +96,12 @@ function Cart({ orderedMeals, sendOrder }) {
 }
 
 Cart.propTypes = {
-  orderedMeals: propTypes.array,
+  mealsToOrder: propTypes.array,
   sendOrder: propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  orderedMeals: state.cart.orderedMeals,
+  mealsToOrder: state.meals.mealsToOrder,
 });
 
 export default connect(mapStateToProps, { sendOrder })(Cart);
