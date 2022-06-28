@@ -1,10 +1,13 @@
-import { loadPaginatedMealsFromServer } from "../../Api/meals";
+import { createMeal, loadPaginatedMealsFromServer } from "../../Api/meals";
+import { needNewPageMeal } from "../actionHelpers";
 import {
   ADD_MEAL_TO_CART,
   LOAD_ALL_PAGINATED_MEALS,
   REMOVE_MEAL_FROM_CART,
   UPDATE_TOTAL_ITEMS,
   UPDATE_TOTAL_PAGES,
+  ADD_ON_END_MEAL,
+  MAKE_NEW_PAGE_MEAL,
 } from "../types";
 
 export const addMealToCart = (meal) => (dispatch) => {
@@ -13,6 +16,55 @@ export const addMealToCart = (meal) => (dispatch) => {
 
 export const removeMealFromCart = (meal) => (dispatch) => {
   dispatch({ type: REMOVE_MEAL_FROM_CART, payload: meal });
+};
+
+export const createMealAction = (name) => async (dispatch, getState) => {
+  const newMeal = await createMeal(name);
+  switch (
+    await needNewPageMeal(
+      getState().meals.browsing.items[
+        getState().pagination.meals.totalPages +
+          "-" +
+          getState().pagination.meals.pageSize
+      ],
+      getState().pagination.meals.pageSize
+    )
+  ) {
+    case ADD_ON_END_MEAL:
+      return dispatch({
+        type: ADD_ON_END_MEAL,
+        payload: {
+          meal: newMeal,
+          pageNumber: getState().pagination.meals.totalPages,
+          pageSize: getState().pagination.meals.pageSize,
+        },
+      });
+
+    case MAKE_NEW_PAGE_MEAL:
+      dispatch({
+        type: MAKE_NEW_PAGE_MEAL,
+        payload: {
+          meal: newMeal,
+          pageNumber: getState().pagination.meals.totalPages + 1,
+          pageSize: getState().pagination.meals.pageSize,
+        },
+      });
+      dispatch({
+        type: UPDATE_TOTAL_PAGES,
+        payload: {
+          type: "meals",
+          totalPages: getState().pagination.meals.totalPages + 1,
+        },
+      });
+    case UPDATE_TOTAL_PAGES:
+      dispatch({
+        type: UPDATE_TOTAL_PAGES,
+        payload: {
+          type: "meals",
+          totalPages: getState().pagination.meals.totalPages + 1,
+        },
+      });
+  }
 };
 
 export const loadPaginatedMeals =
@@ -31,6 +83,12 @@ export const loadPaginatedMeals =
         items: paginatedMeals.items,
       },
     });
-    dispatch({ type: UPDATE_TOTAL_ITEMS, payload: paginatedMeals.totalItems });
-    dispatch({ type: UPDATE_TOTAL_PAGES, payload: paginatedMeals.totalPages });
+    dispatch({
+      type: UPDATE_TOTAL_ITEMS,
+      payload: { type: "meals", totalItems: paginatedMeals.totalItems },
+    });
+    dispatch({
+      type: UPDATE_TOTAL_PAGES,
+      payload: { type: "meals", totalPages: paginatedMeals.totalPages },
+    });
   };

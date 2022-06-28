@@ -1,6 +1,7 @@
 import {
   DONT_NEED_TO_REFRESH,
   NEED_REFRESH,
+  RESET_PAGINATION_FOR_TYPE,
   UPDATE_PAGE_NUMBER,
   UPDATE_PAGE_SIZE,
   UPDATE_TOTAL_ITEMS,
@@ -9,11 +10,18 @@ import {
 } from "../types";
 
 const initialState = {
-  pageNumber: 1,
-  pageSize: 5,
-  totalItems: null,
-  totalPages: null,
-  needToRefresh: false,
+  orders: {
+    pageNumber: 1,
+    pageSize: 5,
+    totalItems: null,
+    totalPages: null,
+  },
+  meals: {
+    pageNumber: 1,
+    pageSize: 5,
+    totalItems: null,
+    totalPages: null,
+  },
 };
 
 export default function paginationReducer(state = initialState, action) {
@@ -21,40 +29,54 @@ export default function paginationReducer(state = initialState, action) {
     case UPDATE_PAGE_NUMBER:
       return {
         ...state,
-        pageNumber: action.payload,
+        [action.payload.type]: {
+          ...state[action.payload.type],
+          pageNumber: action.payload.pageNumber,
+        },
       };
     case UPDATE_PAGE_SIZE:
       return {
         ...state,
-        pageSize: action.payload,
+        [action.payload.type]: {
+          ...state[action.payload.type],
+          pageSize: action.payload.pageSize,
+        },
       };
     case UPDATE_TOTAL_ITEMS:
       return {
         ...state,
-        totalItems: action.payload,
+        [action.payload.type]: {
+          ...state[action.payload.type],
+          totalItems: action.payload.totalItems,
+        },
       };
     case UPDATE_TOTAL_PAGES:
       return {
         ...state,
-        totalPages: action.payload,
+        [action.payload.type]: {
+          ...state[action.payload.type],
+          totalPages: action.payload.totalPages,
+        },
       };
     case WRITE_PAGINATION:
       return {
         ...state,
-        pageNumber: action.payload.pageNumber,
-        pageSize: action.payload.pageSize,
-        totalItems: action.payload.totalItems,
-        totalPages: action.payload.totalPages,
+        [action.payload.type]: {
+          pageNumber: action.payload.pageNumber,
+          pageSize: action.payload.pageNumber,
+          totalItems: action.payload.totalItems,
+          totalPages: action.payload.totalPages,
+        },
       };
-    case NEED_REFRESH:
+    case RESET_PAGINATION_FOR_TYPE:
       return {
         ...state,
-        needToRefresh: true,
-      };
-    case DONT_NEED_TO_REFRESH:
-      return {
-        ...state,
-        needToRefresh: false,
+        [action.payload.type]: {
+          pageNumber: 1,
+          pageSize: 5,
+          totalItems: null,
+          totalPages: null,
+        },
       };
     default:
       return state;

@@ -11,14 +11,13 @@ class PaginatedList {
   }
 
   static getPaginatedResult = async (query, pageNumber = 1, pageSize = 5) => {
-    if (isNaN(pageNumber)) pageNumber=1
+    if (isNaN(pageNumber)) pageNumber = 1;
     if (isNaN(pageSize)) pageSize = 5;
-    
+
     const quryCloned = query.clone();
     query = query.skip((pageNumber - 1) * pageSize);
-    
-   
-    query = query.limit(pageSize)
+
+    query = query.limit(pageSize);
     let count, items;
     try {
       count = await quryCloned.count();
@@ -31,4 +30,9 @@ class PaginatedList {
   };
 }
 
-module.exports = { PaginatedList };
+const needNewPage = async (query, pageSize) => {
+  const length = await query.count();
+  return length % pageSize == 1 ? true : false;
+};
+
+module.exports = { PaginatedList, needNewPage };

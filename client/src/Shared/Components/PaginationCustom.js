@@ -12,16 +12,27 @@ import {
 
 function PaginationCustom(props) {
   const {
-    pageNumber,
-    pageSize,
-    totalItems,
-    totalPages,
+    meals,
+    orders,
+    loadItems,
     updatePageNumber,
-    updatePageSize,
     updateTotalItems,
     updateTotalPages,
-    loadItems
+    updatePageSize,
+    type
   } = props;
+
+  const {
+    pageNumber,
+    pageSize,
+    totalPages,
+    totalItems
+  } = type == "meals" ? meals : type == "orders" ? orders : {
+    pageNumber: 1,
+    pageSize: 5,
+    totalPages: null,
+    totalItems: null
+  } 
 
 
 
@@ -31,9 +42,8 @@ function PaginationCustom(props) {
       pageItems.push(
         <PageItem
           onClick={() => {
-            updatePageNumber(i+1)
+            updatePageNumber(type, i+1)
             loadItems(i + 1, pageSize)
-            
             }}
           active={i === pageNumber - 1}
           key={i}
@@ -45,20 +55,20 @@ function PaginationCustom(props) {
     return pageItems;
   };
   const handleFirst = () => {
-    updatePageNumber(1);
+    updatePageNumber(type, 1);
     loadItems(1, pageSize)
   };
   const handlePrevious = () => {
-    updatePageNumber(pageNumber - 1);
+    updatePageNumber(type, pageNumber - 1);
     loadItems(pageNumber -1, pageSize)
   };
 
   const handleNext = () => {
-    updatePageNumber(pageNumber + 1);
+    updatePageNumber(type, pageNumber + 1);
     loadItems(pageNumber + 1, pageSize)
   };
   const handleLast = () => {
-    updatePageNumber(totalPages);
+    updatePageNumber(type, totalPages);
     loadItems(totalPages, pageSize)
   };
   return (
@@ -83,19 +93,13 @@ function PaginationCustom(props) {
 }
 
 PaginationCustom.propTypes = {
-  currentPageNumber: propTypes.number,
-  pageNumber: propTypes.number,
-  totalItems: propTypes.number,
-  pageSize: propTypes.number,
-  totalPages: propTypes.number,
+  orders: propTypes.object,
+  meals: propTypes.object
 };
 
 const mapStateToProps = (state) => ({
-  pageNumber: state.pagination.pageNumber,
-  pageNumber: state.pagination.pageNumber,
-  totalItems: state.pagination.totalItems,
-  pageSize: state.pagination.pageSize,
-  totalPages: state.pagination.totalPages,
+  orders: state.pagination.orders,
+  meals: state.pagination.meals
 });
 
 export default connect(mapStateToProps, {

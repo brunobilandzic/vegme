@@ -5,7 +5,8 @@ const {
   getAllPaginatedOrdersForUser,
   toggleOrderActive,
   getAllPaginatedOrders,
-  getAllOrders
+  getAllOrders,
+  needNewPageMyOrder
 } = require("../controllers/order");
 const { requireRegular } = require("../helpers/roleCheck");
 const upload = multer();
@@ -19,6 +20,7 @@ router
 router.get("/my", requireRegular, getAllPaginatedOrdersForUser);
 router.get("/paginated", getAllPaginatedOrders)
 
+router.get("/neednew/:pageSize", needNewPageMyOrder)
 router.post("/toggleactive/:order", toggleOrderActive);
 
 module.exports = router;

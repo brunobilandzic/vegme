@@ -12,6 +12,7 @@ export const BrowseOrders = ({ orders, loadPaginatedOrdersForUser, pageNumber, p
     <>
       {JSON.stringify(orders?.items[pageNumber + "-" + pageSize])}
       <PaginationCustom
+      type="orders"
         loadItems={loadPaginatedOrdersForUser}
       ></PaginationCustom>
     </>
@@ -27,8 +28,8 @@ BrowseOrders.propTypes = {
 
 const mapStateToProps = (state) => ({
   orders: state.orders.browsing,
-  pageNumber: state.pagination.pageNumber,
-  pageSize: state.pagination.pageSize
+  pageNumber: state.pagination.orders.pageNumber,
+  pageSize: state.pagination.orders.pageSize
 });
 
 const mapDispatchToProps = {

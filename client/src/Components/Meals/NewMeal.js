@@ -10,30 +10,20 @@ import {
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import mealStyles from "./meal.module.css";
-function NewMeal(props) {
+import { createMealAction } from "../../Shared/Redux/meals/mealsActions";
+function NewMeal({createMealAction}) {
   const selectRestaurant = useRef()
   const [formState, inputHandler, clearForm] = useForm({
     name: {
       value: "",
       isValid: false,
     },
-    ingredients: {
-      value: "",
-      isValid: false,
-    }
   }, false);
   const [sendRequest, error, clearError, setError] = useHttpClient();
   const handleMealSubmit = async (e) => {
     e.preventDefault();
-   
-    let formData = new FormData();
-    formData.append("name", formState.inputs.name.value);
 
-    const response = await sendRequest(
-      process.env.REACT_APP_ROOT_URL + "meals",
-      "POST",
-      formData
-    );
+    createMealAction(formState.inputs.name.value)
 
     clearForm();
   };
@@ -69,10 +59,11 @@ function NewMeal(props) {
 }
 
 NewMeal.propTypes = {
+  createMealAction: propTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   
 });
 
-export default connect(mapStateToProps, {  })(NewMeal);
+export default connect(mapStateToProps, { createMealAction })(NewMeal);

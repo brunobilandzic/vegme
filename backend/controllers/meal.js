@@ -1,4 +1,4 @@
-const { PaginatedList } = require("../helpers/pagination.js");
+const { PaginatedList, needNewPage } = require("../helpers/pagination.js");
 const { Meal } = require("../models/meal.js");
 const url = require("url");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
@@ -42,10 +42,15 @@ const toggleOfferMeal = async (req, res) => {
   await meal.save();
 };
 
+const needNewPageMeal = async (req, res) => {
+  res.send(await needNewPage(Meal.find(), parseInt(req.params.pageSize)))
+}
+
 module.exports = {
   getAllMeals,
   toggleOfferMeal,
   createMeal,
   getAllPaginatedMeals,
   getAllMealsForCook,
+  needNewPageMeal
 };

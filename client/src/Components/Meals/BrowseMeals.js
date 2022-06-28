@@ -12,7 +12,7 @@ const BrowseMeals = ({ meals, loadPaginatedMeals, pageNumber, pageSize }) => {
   return (
     <>
     <MealList meals={meals?.items[pageNumber + "-" + pageSize]} showAdd></MealList>
-      {meals?.pagination && <PaginationCustom loadItems={loadPaginatedMeals} />}
+      {meals?.pagination && <PaginationCustom type="meals" loadItems={loadPaginatedMeals} />}
     </>
   );
 };
@@ -26,8 +26,8 @@ BrowseMeals.propTypes = {
 
 const mapStateToProps = (state) => ({
   meals: state.meals.browsing,
-  pageNumber: state.pagination.pageNumber,
-  pageSize: state.pagination.pageSize
+  pageNumber: state.pagination.meals.pageNumber,
+  pageSize: state.pagination.meals.pageSize
 });
 
 const mapDispatchToProps = {

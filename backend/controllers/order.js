@@ -1,4 +1,4 @@
-const { PaginatedList } = require("../helpers/pagination.js");
+const { PaginatedList, needNewPage } = require("../helpers/pagination.js");
 const { Order } = require("../models/order.js");
 const { Meal } = require("../models/meal.js");
 const url = require("url");
@@ -9,8 +9,9 @@ const { REGULAR } = require("../constants/roles.js");
 const getAllPaginatedOrdersForUser = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   const ordererBaseUser = await BaseUser.findById(req.user.id);
-  const regularId = ordererBaseUser.roles
-    .find((role) => role.name === REGULAR)?.id;
+  const regularId = ordererBaseUser.roles.find(
+    (role) => role.name === REGULAR
+  )?.id;
   const ordersWithPagination = await PaginatedList.getPaginatedResult(
     Order.find(
       extractFiltersFromQuery(queryObject, { orderer: regularId })
@@ -27,11 +28,8 @@ const getAllPaginatedOrdersForUser = async (req, res) => {
 
 const getAllPaginatedOrders = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
-  console.log(typeof queryObject.pageNumber)
   const ordersWithPagination = await PaginatedList.getPaginatedResult(
-    Order.find(
-      extractFiltersFromQuery(queryObject)
-    ).populate({
+    Order.find(extractFiltersFromQuery(queryObject)).populate({
       path: "meals",
       select: "-orders -__v",
     }),
@@ -43,7 +41,7 @@ const getAllPaginatedOrders = async (req, res) => {
 };
 
 const getAllOrders = async (req, res) => {
-  const orders = await Order.find()
+  const orders = await Order.find();
 
   res.json(orders);
 };
@@ -73,10 +71,24 @@ const toggleOrderActive = async (req, res, next) => {
   res.json({ active: order.active });
 };
 
+const needNewPageMyOrder = async (req, res) => {
+  const ordererBaseUser = await BaseUser.findById(req.user.id);
+  const regularId = ordererBaseUser.roles.find(
+    (role) => role.name === REGULAR
+  )?.id;
+  res.send(
+    await needNewPage(
+      Order.find({ orderer: regularId }),
+      parseInt(req.params.pageSize)
+    )
+  );
+};
+
 module.exports = {
   getAllPaginatedOrdersForUser,
   getAllPaginatedOrders,
   createOrder,
   toggleOrderActive,
-  getAllOrders
+  getAllOrders,
+  needNewPageMyOrder,
 };

@@ -11,3 +11,12 @@ export const loadPaginatedMealsFromServer = async (
   });
   return response.data;
 };
+
+export const createMeal = async (name) => {
+  const response = await axios.post(
+    process.env.REACT_APP_ROOT_URL + "meals",
+    {name},
+    { withCredentials: true }
+  );
+  return response.data;
+}

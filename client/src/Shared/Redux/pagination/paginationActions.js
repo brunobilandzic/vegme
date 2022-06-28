@@ -5,40 +5,51 @@ import {
     UPDATE_TOTAL_PAGES,
   } from "../types";
   
-  export const updatePageNumber = (pageNumber) => (dispatch, getState) => {
+  export const updatePageNumber = (type, pageNumber) => (dispatch, getState) => {
     const totalPages = getState().pagination.totalPages;
     if (pageNumber < 0 || pageNumber > totalPages) return;
-  
     dispatch({
       type: UPDATE_PAGE_NUMBER,
-      payload: pageNumber,
+      payload: {
+        type,
+        pageNumber
+      },
     });
   };
   
-  export const updatePageSize = (pageSize) => (dispatch, getState) => {
+  export const updatePageSize = (type, pageSize) => (dispatch, getState) => {
     const totalItems = getState().pagination.totalItems;
     if (pageSize < 0 || totalItems) return;
   
     dispatch({
       type: UPDATE_PAGE_SIZE,
-      payload: pageSize,
+      payload: {
+        type,
+        pageSize
+      },
     });
   };
   
-  export const updateTotalPages = (totalPages) => (dispatch, getState) => {
+  export const updateTotalPages = (type, totalPages) => (dispatch, getState) => {
     const totalItems = getState().pagination.totalItems;
     if (totalPages < 0 || totalPages > totalItems) return;
   
     dispatch({
       type: UPDATE_TOTAL_PAGES,
-      payload: totalPages,
+      payload: {
+        type,
+        totalPages
+      },
     });
   };
   
-  export const updateTotalItems = (totalItems) => (dispatch) => {
+  export const updateTotalItems = (type, totalItems) => (dispatch) => {
     dispatch({
       type: UPDATE_TOTAL_ITEMS,
-      payload: totalItems,
+      payload: {
+        type,
+        totalItems
+      },
     });
   };
   
