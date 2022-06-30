@@ -1,46 +1,51 @@
-import React, {useRef} from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm } from "../../Shared/CustomHooks/form-hook";
-import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
 import Input from "../../Shared/Form/Input";
-import Modal from "../../Shared/UserInterface/Modal";
-import {
-  VALIDATOR_REQUIRED
-} from "../../util/validators";
+import { VALIDATOR_REQUIRED } from "../../util/validators";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
+import {v4 as uuid} from "uuid"
 import mealStyles from "./meal.module.css";
 import { createMealAction } from "../../Shared/Redux/meals/mealsActions";
-function NewMeal({createMealAction}) {
-  const selectRestaurant = useRef()
-  const [formState, inputHandler, clearForm] = useForm({
-    name: {
-      value: "",
-      isValid: false,
+import NewIngredient from "./Ingredients/NewIngredient";
+import IngredientPreview from "./Ingredients/IngredientPreview";
+
+function NewMeal({ createMealAction }) {
+  const [formState, inputHandler, clearForm] = useForm(
+    {
+      name: {
+        value: "",
+        isValid: false,
+      },
     },
-  }, false);
-  const [sendRequest, error, clearError, setError] = useHttpClient();
+    false
+  );
+  const [ingredients, setIngredients] = useState([]);
+  const getIngredientsPreviewItems = () => 
+    ingredients?.map((ingredient) => <IngredientPreview ingredient={ingredient} removeIngredient={removeIngredient} key={uuid()} />)
+
   const handleMealSubmit = async (e) => {
     e.preventDefault();
-
-    createMealAction(formState.inputs.name.value)
-
+    const newMeal = {
+      name: formState.inputs.name.value,
+      ingredients,
+    };
+    createMealAction(newMeal);
+    setIngredients([])
     clearForm();
+  };
+  const addIngredient = (ingredient) => {
+    setIngredients((prevIngredients) => [...prevIngredients, ingredient]);
+  };
+  const removeIngredient = (id) => {
+    setIngredients((prevIngredients) =>
+      prevIngredients.filter((ingredient) => ingredient.id != id)
+    );
   };
 
   return (
     <>
-      <Modal
-        show={error}
-        content={error}
-        header="Error"
-        footer={
-          <Button variant="warning" onClick={clearError}>
-            Cancel
-          </Button>
-        }
-        onCancel={clearError}
-      ></Modal>
       <form onSubmit={handleMealSubmit}>
         <Input
           onInput={inputHandler}
@@ -52,18 +57,21 @@ function NewMeal({createMealAction}) {
           value={formState.inputs.name.value}
           validators={[VALIDATOR_REQUIRED()]}
         ></Input>
-        <Button type="submit" disabled={!formState.isValid}>Submit</Button>
+        {getIngredientsPreviewItems()}
+        <NewIngredient addIngredient={addIngredient} />
+        <br />
+        <Button type="submit" disabled={!formState.isValid}>
+          Submit
+        </Button>
       </form>
     </>
   );
 }
 
 NewMeal.propTypes = {
-  createMealAction: propTypes.func.isRequired
+  createMealAction: propTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  
-});
+const mapStateToProps = (state) => ({});
 
 export default connect(mapStateToProps, { createMealAction })(NewMeal);

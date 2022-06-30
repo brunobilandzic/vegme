@@ -1291,6 +1291,356 @@
       "remark": "remark 332",
       "delivery_address": "Clay Street",
       "active": true
+    },
+    {
+      "remark": "reamrk 991",
+      "delivery_address": "Woodrow Court",
+      "active": true
+    },
+    {
+      "remark": "reamrk 793",
+      "delivery_address": "Celeste Court",
+      "active": true
+    },
+    {
+      "remark": "reamrk 865",
+      "delivery_address": "Miller Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 217",
+      "delivery_address": "Beaver Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 179",
+      "delivery_address": "Broadway ",
+      "active": true
+    },
+    {
+      "remark": "reamrk 497",
+      "delivery_address": "Orient Avenue",
+      "active": false
+    },
+    {
+      "remark": "reamrk 319",
+      "delivery_address": "Prospect Place",
+      "active": false
+    },
+    {
+      "remark": "reamrk 453",
+      "delivery_address": "Holmes Lane",
+      "active": false
+    },
+    {
+      "remark": "reamrk 955",
+      "delivery_address": "Burnett Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 847",
+      "delivery_address": "Canda Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 236",
+      "delivery_address": "Louisiana Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 331",
+      "delivery_address": "Drew Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 882",
+      "delivery_address": "Olive Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 130",
+      "delivery_address": "Putnam Avenue",
+      "active": false
+    },
+    {
+      "remark": "reamrk 718",
+      "delivery_address": "Ridgewood Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 922",
+      "delivery_address": "Times Placez",
+      "active": true
+    },
+    {
+      "remark": "reamrk 845",
+      "delivery_address": "Cornelia Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 544",
+      "delivery_address": "Furman Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 565",
+      "delivery_address": "Adelphi Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 247",
+      "delivery_address": "Sunnyside Court",
+      "active": true
+    },
+    {
+      "remark": "reamrk 620",
+      "delivery_address": "Eldert Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 936",
+      "delivery_address": "Boerum Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 905",
+      "delivery_address": "Varick Avenue",
+      "active": false
+    },
+    {
+      "remark": "reamrk 847",
+      "delivery_address": "Monument Walk",
+      "active": false
+    },
+    {
+      "remark": "reamrk 837",
+      "delivery_address": "Bancroft Place",
+      "active": false
+    },
+    {
+      "remark": "reamrk 298",
+      "delivery_address": "Scholes Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 126",
+      "delivery_address": "Christopher Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 200",
+      "delivery_address": "Irving Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 645",
+      "delivery_address": "Fenimore Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 540",
+      "delivery_address": "Doscher Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 108",
+      "delivery_address": "Seba Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 881",
+      "delivery_address": "Desmond Court",
+      "active": true
+    },
+    {
+      "remark": "reamrk 271",
+      "delivery_address": "Ash Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 193",
+      "delivery_address": "Foster Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 863",
+      "delivery_address": "Reed Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 468",
+      "delivery_address": "Estate Road",
+      "active": false
+    },
+    {
+      "remark": "reamrk 825",
+      "delivery_address": "Maple Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 835",
+      "delivery_address": "Metropolitan Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 490",
+      "delivery_address": "Clinton Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 963",
+      "delivery_address": "Polhemus Place",
+      "active": false
+    },
+    {
+      "remark": "reamrk 964",
+      "delivery_address": "Bevy Court",
+      "active": false
+    },
+    {
+      "remark": "reamrk 200",
+      "delivery_address": "Norman Avenue",
+      "active": false
+    },
+    {
+      "remark": "reamrk 253",
+      "delivery_address": "Bayview Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 378",
+      "delivery_address": "Montauk Court",
+      "active": true
+    },
+    {
+      "remark": "reamrk 809",
+      "delivery_address": "George Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 345",
+      "delivery_address": "Glen Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 976",
+      "delivery_address": "Langham Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 578",
+      "delivery_address": "Congress Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 262",
+      "delivery_address": "Flatbush Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 241",
+      "delivery_address": "Montana Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 440",
+      "delivery_address": "Cambridge Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 885",
+      "delivery_address": "Kingsland Avenue",
+      "active": false
+    },
+    {
+      "remark": "reamrk 466",
+      "delivery_address": "Amersfort Place",
+      "active": false
+    },
+    {
+      "remark": "reamrk 334",
+      "delivery_address": "Kaufman Place",
+      "active": true
+    },
+    {
+      "remark": "reamrk 655",
+      "delivery_address": "Vanderveer Place",
+      "active": false
+    },
+    {
+      "remark": "reamrk 141",
+      "delivery_address": "Troutman Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 296",
+      "delivery_address": "Llama Court",
+      "active": false
+    },
+    {
+      "remark": "reamrk 855",
+      "delivery_address": "Beverly Road",
+      "active": true
+    },
+    {
+      "remark": "reamrk 373",
+      "delivery_address": "Vandam Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 169",
+      "delivery_address": "Withers Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 801",
+      "delivery_address": "Tillary Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 299",
+      "delivery_address": "Strickland Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 348",
+      "delivery_address": "Ditmars Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 557",
+      "delivery_address": "Lafayette Avenue",
+      "active": true
+    },
+    {
+      "remark": "reamrk 743",
+      "delivery_address": "Colonial Court",
+      "active": false
+    },
+    {
+      "remark": "reamrk 127",
+      "delivery_address": "Shale Street",
+      "active": false
+    },
+    {
+      "remark": "reamrk 762",
+      "delivery_address": "Luquer Street",
+      "active": true
+    },
+    {
+      "remark": "reamrk 350",
+      "delivery_address": "Dare Court",
+      "active": true
+    },
+    {
+      "remark": "reamrk 152",
+      "delivery_address": "Greenpoint Avenue",
+      "active": false
+    },
+    {
+      "remark": "reamrk 219",
+      "delivery_address": "Scott Avenue",
+      "active": true
     }
   ]
 }

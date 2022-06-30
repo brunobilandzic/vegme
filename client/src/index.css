@@ -1,0 +1,12 @@
+.checkboxContainer {
+    display: flex;
+    margin: 1rem 0 0.5rem;
+}
+
+.checkboxContainer input {
+    margin-left: 1rem
+}
+
+.action:hover {
+    cursor: pointer;
+}

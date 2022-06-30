@@ -1,0 +1,28 @@
+.container {
+    padding-top: 2rem;
+}
+
+.newItem {
+    display: flex;
+    align-items: center;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1rem 0;
+  }
+
+
+.item_preview_right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.preview_icon {
+    color: red;
+    margin-right: 1rem;
+}

@@ -82,7 +82,7 @@ function Cart({ mealsToOrder, sendOrder }) {
         validators={[VALIDATOR_REQUIRED()]}
         onInput={inputHandler}
       />
-      <div className={cartStyles.activeCheckboxContainer}>
+      <div className="checkboxContainer">
         <FormCheckLabel>Active</FormCheckLabel>
         <FormCheck onChange={handleActiveCheck} checked={isActive}></FormCheck>
       </div>

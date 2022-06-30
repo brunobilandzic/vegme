@@ -18,8 +18,8 @@ export const removeMealFromCart = (meal) => (dispatch) => {
   dispatch({ type: REMOVE_MEAL_FROM_CART, payload: meal });
 };
 
-export const createMealAction = (name) => async (dispatch, getState) => {
-  const newMeal = await createMeal(name);
+export const createMealAction = (meal) => async (dispatch, getState) => {
+  const newMeal = await createMeal(meal);
   switch (
     await needNewPageMeal(
       getState().meals.browsing.items[
@@ -47,13 +47,6 @@ export const createMealAction = (name) => async (dispatch, getState) => {
           meal: newMeal,
           pageNumber: getState().pagination.meals.totalPages + 1,
           pageSize: getState().pagination.meals.pageSize,
-        },
-      });
-      dispatch({
-        type: UPDATE_TOTAL_PAGES,
-        payload: {
-          type: "meals",
-          totalPages: getState().pagination.meals.totalPages + 1,
         },
       });
     case UPDATE_TOTAL_PAGES:

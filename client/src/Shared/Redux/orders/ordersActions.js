@@ -49,13 +49,6 @@ export const sendOrder =
             pageSize: getState().pagination.orders.pageSize,
           },
         });
-        dispatch({
-          type: UPDATE_TOTAL_PAGES,
-          payload: {
-            type: "orders",
-            totalPages: getState().pagination.orders.totalPages + 1,
-          },
-        });
         case UPDATE_TOTAL_PAGES:
           dispatch({
             type: UPDATE_TOTAL_PAGES,
