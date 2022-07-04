@@ -1,0 +1,16 @@
+.container {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+}
+
+.items_on_end {
+    display: flex;
+    margin-left: 1rem
+}
+
+.items_on_beginning {
+    display: flex;
+    margin-right: 1rem
+}
