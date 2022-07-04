@@ -8,6 +8,8 @@ import {
   UPDATE_TOTAL_PAGES,
   ADD_ON_END_MEAL,
   MAKE_NEW_PAGE_MEAL,
+  IS_LOADING,
+  NOT_LOADING,
 } from "../types";
 
 export const addMealToCart = (meal) => (dispatch) => {
@@ -64,6 +66,9 @@ export const loadPaginatedMeals =
   (pageNumber = 1, pageSize = 5) =>
   async (dispatch, getState) => {
     if (getState().meals.browsing.items[pageNumber + "-" + pageSize]) return;
+    dispatch({
+      type: IS_LOADING
+    })
     const paginatedMeals = await loadPaginatedMealsFromServer(
       pageNumber,
       pageSize
@@ -84,4 +89,7 @@ export const loadPaginatedMeals =
       type: UPDATE_TOTAL_PAGES,
       payload: { type: "meals", totalPages: paginatedMeals.totalPages },
     });
+    dispatch({
+      type: NOT_LOADING
+    })
   };

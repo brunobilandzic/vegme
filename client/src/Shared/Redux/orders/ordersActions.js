@@ -5,8 +5,10 @@ import {
 import { needNewPageOrder } from "../actionHelpers";
 import {
   ADD_ON_END_ORDER,
+  IS_LOADING,
   LOAD_PAGINATED_ORDERS_FOR_USER,
   MAKE_NEW_PAGE_ORDER,
+  NOT_LOADING,
   UPDATE_TOTAL_ITEMS,
   UPDATE_TOTAL_PAGES,
 } from "../types";
@@ -64,6 +66,9 @@ export const loadPaginatedOrdersForUser =
   (pageNumber = 1, pageSize = 5) =>
   async (dispatch, getState) => {
     if (getState().orders.browsing.items[pageNumber + "-" + pageSize]) return;
+    dispatch({
+      type: IS_LOADING
+    })
     const paginatedOrders = await loadPaginatedOrdersForUserFromServer(
       pageNumber,
       pageSize
@@ -84,4 +89,7 @@ export const loadPaginatedOrdersForUser =
       type: UPDATE_TOTAL_PAGES,
       payload: { type: "orders", totalPages: paginatedOrders.totalPages },
     });
+    dispatch({
+      type: NOT_LOADING
+    })
   };

@@ -10,3 +10,10 @@
 .action:hover {
     cursor: pointer;
 }
+
+.loading-wrap {
+    padding: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
