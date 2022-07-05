@@ -31,7 +31,6 @@ export default function UsernamePrompt(props) {
       "POST",
       formData
     );
-    console.log(error);
 
     if (!error) navigate("/auth/google/success");
   };

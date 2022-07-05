@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { loadUser } from "../../Shared/Redux/auth/authActions.js";
 
-function AuthSuccess({ user, loadUser }) {
-  useEffect(() => {
-    loadUser();
-  }, []);
+function AuthSuccess({ user }) {
+
   return (
     <>
       <div className="local-auth-success-container auth-success.container">

@@ -9,8 +9,11 @@ import {
   VALIDATOR_MIN_LENGTH,
   VALIDATOR_NO_SPACE,
 } from "../../util/validators";
+import { loadUser } from "../../Shared/Redux/auth/authActions.js";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-export default function Login() {
+function Login({ loadUser }) {
   const [sendRequest, error, clearError, setError] = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
@@ -39,7 +42,10 @@ export default function Login() {
       formData
     );
 
-    if (!error) navigate("/auth/success");
+    if (!error) {
+      loadUser();
+      navigate("/auth/success");
+    }
   };
   return (
     <>
@@ -90,3 +96,11 @@ export default function Login() {
     </>
   );
 }
+
+Login.propTypes = {
+  loadUser: PropTypes,
+};
+
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, {loadUser})(Login);

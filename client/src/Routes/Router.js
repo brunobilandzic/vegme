@@ -23,6 +23,7 @@ import AuthSuccess from "../Components/Authorization/AuthSuccess";
 import GoogleAuthSuccess from "../Components/Authorization/GoogleAuthSuccess";
 import BrowseOrders from "../Components/Orders/BrowseOrders";
 import MainPage from "../Shared/Components/MainPage";
+import AuthorizationShield from "./Shields/AuthorizationShield";
 
 export default function Router(props) {
   return (
@@ -91,7 +92,14 @@ export default function Router(props) {
             ></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/auth/success" element={<AuthSuccess />}></Route>
+            <Route
+              path="/auth/success"
+              element={
+                <AuthorizationShield>
+                  <AuthSuccess />
+                </AuthorizationShield>
+              }
+            ></Route>
             <Route path="/auth/failure">Failed to log in</Route>
             <Route
               path="/auth/google/username"
