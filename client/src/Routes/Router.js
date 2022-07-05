@@ -11,12 +11,9 @@ import NewMeal from "../Components/Meals/NewMeal";
 import CustomerShield from "./Shields/RegularShield";
 import Cart from "../Components//Meals/Cart/Cart";
 import RegularShield from "./Shields/RegularShield";
-import NewOffer from "../Components/Meals/Offers/NewOffer";
-import Offers from "../Components/Meals/Offers/Offers";
 import UserMeals from "../Components/Meals/UserMeals";
 import MealsMainPage from "../Components/Meals/MealsMainPage";
 import BrowseMeals from "../Components/Meals/BrowseMeals";
-import UserOrders from "../Components/Meals/Offers/UserOrders";
 import CookShield from "./Shields/CookShield";
 import UsernamePrompt from "../Components/Authorization/UsernamePrompt";
 import AuthSuccess from "../Components/Authorization/AuthSuccess";
@@ -59,34 +56,10 @@ export default function Router(props) {
               }
             ></Route>
             <Route
-              path="/orders"
-              element={
-                <RegularShield>
-                  <UserOrders />
-                </RegularShield>
-              }
-            ></Route>
-            <Route
               path="/orders/my"
               element={
                 <RegularShield>
                   <BrowseOrders />
-                </RegularShield>
-              }
-            ></Route>
-            <Route
-              path="/offers"
-              element={
-                <RegularShield>
-                  <Offers />
-                </RegularShield>
-              }
-            ></Route>
-            <Route
-              path="/offers/new"
-              element={
-                <RegularShield>
-                  <NewOffer />
                 </RegularShield>
               }
             ></Route>

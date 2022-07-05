@@ -18,6 +18,7 @@ const mealObject = {
     enum: Object.values(mealTypes),
     default: mealTypes.MAIN,
   },
+  date_created: {type: Date, default: () => Date.now() },
 };
 const mealSchema = new mongoose.Schema(mealObject);
 

@@ -11,7 +11,6 @@ const BrowseMeals = ({
   loadPaginatedMeals,
   pageNumber,
   pageSize,
-  isLoading,
 }) => {
   useEffect(() => {
     loadPaginatedMeals();
@@ -31,7 +30,6 @@ const BrowseMeals = ({
 };
 
 BrowseMeals.propTypes = {
-  isLoading: propTypes.bool,
   loadPaginatedMeals: PropTypes.func.isRequired,
   meals: PropTypes.object,
   pageNumber: PropTypes.number,
@@ -42,7 +40,6 @@ const mapStateToProps = (state) => ({
   meals: state.meals.browsing,
   pageNumber: state.pagination.meals.pageNumber,
   pageSize: state.pagination.meals.pageSize,
-  isLoading: state.api.isLoading,
 });
 
 const mapDispatchToProps = {

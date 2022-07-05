@@ -20,7 +20,8 @@ const getAllPaginatedOrdersForUser = async (req, res) => {
       select: "-orders -__v",
     }),
     Number(queryObject.pageNumber),
-    Number(queryObject.pageSize)
+    Number(queryObject.pageSize),
+    {date_ordered: -1}
   );
 
   res.json(ordersWithPagination);

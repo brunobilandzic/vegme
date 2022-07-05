@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import PaginationCustom from "../../Shared/Components/PaginationCustom";
 import { loadPaginatedOrdersForUser } from "../../Shared/Redux/orders/ordersActions";
 import Loading from "../../Shared/UserInterface/Loading";
+import OrderItem from "./OrderItem";
+import { v4 as uuid } from "uuid";
 
 export const BrowseOrders = ({
   orders,
@@ -14,10 +16,15 @@ export const BrowseOrders = ({
   useEffect(() => {
     loadPaginatedOrdersForUser();
   }, []);
+  const getOrders = () => {
+    return orders?.items[pageNumber + "-" + pageSize]?.map((order) => (
+      <OrderItem order={order} key={uuid()}></OrderItem>
+    ));
+  };
   return (
     <>
       <Loading />
-      {JSON.stringify(orders?.items[pageNumber + "-" + pageSize])}
+      {getOrders()}
       <PaginationCustom
         type="orders"
         loadItems={loadPaginatedOrdersForUser}

@@ -1,15 +1,14 @@
 import { createMeal, loadPaginatedMealsFromServer } from "../../Api/meals";
-import { needNewPageMeal } from "../actionHelpers";
 import {
   ADD_MEAL_TO_CART,
   LOAD_ALL_PAGINATED_MEALS,
   REMOVE_MEAL_FROM_CART,
   UPDATE_TOTAL_ITEMS,
   UPDATE_TOTAL_PAGES,
-  ADD_ON_END_MEAL,
-  MAKE_NEW_PAGE_MEAL,
   IS_LOADING,
   NOT_LOADING,
+  DELETE_CACHE_MEALS,
+  RESET_PAGINATION_FOR_TYPE,
 } from "../types";
 
 export const addMealToCart = (meal) => (dispatch) => {
@@ -22,44 +21,15 @@ export const removeMealFromCart = (meal) => (dispatch) => {
 
 export const createMealAction = (meal) => async (dispatch, getState) => {
   const newMeal = await createMeal(meal);
-  switch (
-    await needNewPageMeal(
-      getState().meals.browsing.items[
-        getState().pagination.meals.totalPages +
-          "-" +
-          getState().pagination.meals.pageSize
-      ],
-      getState().pagination.meals.pageSize
-    )
-  ) {
-    case ADD_ON_END_MEAL:
-      return dispatch({
-        type: ADD_ON_END_MEAL,
-        payload: {
-          meal: newMeal,
-          pageNumber: getState().pagination.meals.totalPages,
-          pageSize: getState().pagination.meals.pageSize,
-        },
-      });
-
-    case MAKE_NEW_PAGE_MEAL:
-      dispatch({
-        type: MAKE_NEW_PAGE_MEAL,
-        payload: {
-          meal: newMeal,
-          pageNumber: getState().pagination.meals.totalPages + 1,
-          pageSize: getState().pagination.meals.pageSize,
-        },
-      });
-    case UPDATE_TOTAL_PAGES:
-      dispatch({
-        type: UPDATE_TOTAL_PAGES,
-        payload: {
-          type: "meals",
-          totalPages: getState().pagination.meals.totalPages + 1,
-        },
-      });
-  }
+  dispatch({
+    type: DELETE_CACHE_MEALS,
+  });
+  dispatch({
+    type: RESET_PAGINATION_FOR_TYPE,
+    payload: {
+      type: "meals",
+    },
+  });
 };
 
 export const loadPaginatedMeals =
@@ -67,8 +37,8 @@ export const loadPaginatedMeals =
   async (dispatch, getState) => {
     if (getState().meals.browsing.items[pageNumber + "-" + pageSize]) return;
     dispatch({
-      type: IS_LOADING
-    })
+      type: IS_LOADING,
+    });
     const paginatedMeals = await loadPaginatedMealsFromServer(
       pageNumber,
       pageSize
@@ -90,6 +60,6 @@ export const loadPaginatedMeals =
       payload: { type: "meals", totalPages: paginatedMeals.totalPages },
     });
     dispatch({
-      type: NOT_LOADING
-    })
+      type: NOT_LOADING,
+    });
   };

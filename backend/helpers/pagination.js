@@ -10,11 +10,17 @@ class PaginatedList {
     this.totalItems = _count;
   }
 
-  static getPaginatedResult = async (query, pageNumber = 1, pageSize = 5) => {
+  static getPaginatedResult = async (
+    query,
+    pageNumber = 1,
+    pageSize = 5,
+    sort = {}
+  ) => {
     if (isNaN(pageNumber)) pageNumber = 1;
     if (isNaN(pageSize)) pageSize = 5;
 
     const quryCloned = query.clone();
+    query = query.sort(sort);
     query = query.skip((pageNumber - 1) * pageSize);
 
     query = query.limit(pageSize);

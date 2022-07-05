@@ -4,6 +4,8 @@ import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { updatePageNumber } from "../Redux/pagination/paginationActions.js";
 import paginationStyles from "./pagination.module.css";
+import { v4 as uuid } from "uuid";
+
 function PaginationCustom(props) {
   const { meals, orders, loadItems, updatePageNumber, type } = props;
 
@@ -22,7 +24,12 @@ function PaginationCustom(props) {
     let pageItems = [];
     const needDots = totalPages > 5 ? true : false;
     if (needDots) {
-      if (pageNumber > 3) pageItems.push(<PageItem disabled>{"..."}</PageItem>);
+      if (pageNumber > 3)
+        pageItems.push(
+          <PageItem key={uuid()} disabled>
+            {"..."}
+          </PageItem>
+        );
       for (
         let i = pageNumber - 2;
         i <= pageNumber + 2 && i <= totalPages;
@@ -83,19 +90,35 @@ function PaginationCustom(props) {
     <div>
       <Pagination className={paginationStyles.container}>
         <div className={paginationStyles.items_on_beginning}>
-          <PageItem disabled={pageNumber === 1} onClick={handleFirst}>
+          <PageItem
+            disabled={pageNumber === 1}
+            key={uuid()}
+            onClick={handleFirst}
+          >
             {"<<"}
           </PageItem>
-          <PageItem disabled={pageNumber === 1} onClick={handlePrevious}>
+          <PageItem
+            disabled={pageNumber === 1}
+            key={uuid()}
+            onClick={handlePrevious}
+          >
             {"<"}
           </PageItem>
         </div>
         {getPageNumbers()}
         <div className={paginationStyles.items_on_end}>
-          <PageItem disabled={pageNumber === totalPages} onClick={handleNext}>
+          <PageItem
+            disabled={pageNumber === totalPages}
+            key={uuid()}
+            onClick={handleNext}
+          >
             {">"}
           </PageItem>
-          <PageItem disabled={pageNumber === totalPages} onClick={handleLast}>
+          <PageItem
+            disabled={pageNumber === totalPages}
+            key={uuid()}
+            onClick={handleLast}
+          >
             {">>"}
           </PageItem>
         </div>
