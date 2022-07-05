@@ -2,6 +2,14 @@ const { OPERATOR, ADINISTRATOR, COOK, REGULAR } = require("../constants/roles");
 const HttpError = require("../errors/http-error");
 const { BaseUser } = require("../models/user");
 
+const requireLogin = async (req, res, next) => {
+  if (!req.user) {
+    return res.json({
+      message: "You need to login"
+    })
+  } else next();
+};
+
 const isInRole = async (userId, roleName, next) => {
   if (typeof userId === "undefined") {
     return next(new HttpError("You have to log in to continue.", 401));
@@ -45,4 +53,5 @@ module.exports = {
   requireCook,
   requireAdministrator,
   requireOperator,
+  requireLogin
 };

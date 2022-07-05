@@ -51,11 +51,11 @@ router.post("/local/login", upload.none(), async (req, res, next) => {
 });
 
 router.get("/loginfail", (req, res, next) => {
-  return next(new HttpError("Password incorrect"));
+  return next(new HttpError("Password incorrect", 401));
 });
 
-router.get("/getuser", (req, res) => {
-  res.json(req.user);
+router.get("/getuser", requireLogin, (req, res) => {
+  res.json({ user: req.user });
 });
 
 module.exports = router;

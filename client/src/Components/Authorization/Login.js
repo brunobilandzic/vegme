@@ -5,7 +5,10 @@ import Modal from "../../Shared/UserInterface/Modal.js";
 import { useForm } from "../../Shared/CustomHooks/form-hook";
 import { useHttpClient } from "../../Shared/CustomHooks/http-hook";
 import Input from "../../Shared/Form/Input";
-import { VALIDATOR_MIN_LENGTH, VALIDATOR_NO_SPACE, VALIDATOR_REQUIRED } from "../../util/validators";
+import {
+  VALIDATOR_MIN_LENGTH,
+  VALIDATOR_NO_SPACE,
+} from "../../util/validators";
 
 export default function Login() {
   const [sendRequest, error, clearError, setError] = useHttpClient();
@@ -60,7 +63,8 @@ export default function Login() {
           placeholder="Username"
           id="username"
           label="Username"
-          validators={[VALIDATOR_NO_SPACE(), VALIDATOR_MIN_LENGTH(6)]}_
+          validators={[VALIDATOR_NO_SPACE(), VALIDATOR_MIN_LENGTH(6)]}
+          _
         />
         <Input
           onInput={inputHandler}
@@ -72,9 +76,13 @@ export default function Login() {
           id="password"
           validators={[VALIDATOR_MIN_LENGTH(6)]}
         />
-        <a href={`${process.env.REACT_APP_ROOT_URL}auth/google`} target="_blank">
+        <a
+          href={`${process.env.REACT_APP_ROOT_URL}auth/google`}
+          target="_blank"
+        >
           Authorize with google
-        </a><br></br>
+        </a>
+        <br></br>
         <Button type="submit" disabled={!formState.isValid}>
           Login
         </Button>

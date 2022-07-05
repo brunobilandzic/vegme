@@ -22,6 +22,7 @@ import UsernamePrompt from "../Components/Authorization/UsernamePrompt";
 import AuthSuccess from "../Components/Authorization/AuthSuccess";
 import GoogleAuthSuccess from "../Components/Authorization/GoogleAuthSuccess";
 import BrowseOrders from "../Components/Orders/BrowseOrders";
+import MainPage from "../Shared/Components/MainPage";
 
 export default function Router(props) {
   return (
@@ -101,7 +102,7 @@ export default function Router(props) {
               element={<GoogleAuthSuccess />}
             ></Route>
             <Route path="/cart" element={<Cart />}></Route>
-            <Route path="/" element={<Login />}></Route>
+            <Route path="/" element={<MainPage />}></Route>
           </Routes>
         </Container>
       </BrowserRouter>
