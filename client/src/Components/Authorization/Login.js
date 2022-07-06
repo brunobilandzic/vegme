@@ -98,7 +98,7 @@ function Login({ loadUser }) {
 }
 
 Login.propTypes = {
-  loadUser: PropTypes,
+  loadUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({});

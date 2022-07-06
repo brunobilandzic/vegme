@@ -1,14 +1,12 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
-
 import Login from "../Components/Authorization/Login";
 import OperatorShield from "./Shields/OperatorShield";
 import AdministratorShield from "./Shields/AdministratorShield";
 import NewOperator from "../Components/Authorization/NewOperator";
 import Signup from "../Components/Authorization/Signup";
 import NewMeal from "../Components/Meals/NewMeal";
-import CustomerShield from "./Shields/RegularShield";
 import Cart from "../Components//Meals/Cart/Cart";
 import RegularShield from "./Shields/RegularShield";
 import UserMeals from "../Components/Meals/UserMeals";
@@ -21,6 +19,7 @@ import GoogleAuthSuccess from "../Components/Authorization/GoogleAuthSuccess";
 import BrowseOrders from "../Components/Orders/BrowseOrders";
 import MainPage from "../Shared/Components/MainPage";
 import AuthorizationShield from "./Shields/AuthorizationShield";
+import OrderPage from "../Components/Orders/OrderPage";
 
 export default function Router(props) {
   return (
@@ -62,6 +61,14 @@ export default function Router(props) {
                   <BrowseOrders />
                 </RegularShield>
               }
+            ></Route>
+            <Route
+             path="/order"
+             element={
+              <RegularShield>
+                <OrderPage />
+              </RegularShield>
+             }
             ></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>

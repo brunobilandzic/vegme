@@ -1,0 +1,22 @@
+.container {
+    border: 1px solid;
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+.container:hover {
+    cursor: pointer;
+}
+
+.box {
+    display: flex;
+}
+
+.ingredient {
+    display: flex;
+    margin: 0.2rem 0;
+}
+
+.ingredientName {
+    margin-right: .5rem;
+}

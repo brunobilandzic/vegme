@@ -3,6 +3,7 @@ import {
   LOAD_ALL_PAGINATED_MEALS,
   REMOVE_MEAL_FROM_CART,
   DELETE_CACHE_MEALS,
+  EMPTY_THE_CART
 } from "../types";
 
 const initialState = {
@@ -33,7 +34,6 @@ export default function mealsReducer(state = initialState, action) {
         ...state,
         mealsToOrder: [...state.mealsToOrder, action.payload],
       };
-
     case REMOVE_MEAL_FROM_CART:
       return {
         ...state,
@@ -41,6 +41,11 @@ export default function mealsReducer(state = initialState, action) {
           ...state.mealsToOrder.filter((meal) => meal._id != action.payload),
         ],
       };
+    case EMPTY_THE_CART:
+      return {
+        ...state,
+        mealsToOrder: []
+      }
     case DELETE_CACHE_MEALS:
       return {
         ...state,

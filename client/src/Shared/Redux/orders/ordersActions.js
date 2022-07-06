@@ -4,6 +4,7 @@ import {
 } from "../../Api/orders";
 import {
   DELETE_CACHE_ORDERS,
+  EMPTY_THE_CART,
   IS_LOADING,
   LOAD_PAGINATED_ORDERS_FOR_USER,
   NOT_LOADING,
@@ -29,6 +30,9 @@ export const sendOrder =
       payload: {
         type: "orders"
       }
+    })
+    dispatch({
+      type: EMPTY_THE_CART
     })
   };
 

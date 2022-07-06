@@ -1,28 +1,31 @@
-import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-const MainPage = ({user}) => {
-    const navigate = useNavigate()
-    useEffect(() => {
-        if(!user) navigate("/login")
-    }, [])
-  return (
-    <>
-        { <div>Main Page</div>}
-    </>
-  )
-}
+const MainPage = ({ user }) => {
+  const getContent = () => {
+    return user ? (
+      <div>{JSON.stringify(user)}</div>
+    ) : (
+      <div>
+        <Link to="/login">Login</Link>
+      </div>
+    );
+  };
+  return <>{getContent()}</>;
+};
 
 MainPage.propTypes = {
-  user: PropTypes.object
-}
+  user: PropTypes.object,
+};
 
 const mapStateToProps = (state) => ({
-    user: state.auth.user
-})
+  user: state.auth.user,
+});
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage)
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

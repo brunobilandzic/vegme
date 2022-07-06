@@ -13,11 +13,12 @@ import cartStyles from "./cart.module.css";
 function Cart({ mealsToOrder, sendOrder }) {
   const [showConfirmOrder, setShowConfirmOrder] = useState(false);
   let [isActive, setIsActive] = useState(false);
-  const [formState, inputHandler] = useForm(
+  const [orderSuccess, setOrderSuccess] = useState(false);
+  const [formState, inputHandler, clearForm] = useForm(
     {
       remark: {
         value: "",
-        isValid: true,
+        isValid: false,
       },
       deliveryAddress: {
         value: "",
@@ -29,13 +30,15 @@ function Cart({ mealsToOrder, sendOrder }) {
   const handleOrderClick = (e) => {
     setShowConfirmOrder(true);
   };
-  const handleOrderConfirm = (e) => {
-    sendOrder(
+  const handleOrderConfirm = async (e) => {
+    await sendOrder(
       formState.inputs.remark.value,
       formState.inputs.deliveryAddress.value,
       isActive
     );
     setShowConfirmOrder(false);
+    setOrderSuccess(true)
+    clearForm()
   };
   const handleOrderCancel = (e) => {
     setShowConfirmOrder(false);
@@ -44,6 +47,9 @@ function Cart({ mealsToOrder, sendOrder }) {
   const handleActiveCheck = () => {
     setIsActive((prevActive) => !prevActive);
   };
+  const handleSuccessClose = ( ) => {
+    setOrderSuccess(false)
+  }
   return (
     <>
       <Modal
@@ -62,6 +68,20 @@ function Cart({ mealsToOrder, sendOrder }) {
         }
         onCancel={handleOrderCancel}
       ></Modal>
+      <Modal
+        show={orderSuccess}
+        content={`You've successfully made an order!`}
+        header="Success"
+        footer={
+          <div className="modal-footer-buttons">
+            <Button variant="success" onClick={handleSuccessClose}>
+              Ok
+            </Button>
+          </div>
+        }
+        onCancel={handleOrderCancel}
+      ></Modal>
+      
 
       <div>Cart</div>
 
@@ -72,6 +92,7 @@ function Cart({ mealsToOrder, sendOrder }) {
         label="Remark"
         placeholder="Please enter your remark"
         onInput={inputHandler}
+        value={formState.inputs.remark.value}
       />
       <Input
         element="input"
@@ -81,6 +102,7 @@ function Cart({ mealsToOrder, sendOrder }) {
         placeholder="Enter delivery address"
         validators={[VALIDATOR_REQUIRED()]}
         onInput={inputHandler}
+        value={formState.inputs.deliveryAddress.value}
       />
       <div className="checkboxContainer">
         <FormCheckLabel>Active</FormCheckLabel>

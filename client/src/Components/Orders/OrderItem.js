@@ -1,13 +1,35 @@
 import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { connect } from "react-redux";
-import { format} from "date-fns"
+import { format } from "date-fns";
+import ordersStyles from "./orders.module.css";
 const OrderItem = ({ order }) => {
+  const navigate = useNavigate();
+  const navigateToSingular = () => {
+    navigate("/order", { state: { ...order } });
+  };
   return (
-    <div className="item-container">
-      <div className="reamrk">{order.remark}</div>
-      <div className="address">{order.delivery_address}</div>
-      <div className="date">{format(new Date(order.date_ordered), "MMMM dd yyyy")}</div>
+    <div onClick={navigateToSingular} className={ordersStyles.container}>
+      <div className={`${ordersStyles.remark} ${ordersStyles.box}`}>
+        <div className={ordersStyles.remarkHeading}>Remark:</div>
+        <div className={ordersStyles.remarkContent}>{order.remark}</div>
+      </div>
+      <div className={`${ordersStyles.address} ${ordersStyles.box}`}>
+        <div className={ordersStyles.addressHeading}>Address:</div>
+        <div className={ordersStyles.addressContent}>
+          {order.delivery_address}
+        </div>
+      </div>
+      <div>
+        {order.meals?.length} {order.meals?.length == 1 ? "meal" : "meals"}
+      </div>
+      <div className={`${ordersStyles.date} ${ordersStyles.box}`}>
+        <div className={ordersStyles.dateHeading}>Date:</div>
+        <div className={ordersStyles.dateContent}>
+          {format(new Date(order.date_ordered), "MM/dd/yy, hh:mmaa")}
+        </div>
+      </div>
     </div>
   );
 };
