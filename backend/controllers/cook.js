@@ -1,7 +1,10 @@
 const { default: mongoose } = require("mongoose");
 const { COOK } = require("../constants/roles");
 const HttpError = require("../errors/http-error");
+const { PaginatedList } = require("../helpers/pagination");
+const { orderMeals, orderByDateOrdered } = require("../helpers/sorting");
 const { CookRoleUser, BaseUser } = require("../models/user");
+const url = require("url");
 
 const getAllCooks = async (req, res) => {
   const cooksDocuments = await CookRoleUser.find();
@@ -41,9 +44,38 @@ const addToCook = async (userId) => {
 
   return cookRoleUser;
 };
+
+const getAllMealsForCook = async (req, res, next) => {
+  const queryObject = url.parse(req.url, true).query;
+
+  const cook = await CookRoleUser.findOne({ user: req.user.id }).populate({
+    path: "cooks",
+    populate: {
+      path: "orders",
+      select: "-meals",
+    },
+  });
+  let mealsOrderArray = [];
+
+  cook.cooks.forEach(async (meal) => {
+    mealsOrderArray.push({
+      meal: meal,
+      orders: meal.orders.sort(orderByDateOrdered),
+    });
+  });
+  mealsOrderArray.sort(orderMeals);
+  const paginatedMealsOrderArray = PaginatedList.getPaginatedArray(
+    mealsOrderArray,
+    Number(queryObject.pageNumber),
+    Number(queryObject.pageSize)
+  );
+
+  res.json(paginatedMealsOrderArray);
+};
 module.exports = {
   getAllCooks,
   getAllCookRoles,
   createCook,
-  addToCook
+  addToCook,
+  getAllMealsForCook,
 };

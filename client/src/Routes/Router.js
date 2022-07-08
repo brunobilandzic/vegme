@@ -9,7 +9,6 @@ import Signup from "../Components/Authorization/Signup";
 import NewMeal from "../Components/Meals/NewMeal";
 import Cart from "../Components//Meals/Cart/Cart";
 import RegularShield from "./Shields/RegularShield";
-import UserMeals from "../Components/Meals/UserMeals";
 import MealsMainPage from "../Components/Meals/MealsMainPage";
 import BrowseMeals from "../Components/Meals/BrowseMeals";
 import CookShield from "./Shields/CookShield";
@@ -20,6 +19,7 @@ import BrowseOrders from "../Components/Orders/BrowseOrders";
 import MainPage from "../Shared/Components/MainPage";
 import AuthorizationShield from "./Shields/AuthorizationShield";
 import OrderPage from "../Components/Orders/OrderPage";
+import CookMeals from "../Components/Meals/CookMeals";
 
 export default function Router(props) {
   return (
@@ -36,7 +36,12 @@ export default function Router(props) {
                 </AdministratorShield>
               }
             ></Route>
-            <Route path="/meals" element={<MealsMainPage />}></Route>
+            <Route
+              path="/meals"
+              element={
+                  <MealsMainPage />
+              }
+            ></Route>
             <Route
               path="/meals/new"
               element={
@@ -45,13 +50,18 @@ export default function Router(props) {
                 </CookShield>
               }
             ></Route>
-            <Route path="/meals/browse" element={<BrowseMeals />}></Route>
+            <Route
+              path="/meals/browse"
+              element={
+                  <BrowseMeals />
+              }
+            ></Route>
             <Route
               path="/mymeals"
               element={
-                <RegularShield>
-                  <UserMeals />
-                </RegularShield>
+                <CookShield>
+                  <CookMeals />
+                </CookShield>
               }
             ></Route>
             <Route
@@ -63,12 +73,12 @@ export default function Router(props) {
               }
             ></Route>
             <Route
-             path="/order"
-             element={
-              <RegularShield>
-                <OrderPage />
-              </RegularShield>
-             }
+              path="/order"
+              element={
+                <RegularShield>
+                  <OrderPage />
+                </RegularShield>
+              }
             ></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>

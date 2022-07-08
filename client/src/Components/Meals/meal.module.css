@@ -25,3 +25,9 @@
     padding-bottom: 0.1rem;
     padding-left: 0;
 }
+
+.mealOrders {
+    padding: 1rem;
+    border: 1px solid;
+    margin: 1rem 0;
+}

@@ -19,7 +19,7 @@ export default function IngredientList({ ingredients }) {
               {ingredient.name}
             </td>
             <td className={mealStyles.ingredientsTableItem}>
-              {ingredient.allergen ? "da" : "ne"}
+              {ingredient.allergen ? "yes" : "no"}
             </td>
           </tr>
         ))}
@@ -28,6 +28,6 @@ export default function IngredientList({ ingredients }) {
     </div>
   );
   return (
-    <div>{ingredients.length != 0 ? getIngredients() : <div>none</div>}</div>
+    <div>{ingredients?.length != 0 ? getIngredients() : <div>none</div>}</div>
   );
 }

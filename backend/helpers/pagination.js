@@ -34,6 +34,23 @@ class PaginatedList {
 
     return new PaginatedList(items, pageNumber, pageSize, count);
   };
+
+  static getPaginatedArray = (array, pageNumber = 1, pageSize = 5) => {
+    if (isNaN(pageNumber)) pageNumber = 1;
+    if (isNaN(pageSize)) pageSize = 5;
+
+    const paginatedArray = array.slice(
+      (pageNumber - 1) * pageSize,
+      pageNumber * pageSize
+    );
+    
+    return new PaginatedList(
+      paginatedArray,
+      pageNumber,
+      pageSize,
+      array.length
+    );
+  };
 }
 
 const needNewPage = async (query, pageSize) => {

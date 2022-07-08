@@ -37,8 +37,8 @@ function Cart({ mealsToOrder, sendOrder }) {
       isActive
     );
     setShowConfirmOrder(false);
-    setOrderSuccess(true)
-    clearForm()
+    setOrderSuccess(true);
+    clearForm();
   };
   const handleOrderCancel = (e) => {
     setShowConfirmOrder(false);
@@ -47,9 +47,9 @@ function Cart({ mealsToOrder, sendOrder }) {
   const handleActiveCheck = () => {
     setIsActive((prevActive) => !prevActive);
   };
-  const handleSuccessClose = ( ) => {
-    setOrderSuccess(false)
-  }
+  const handleSuccessClose = () => {
+    setOrderSuccess(false);
+  };
   return (
     <>
       <Modal
@@ -81,7 +81,6 @@ function Cart({ mealsToOrder, sendOrder }) {
         }
         onCancel={handleOrderCancel}
       ></Modal>
-      
 
       <div>Cart</div>
 
@@ -109,8 +108,15 @@ function Cart({ mealsToOrder, sendOrder }) {
         <FormCheck onChange={handleActiveCheck} checked={isActive}></FormCheck>
       </div>
 
-      <MealList meals={mealsToOrder}></MealList>
-      <Button disabled={!formState.isValid} onClick={handleOrderClick}>
+      {mealsToOrder.length != 0 ? (
+        <MealList meals={mealsToOrder}></MealList>
+      ) : (
+        <div className="mb-3">Please provide meals</div>
+      )}
+      <Button
+        disabled={!formState.isValid || mealsToOrder.length == 0}
+        onClick={handleOrderClick}
+      >
         Order
       </Button>
     </>

@@ -22,6 +22,12 @@ const initialState = {
     totalItems: null,
     totalPages: null,
   },
+  cookMeals: {
+    pageNumber: 1,
+    pageSize: 5,
+    totalItems: null,
+    totalPages: null,
+  }
 };
 
 export default function paginationReducer(state = initialState, action) {

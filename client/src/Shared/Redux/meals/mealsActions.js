@@ -1,4 +1,4 @@
-import { createMeal, loadPaginatedMealsFromServer } from "../../Api/meals";
+import { createMeal, loadMealsWithOrders, loadPaginatedMealsFromServer } from "../../Api/meals";
 import {
   ADD_MEAL_TO_CART,
   LOAD_ALL_PAGINATED_MEALS,
@@ -9,6 +9,7 @@ import {
   NOT_LOADING,
   DELETE_CACHE_MEALS,
   RESET_PAGINATION_FOR_TYPE,
+  LOAD_ALL_PAGINATED_COOK_MEALS,
 } from "../types";
 
 export const addMealToCart = (meal) => (dispatch) => {
@@ -35,7 +36,7 @@ export const createMealAction = (meal) => async (dispatch, getState) => {
 export const loadPaginatedMeals =
   (pageNumber = 1, pageSize = 5) =>
   async (dispatch, getState) => {
-    if (getState().meals.browsing.items[pageNumber + "-" + pageSize]) return;
+    if (getState().meals.meals.items[pageNumber + "-" + pageSize]) return;
     dispatch({
       type: IS_LOADING,
     });
@@ -63,3 +64,34 @@ export const loadPaginatedMeals =
       type: NOT_LOADING,
     });
   };
+
+
+  export const loadPaginatedMealsWithOrders = (pageNumber = 1, pageSize =5) => async (dispatch, getState) => {
+    if (getState().meals.cookMeals.items[pageNumber + "-" + pageSize]) return;
+    dispatch({
+      type: IS_LOADING,
+    });
+    const paginatedMealsOrders = await loadMealsWithOrders(pageNumber, pageSize)
+    dispatch({
+      type: LOAD_ALL_PAGINATED_COOK_MEALS,
+      payload: {
+        pageNumber,
+        pageSize,
+        items: paginatedMealsOrders.items,
+      },
+    });
+    dispatch({
+      type: UPDATE_TOTAL_ITEMS,
+      payload: { type: "cookMeals", totalItems: paginatedMealsOrders.totalItems },
+    });
+    dispatch({
+      type: UPDATE_TOTAL_PAGES,
+      payload: { type: "cookMeals", totalPages: paginatedMealsOrders.totalPages },
+    });
+    dispatch({
+      type: NOT_LOADING,
+    });
+    
+    console.log(paginatedMealsOrders);
+    
+  }

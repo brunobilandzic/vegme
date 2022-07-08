@@ -3,13 +3,16 @@ import {
   LOAD_ALL_PAGINATED_MEALS,
   REMOVE_MEAL_FROM_CART,
   DELETE_CACHE_MEALS,
-  EMPTY_THE_CART
+  EMPTY_THE_CART,
+  LOAD_ALL_PAGINATED_COOK_MEALS,
 } from "../types";
 
 const initialState = {
-  browsing: {
+  meals: {
     items: {},
-    pagination: false,
+  },
+  cookMeals: {
+    items: {},
   },
   mealsToOrder: [],
 };
@@ -19,14 +22,25 @@ export default function mealsReducer(state = initialState, action) {
     case LOAD_ALL_PAGINATED_MEALS:
       return {
         ...state,
-        browsing: {
-          ...state.browsing,
+        meals: {
+          ...state.meals,
           items: {
-            ...state.browsing.items,
+            ...state.meals.items,
             [action.payload.pageNumber + "-" + action.payload.pageSize]:
               action.payload.items,
           },
-          pagination: true,
+        },
+      };
+    case LOAD_ALL_PAGINATED_COOK_MEALS:
+      return {
+        ...state,
+        cookMeals: {
+          ...state.cookMeals,
+          items: {
+            ...state.cookMeals.items,
+            [action.payload.pageNumber + "-" + action.payload.pageSize]:
+              action.payload.items,
+          },
         },
       };
     case ADD_MEAL_TO_CART:
@@ -44,8 +58,8 @@ export default function mealsReducer(state = initialState, action) {
     case EMPTY_THE_CART:
       return {
         ...state,
-        mealsToOrder: []
-      }
+        mealsToOrder: [],
+      };
     case DELETE_CACHE_MEALS:
       return {
         ...state,

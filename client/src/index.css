@@ -17,3 +17,15 @@
     justify-content: center;
     align-items: center;
 }
+
+.hidden {
+    display: none;
+}
+
+.showOrders:hover {
+    cursor: pointer;
+}
+
+.showOrders {
+    color: blue
+}

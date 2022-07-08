@@ -6,9 +6,11 @@ const {
   createCook,
   getAllCooks,
   getAllCookRoles,
+  getAllMealsForCook,
 } = require("../controllers/cook.js");
 
 router.route("/").get(getAllCooks).post(upload.none(), createCook);
+router.get("/meals", getAllMealsForCook)
 
 router.get("/roles", getAllCookRoles);
 

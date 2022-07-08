@@ -7,19 +7,20 @@ import paginationStyles from "./pagination.module.css";
 import { v4 as uuid } from "uuid";
 
 function PaginationCustom(props) {
-  const { meals, orders, loadItems, updatePageNumber, type } = props;
+  const { meals, orders, cookMeals, loadItems, updatePageNumber, type } = props;
 
   const { pageNumber, pageSize, totalPages } =
     type == "meals"
       ? meals
       : type == "orders"
       ? orders
+      : type == "cookMeals"
+      ? cookMeals
       : {
           pageNumber: 1,
           pageSize: 5,
           totalPages: null,
         };
-
   const getPageNumbers = () => {
     let pageItems = [];
     const needDots = totalPages > 5 ? true : false;
@@ -130,11 +131,13 @@ function PaginationCustom(props) {
 PaginationCustom.propTypes = {
   orders: propTypes.object,
   meals: propTypes.object,
+  cookMeals: propTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   orders: state.pagination.orders,
   meals: state.pagination.meals,
+  cookMeals: state.pagination.cookMeals,
 });
 
 export default connect(mapStateToProps, {
