@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { useCallback, useState } = require("react");
 
+
 const useHttpClient = () => {
   const [error, setError] = useState();
   const clearError = () => setError();
@@ -10,16 +11,15 @@ const useHttpClient = () => {
       try {
         switch (method) {
           case "GET":
-            response = await axios.get(url, { withCredentials: true});
+            response = await axios.get(url, { withCredentials: true });
             break;
           case "POST":
-            response = await axios.post(url, body, {withCredentials: true});
+            response = await axios.post(url, body, { withCredentials: true });
             break;
         }
       } catch (error) {
         setError(error.response.data.message);
       }
-      
 
       return response.data;
     },

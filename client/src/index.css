@@ -29,3 +29,35 @@
 .showOrders {
     color: blue
 }
+
+.flex-row-item {
+    margin-right: 2rem;
+}
+.last-item {
+    margin-right: -1rem;
+}
+
+.different-cook {
+    width: 9rem;
+}
+
+.hover-box {
+    position: relative
+}
+
+
+.hover-box:hover .hover-text {
+    visibility: visible;
+}
+
+.hover-text {
+    position: absolute;
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 0.4rem 0.4rem;
+    right: -50px;
+    border-radius: 20px;
+    top: 40px;
+    visibility: hidden;
+}

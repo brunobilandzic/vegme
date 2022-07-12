@@ -6,6 +6,7 @@ const { orderMeals, orderByDateOrdered } = require("../helpers/sorting");
 const { CookRoleUser, BaseUser } = require("../models/user");
 const url = require("url");
 
+
 const getAllCooks = async (req, res) => {
   const cooksDocuments = await CookRoleUser.find();
   const cooksIds = cooksDocuments.map((cd) =>
@@ -16,10 +17,14 @@ const getAllCooks = async (req, res) => {
   res.json(cooks);
 };
 
+
 const getAllCookRoles = async (req, res) => {
-  const cookRoles = await CookRoleUser.find();
+  const cookRoles = await CookRoleUser.find()
+    .populate({ path: "user", select: "username name" })
+    .populate({ path: "cooks" });
   res.json(cookRoles);
 };
+
 
 const createCook = async (req, res, next) => {
   let user;
@@ -34,6 +39,7 @@ const createCook = async (req, res, next) => {
   res.json(cookRoleUser);
 };
 
+
 const addToCook = async (userId) => {
   let user = await BaseUser.findById(userId);
   let cookRoleUser = new CookRoleUser({ user: userId });
@@ -44,6 +50,7 @@ const addToCook = async (userId) => {
 
   return cookRoleUser;
 };
+
 
 const getAllMealsForCook = async (req, res, next) => {
   const queryObject = url.parse(req.url, true).query;
@@ -72,10 +79,25 @@ const getAllMealsForCook = async (req, res, next) => {
 
   res.json(paginatedMealsOrderArray);
 };
+
+
+const getCookByUsername = async (req, res, next) => {
+  const { username } = req.params;
+  const user = await BaseUser.findOne({ username });
+  const cook = await CookRoleUser.findById(
+    user?.roles.find((role) => role.name === COOK).id
+  )
+    .populate({ path: "cooks", populate: "cook" })
+    .populate({ path: "user" });
+  res.json(cook);
+};
+
+
 module.exports = {
   getAllCooks,
   getAllCookRoles,
   createCook,
   addToCook,
   getAllMealsForCook,
+  getCookByUsername,
 };

@@ -7,11 +7,12 @@ const {
   getAllCooks,
   getAllCookRoles,
   getAllMealsForCook,
+  getCookByUsername,
 } = require("../controllers/cook.js");
 
 router.route("/").get(getAllCooks).post(upload.none(), createCook);
-router.get("/meals", getAllMealsForCook)
-
+router.get("/meals", getAllMealsForCook);
 router.get("/roles", getAllCookRoles);
+router.get("/one/:username", getCookByUsername);
 
 module.exports = router;

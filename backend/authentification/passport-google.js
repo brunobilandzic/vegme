@@ -2,14 +2,18 @@ const passport = require("passport");
 const { BaseUser } = require("../models/user");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const { addToRegularRole } = require("../controllers/regular");
+
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
+
 
 passport.deserializeUser(async (user, done) => {
   const existingUser = await BaseUser.findById(user._id);
   return done(null, existingUser);
 });
+
 
 passport.use(
   new GoogleStrategy(
@@ -33,6 +37,7 @@ passport.use(
         googleId: profile.id,
         email: profile.emails[0]?.value,
         email_verified: true,
+        changed_username: false,
         username: profile.displayName.trim().toLowerCase().replace(/\s/g, ""),
       });
 

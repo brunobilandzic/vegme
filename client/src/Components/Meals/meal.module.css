@@ -1,33 +1,35 @@
-.mealItem {
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem 0 3rem;
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 3rem;
+}
+
+.item {
+  margin-right: 2rem;
 }
 
 .addIcon {
-    padding: 0.2rem;
+  padding: 0.2rem;
 }
 
 .addIcon:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .ingredientsContainer {
-
 }
 
 .ingredientsTable {
-
 }
 
 .ingredientsTableItem {
-    padding: 0.5rem;
-    padding-bottom: 0.1rem;
-    padding-left: 0;
+  padding: 0.5rem;
+  padding-bottom: 0.1rem;
+  padding-left: 0;
 }
 
 .mealOrders {
-    padding: 1rem;
-    border: 1px solid;
-    margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid;
+  margin: 1rem 0;
 }

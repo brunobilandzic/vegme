@@ -29,6 +29,8 @@ function Login({ loadUser }) {
     false
   );
   const navigate = useNavigate();
+
+
   const onLogin = async (e) => {
     e.preventDefault();
     let formData = new FormData();
@@ -37,7 +39,7 @@ function Login({ loadUser }) {
     formData.append("password", formState.inputs.password.value);
 
     const response = await sendRequest(
-      process.env.REACT_APP_ROOT_URL + "auth/local/login",
+      process.env.REACT_APP_ROOT_URL + "/auth/local/login",
       "POST",
       formData
     );
@@ -47,6 +49,8 @@ function Login({ loadUser }) {
       navigate("/auth/success");
     }
   };
+
+  
   return (
     <>
       <Modal
@@ -83,7 +87,7 @@ function Login({ loadUser }) {
           validators={[VALIDATOR_MIN_LENGTH(6)]}
         />
         <a
-          href={`${process.env.REACT_APP_ROOT_URL}auth/google`}
+          href={`${process.env.REACT_APP_ROOT_URL}/auth/google`}
           target="_blank"
         >
           Authorize with google

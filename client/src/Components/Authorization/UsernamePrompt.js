@@ -22,12 +22,13 @@ export default function UsernamePrompt(props) {
   const navigate = useNavigate();
   const [sendRequest, error, clearError, setError] = useHttpClient();
 
+
   const usernameSubmitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("username", formState.inputs.username.value);
     const response = await sendRequest(
-      process.env.REACT_APP_ROOT_URL + "users/username/new",
+      process.env.REACT_APP_ROOT_URL + "/users/username/new",
       "POST",
       formData
     );
@@ -35,6 +36,7 @@ export default function UsernamePrompt(props) {
     if (!error) navigate("/auth/google/success");
   };
 
+  
   return (
     <>
       <form onSubmit={usernameSubmitHandler}>

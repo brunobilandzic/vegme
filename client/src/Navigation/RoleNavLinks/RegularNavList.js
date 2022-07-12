@@ -14,6 +14,9 @@ export default function RegularNavList() {
       <LinkContainer to="/orders/my">
         <NavLink>Orders</NavLink>
       </LinkContainer>
+      <LinkContainer to="/cooks">
+        <NavLink>Cooks</NavLink>
+      </LinkContainer>
     </>
   );
 }

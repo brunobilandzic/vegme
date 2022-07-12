@@ -6,6 +6,7 @@ const { RegularRoleUser, BaseUser } = require("../models/user.js");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { REGULAR } = require("../constants/roles.js");
 
+
 const getAllPaginatedOrdersForUser = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   const ordererBaseUser = await BaseUser.findById(req.user.id);
@@ -21,11 +22,12 @@ const getAllPaginatedOrdersForUser = async (req, res) => {
     }),
     Number(queryObject.pageNumber),
     Number(queryObject.pageSize),
-    {date_ordered: -1}
+    { date_ordered: -1 }
   );
 
   res.json(ordersWithPagination);
 };
+
 
 const getAllPaginatedOrders = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
@@ -41,11 +43,13 @@ const getAllPaginatedOrders = async (req, res) => {
   res.json(ordersWithPagination);
 };
 
+
 const getAllOrders = async (req, res) => {
   const orders = await Order.find();
 
   res.json(orders);
 };
+
 
 const createOrder = async (req, res) => {
   const newOrder = new Order(req.body);
@@ -64,6 +68,7 @@ const createOrder = async (req, res) => {
   res.json(newOrder);
 };
 
+
 const toggleOrderActive = async (req, res, next) => {
   const order = await Order.findById(req.params.order);
   order.active = !order.active;
@@ -71,6 +76,7 @@ const toggleOrderActive = async (req, res, next) => {
 
   res.json({ active: order.active });
 };
+
 
 const needNewPageMyOrder = async (req, res) => {
   const ordererBaseUser = await BaseUser.findById(req.user.id);
@@ -84,6 +90,7 @@ const needNewPageMyOrder = async (req, res) => {
     )
   );
 };
+
 
 module.exports = {
   getAllPaginatedOrdersForUser,

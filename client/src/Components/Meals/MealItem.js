@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { isArrayNullOrEmpty } from "../../util/helper";
 import IngredientList from "./Ingredients/IngredientList";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import { RiForbid2Line } from "react-icons/ri";
 import propTypes from "prop-types";
 import mealStyles from "./meal.module.css";
 import { connect } from "react-redux";
@@ -21,25 +22,54 @@ function MealItem({
     isMealInCart() ? removeMealFromCart(meal._id) : addMealToCart(meal);
   };
 
+
   const getIcon = () => {
     return isMealInCart() ? <AiOutlineMinusCircle /> : <AiOutlinePlusCircle />;
   };
 
+
   const isMealInCart = () => {
     return mealsToOrder?.map((meal) => meal._id).includes(meal._id);
   };
+
+
+  const determineIcon = () => {
+    console.log(mealsToOrder.map((meal) => meal.cook._id));
+    if (mealsToOrder.length == 0) return getIcon();
+    if (
+      mealsToOrder
+        .map((meal) => meal.cook._id)
+        .every((cookId) => cookId == meal.cook._id)
+    )
+      return getIcon();
+    return (
+      <div className="hover-box">
+        <RiForbid2Line />
+        <div className="hover-text different-cook">Different cook!</div>
+      </div>
+    );
+  };
+
+
   return (
     <>
-      <div className={mealStyles.mealItem}>
-        <h6>{meal.name}</h6>
-        {!isArrayNullOrEmpty(meal.ingredients) && (
-          <>
-            <IngredientList ingredients={meal.ingredients}></IngredientList>
-          </>
-        )}
+      <div className={mealStyles.wrap}>
+        <div className="d-flex flex-row justify-content-start">
+          <div className="flex-row-item">
+            <h6>{meal?.name}</h6>
+          </div>
+          {!isArrayNullOrEmpty(meal.ingredients) && (
+            <div className="flex-row-item">
+              <IngredientList ingredients={meal.ingredients}></IngredientList>
+            </div>
+          )}
+          <div className={mealStyles.cookName}>{meal.cook.user?.name}</div>
+        </div>
         {showAdd && (
-          <div onClick={handleMealAddClick} className={mealStyles.addIcon}>
-            {getIcon()}
+          <div className="last-item">
+            <div onClick={handleMealAddClick} className={mealStyles.addIcon}>
+              {determineIcon()}
+            </div>
           </div>
         )}
       </div>
@@ -53,9 +83,11 @@ MealItem.propTypes = {
   addMealToCart: propTypes.func.isRequired,
 };
 
+
 const mapStateToProps = (state) => ({
   mealsToOrder: state.meals.mealsToOrder,
 });
+
 
 export default connect(mapStateToProps, { addMealToCart, removeMealFromCart })(
   MealItem

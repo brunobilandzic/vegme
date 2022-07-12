@@ -1,12 +1,13 @@
 import axios from "axios";
 import { buildUrlWithPagination } from "../../util/helper";
 
+
 export const loadPaginatedMealsFromServer = async (
   pageNumber = 1,
   pageSize = 5
 ) => {
   const urlWithPagination = buildUrlWithPagination(
-    process.env.REACT_APP_ROOT_URL + "meals",
+    process.env.REACT_APP_ROOT_URL + "/meals",
     pageNumber,
     pageSize
   );
@@ -16,18 +17,20 @@ export const loadPaginatedMealsFromServer = async (
   return response.data;
 };
 
+
 export const createMeal = async (meal) => {
   const response = await axios.post(
-    process.env.REACT_APP_ROOT_URL + "meals",
+    process.env.REACT_APP_ROOT_URL + "/meals",
     meal,
     { withCredentials: true }
   );
   return response.data;
 };
 
+
 export const loadMealsWithOrders = async (pageNumber = 1, pageSize = 5) => {
   const urlWithPagination = buildUrlWithPagination(
-    process.env.REACT_APP_ROOT_URL + "cooks/meals",
+    process.env.REACT_APP_ROOT_URL + "/cooks/meals",
     pageNumber,
     pageSize
   );

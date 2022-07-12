@@ -33,23 +33,26 @@ export default function Signup() {
     },
     false
   );
-    const navgate = useNavigate()
+  const navgate = useNavigate();
   const [sendRequest, error, clearError, setError] = useHttpClient();
+
+
   const handleNewCustomerSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData();
 
     formData.append("name", formState.inputs.name.value);
     formData.append("password", formState.inputs.password.value);
-    formData.append("username", formState.inputs.username.value)
+    formData.append("username", formState.inputs.username.value);
     const response = await sendRequest(
       process.env.REACT_APP_ROOT_URL + "auth/local/signup",
       "POST",
       formData
     );
-    navgate("/auth/success")
+    navgate("/auth/success");
   };
 
+  
   return (
     <>
       <Modal
@@ -100,12 +103,16 @@ export default function Signup() {
           placeholder="Repeat Password"
           id="repeatPassword"
           validators={[VALIDATOR_SAME_AS(formState.inputs.password?.value)]}
-        /><br></br>
+        />
+        <br></br>
         <Button type="submit" disabled={!formState.isValid}>
           Submit
         </Button>
       </form>
-      <a href="http://localhost:5000/auth/google" target="_blank">
+      <a
+        href={`${process.env.REACT_APP_ROOT_URL}/auth/google`}
+        target="_blank"
+      >
         Authorize with google
       </a>{" "}
       <br />

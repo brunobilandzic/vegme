@@ -20,6 +20,8 @@ import MainPage from "../Shared/Components/MainPage";
 import AuthorizationShield from "./Shields/AuthorizationShield";
 import OrderPage from "../Components/Orders/OrderPage";
 import CookMeals from "../Components/Meals/CookMeals";
+import CookProfile from "../Components/Cook/CookProfile";
+import BrowseCooks from "../Components/Cook/BrowseCooks";
 
 export default function Router(props) {
   return (
@@ -36,12 +38,7 @@ export default function Router(props) {
                 </AdministratorShield>
               }
             ></Route>
-            <Route
-              path="/meals"
-              element={
-                  <MealsMainPage />
-              }
-            ></Route>
+            <Route path="/meals" element={<MealsMainPage />}></Route>
             <Route
               path="/meals/new"
               element={
@@ -50,12 +47,7 @@ export default function Router(props) {
                 </CookShield>
               }
             ></Route>
-            <Route
-              path="/meals/browse"
-              element={
-                  <BrowseMeals />
-              }
-            ></Route>
+            <Route path="/meals/browse" element={<BrowseMeals />}></Route>
             <Route
               path="/mymeals"
               element={
@@ -80,6 +72,8 @@ export default function Router(props) {
                 </RegularShield>
               }
             ></Route>
+            <Route path="/cooks" element={<BrowseCooks />} />
+            <Route path="/cooks/:username" element={<CookProfile />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route
