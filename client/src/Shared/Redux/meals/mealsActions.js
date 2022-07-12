@@ -116,6 +116,4 @@ export const loadPaginatedMealsWithOrders =
     dispatch({
       type: NOT_LOADING,
     });
-
-    console.log(paginatedMealsOrders);
   };

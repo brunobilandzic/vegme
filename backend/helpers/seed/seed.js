@@ -13,12 +13,10 @@ const {
   BaseUser,
 } = require("../../models/user");
 
-
 const readJsonData = (filename) => {
   const jsonString = fs.readFileSync(filename);
   return JSON.parse(jsonString);
 };
-
 
 const seedUsers = async () => {
   if (await BaseUser.count()) return;
@@ -33,13 +31,11 @@ const seedUsers = async () => {
   await writeRegulars(regulars);
 };
 
-
 const writeRegulars = async (regulars) => {
   await regulars.forEach(async (regular) => {
     await addRegular(regular);
   });
 };
-
 
 const addRegular = async (regular) => {
   const userId = await createNewUserManually(regular);
@@ -47,13 +43,11 @@ const addRegular = async (regular) => {
   console.log(`${regular.username} saved`);
 };
 
-
 const writeAdmins = async (admins) => {
   admins?.forEach(async (admin) => {
     await addAdmin(admin);
   });
 };
-
 
 const addAdmin = async (admin) => {
   const userId = await createNewUserManually(admin);
@@ -61,13 +55,11 @@ const addAdmin = async (admin) => {
   console.log(`${admin.username} saved`);
 };
 
-
 const writeCooks = async (cooks) => {
   await cooks.forEach(async (cook) => {
     await addCook(cook);
   });
 };
-
 
 const addCook = async (cook) => {
   const userId = await createNewUserManually(cook);
@@ -75,20 +67,17 @@ const addCook = async (cook) => {
   console.log(`${cook.username} saved`);
 };
 
-
 const writeOperators = async (operators) => {
   operators.forEach(async (operator) => {
     await addOperator(operator);
   });
 };
 
-
 const addOperator = async (operator) => {
   const userId = await createNewUserManually(operator);
   await addToOperatorRole(userId);
   console.log(`${operator.username} saved`);
 };
-
 
 const seedMeals = async () => {
   if (!(await CookRoleUser.count())) return;
@@ -97,7 +86,6 @@ const seedMeals = async () => {
   console.log(meals.length);
   writeMeals(meals);
 };
-
 
 const writeMeals = async (meals) => {
   await meals.forEach(async (mealJSON) => {
@@ -114,10 +102,9 @@ const writeMeals = async (meals) => {
 
     await meal.save();
     await cook.save();
-    console.log(`˘${meal.name} saved`);
+    console.log(`${meal.name} saved`);
   });
 };
-
 
 const seedOrders = async () => {
   if (!(await RegularRoleUser.count())) return;
@@ -127,7 +114,6 @@ const seedOrders = async () => {
   console.log(orders.length);
   writeOrders(orders);
 };
-
 
 const writeOrders = async (orders) => {
   for (let i = 0; i <= 11; i++) {
@@ -180,7 +166,6 @@ const writeOrders = async (orders) => {
   });
 };
 
-
 const getMealIdsFromSameCook = async (numberOfitems) => {
   const cookId = await getRandomCookId();
   const allMeals = await Meal.find({ cook: cookId });
@@ -197,19 +182,16 @@ const getMealIdsFromSameCook = async (numberOfitems) => {
   return shuffledMeals.slice(0, numberOfitems);
 };
 
-
 const getOrdererId = async () => {
   const regulars = await RegularRoleUser.find();
   const regularIds = regulars.map((regular) => regular.id);
   return regularIds[Math.floor(Math.random() * regularIds.length)];
 };
 
-
 const getRegular330Id = async () => {
   const regular = await BaseUser.findOne({ username: "regularusername330" });
   return regular.roles.find((role) => role.name == REGULAR)?.id;
 };
-
 
 const getRandomCookId = async () => {
   const randomCook = await CookRoleUser.findOne().skip(
@@ -219,12 +201,28 @@ const getRandomCookId = async () => {
   return randomCookId;
 };
 
+const cookUsernameMostOrders = async () => {
+  if (!(await Meal.count()) || !(await Order.count())) return;
+  const meals = await Meal.find().populate({
+    path: "cook",
+    populate: { path: "user" },
+  });
+  let mostOrders = 0;
+  let mealWithMostOrders;
+  meals.forEach((meal) => {
+    if (meal.orders.length > mostOrders) {
+      mostOrders = meal.orders.length;
+      mealWithMostOrders = meal;
+    }
+  });
+  console.log(`${mealWithMostOrders.cook.user.username} has meal with most orders`);
+};
 
 const seedData = async () => {
   await seedUsers();
   await seedMeals();
   await seedOrders();
+  await cookUsernameMostOrders();
 };
-
 
 module.exports = { seedData };

@@ -27,6 +27,12 @@ const initialState = {
     pageSize: 5,
     totalItems: null,
     totalPages: null,
+  },
+  specialMeals: {
+    pageNumber: 1,
+    pageSize: 5,
+    totalItems: null,
+    totalPages: null,
   }
 };
 
