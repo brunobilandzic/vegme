@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { PageItem, Pagination } from "react-bootstrap";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
@@ -7,7 +7,15 @@ import paginationStyles from "./pagination.module.css";
 import { v4 as uuid } from "uuid";
 
 function PaginationCustom(props) {
-  const { meals, orders, cookMeals, loadItems, updatePageNumber, type } = props;
+  const {
+    meals,
+    orders,
+    cookMeals,
+    specialMeals,
+    loadItems,
+    updatePageNumber,
+    type,
+  } = props;
 
   const { pageNumber, pageSize, totalPages } =
     type == "meals"
@@ -16,6 +24,8 @@ function PaginationCustom(props) {
       ? orders
       : type == "cookMeals"
       ? cookMeals
+      : type == "specialMeals"
+      ? specialMeals
       : {
           pageNumber: 1,
           pageSize: 5,
@@ -132,12 +142,14 @@ PaginationCustom.propTypes = {
   orders: propTypes.object,
   meals: propTypes.object,
   cookMeals: propTypes.object,
+  specialMeals: propTypes.object
 };
 
 const mapStateToProps = (state) => ({
   orders: state.pagination.orders,
   meals: state.pagination.meals,
   cookMeals: state.pagination.cookMeals,
+  specialMeals: state.pagination.specialMeals
 });
 
 export default connect(mapStateToProps, {

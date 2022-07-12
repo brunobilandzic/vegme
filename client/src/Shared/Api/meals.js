@@ -39,3 +39,15 @@ export const loadMealsWithOrders = async (pageNumber = 1, pageSize = 5) => {
   });
   return response.data;
 };
+
+export const loadPaginatedSpecialMealsFromServer = async (pageNumber = 1, pageSize = 5) => {
+  const urlWithPagination = buildUrlWithPagination(
+    process.env.REACT_APP_ROOT_URL + "/meals/special",
+    pageNumber,
+    pageSize
+  );
+  const response = await axios.get(urlWithPagination.href, {
+    withCredentials: true,
+  });
+  return response.data;
+}

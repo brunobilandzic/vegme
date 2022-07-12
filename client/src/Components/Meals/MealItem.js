@@ -63,7 +63,8 @@ function MealItem({
               <IngredientList ingredients={meal.ingredients}></IngredientList>
             </div>
           )}
-          <div className={mealStyles.cookName}>{meal.cook.user?.username}</div>
+          <div className={"flex-row-item " + mealStyles.cookName}>{meal.cook.user?.username}</div>
+          <div className={mealStyles.type}>{meal.type}</div>
         </div>
         {showAdd && (
           <div className="last-item">

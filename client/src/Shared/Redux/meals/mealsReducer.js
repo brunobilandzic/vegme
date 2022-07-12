@@ -5,6 +5,7 @@ import {
   DELETE_CACHE_MEALS,
   EMPTY_THE_CART,
   LOAD_ALL_PAGINATED_COOK_MEALS,
+  LOAD_ALL_PAGINATED_SPECIAL_MEALS,
 } from "../types";
 
 const initialState = {
@@ -12,6 +13,9 @@ const initialState = {
     items: {},
   },
   cookMeals: {
+    items: {},
+  },
+  specialMeals: {
     items: {},
   },
   mealsToOrder: [],
@@ -43,6 +47,19 @@ export default function mealsReducer(state = initialState, action) {
           },
         },
       };
+    case LOAD_ALL_PAGINATED_SPECIAL_MEALS:
+      return {
+        ...state,
+        specialMeals: {
+          ...state.specialMeals,
+          items: {
+            ...state.specialMeals.items,
+            [action.payload.pageNumber + "-" + action.payload.pageSize]:
+              action.payload.items,
+          },
+        },
+      };
+
     case ADD_MEAL_TO_CART:
       return {
         ...state,

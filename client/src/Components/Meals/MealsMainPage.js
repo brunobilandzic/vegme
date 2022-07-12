@@ -9,6 +9,8 @@ const MealsMainPage = ({user}) => {
   return (
     <>
         <Link to="/meals/browse">Browse</Link>
+        <br />
+        <Link to="/meals/special">Special meals</Link>
         { 
           isInCookRole(user) && <div>
             <Link to="/mymeals">My Meals</Link>

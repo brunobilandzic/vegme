@@ -2,6 +2,7 @@ import {
   createMeal,
   loadMealsWithOrders,
   loadPaginatedMealsFromServer,
+  loadPaginatedSpecialMealsFromServer,
 } from "../../Api/meals";
 import {
   ADD_MEAL_TO_CART,
@@ -14,8 +15,8 @@ import {
   DELETE_CACHE_MEALS,
   RESET_PAGINATION_FOR_TYPE,
   LOAD_ALL_PAGINATED_COOK_MEALS,
+  LOAD_ALL_PAGINATED_SPECIAL_MEALS,
 } from "../types";
-
 
 export const addMealToCart = (meal) => (dispatch, getState) => {
   if (
@@ -32,7 +33,6 @@ export const removeMealFromCart = (meal) => (dispatch) => {
   dispatch({ type: REMOVE_MEAL_FROM_CART, payload: meal });
 };
 
-
 export const createMealAction = (meal) => async (dispatch, getState) => {
   const newMeal = await createMeal(meal);
   dispatch({
@@ -45,7 +45,6 @@ export const createMealAction = (meal) => async (dispatch, getState) => {
     },
   });
 };
-
 
 export const loadPaginatedMeals =
   (pageNumber = 1, pageSize = 5) =>
@@ -79,7 +78,6 @@ export const loadPaginatedMeals =
     });
   };
 
-  
 export const loadPaginatedMealsWithOrders =
   (pageNumber = 1, pageSize = 5) =>
   async (dispatch, getState) => {
@@ -111,6 +109,45 @@ export const loadPaginatedMealsWithOrders =
       payload: {
         type: "cookMeals",
         totalPages: paginatedMealsOrders.totalPages,
+      },
+    });
+    dispatch({
+      type: NOT_LOADING,
+    });
+  };
+
+export const loadPaginatedSpecialMeals =
+  (pageNumber = 1, pageSize = 5) =>
+  async (dispatch, getState) => {
+    if (getState().meals.specialMeals.items[pageNumber + "-" + pageSize])
+      return;
+    dispatch({
+      type: IS_LOADING,
+    });
+    const paginatedSpecialMeals = await loadPaginatedSpecialMealsFromServer(
+      pageNumber,
+      pageSize
+    );
+    dispatch({
+      type: LOAD_ALL_PAGINATED_SPECIAL_MEALS,
+      payload: {
+        pageNumber,
+        pageSize,
+        items: paginatedSpecialMeals.items,
+      },
+    });
+    dispatch({
+      type: UPDATE_TOTAL_ITEMS,
+      payload: {
+        type: "specialMeals",
+        totalItems: paginatedSpecialMeals.totalItems,
+      },
+    });
+    dispatch({
+      type: UPDATE_TOTAL_PAGES,
+      payload: {
+        type: "specialMeals",
+        totalPages: paginatedSpecialMeals.totalPages,
       },
     });
     dispatch({
