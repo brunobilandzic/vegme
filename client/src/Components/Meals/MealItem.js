@@ -63,7 +63,7 @@ function MealItem({
               <IngredientList ingredients={meal.ingredients}></IngredientList>
             </div>
           )}
-          <div className={mealStyles.cookName}>{meal.cook.user?.name}</div>
+          <div className={mealStyles.cookName}>{meal.cook.user?.username}</div>
         </div>
         {showAdd && (
           <div className="last-item">
