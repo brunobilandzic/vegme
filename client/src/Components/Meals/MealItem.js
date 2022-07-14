@@ -34,7 +34,6 @@ function MealItem({
 
 
   const determineIcon = () => {
-    console.log(mealsToOrder.map((meal) => meal.cook._id));
     if (mealsToOrder.length == 0) return getIcon();
     if (
       mealsToOrder
