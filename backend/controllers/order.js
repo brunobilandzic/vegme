@@ -50,8 +50,23 @@ const getAllOrders = async (req, res) => {
 const getAllOrdersForUser = async (req, res) => {
   const regular = await RegularRoleUser.findOne({ user: req.user.id });
   const regularId = regular.id;
-  const orders = await Order.find({orderer: regularId});
-  res.json(orders)
+  const orders = await Order.find({ orderer: regularId });
+  res.json(orders);
+};
+
+const getAllOrdersForCook = async (req, res) => {
+  const orders = await Order.find({ cook: req.params.cook });
+  res.json(orders);
+};
+
+const getAllPersonalOrdersForCook = async (req, res) => {
+  const queryObject = url.parse(req.url, true).query;
+  const regular = await RegularRoleUser.findOne({ user: req.user.id });
+  const regularId = regular.id;
+  const orders = await Order.find({
+    $and: [{ cook: queryObject.cookId }, { orderer: regularId }],
+  });
+  res.json(orders);
 };
 
 const createOrder = async (req, res) => {
@@ -61,6 +76,8 @@ const createOrder = async (req, res) => {
     meal.orders.push(newOrder.id);
     await meal.save();
   });
+  const cook = await CookRoleUser.findById(req.params.cook);
+  cook.orders.push(newOrder.id);
   const client = await RegularRoleUser.findOne({ user: req.user.id });
   client.orders.push(newOrder.id);
   newOrder.orderer = client.id;
@@ -99,5 +116,7 @@ module.exports = {
   toggleOrderActive,
   getAllOrders,
   needNewPageMyOrder,
-  getAllOrdersForUser
+  getAllOrdersForUser,
+  getAllOrdersForCook,
+  getAllPersonalOrdersForCook,
 };

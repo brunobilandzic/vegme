@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const PassportLocalMongoose = require("passport-local-mongoose");
 
-
 const roleObject = {
   name: { type: String, required: true },
   id: { type: mongoose.Types.ObjectId },
@@ -33,6 +32,7 @@ const cookRoleUserObject = {
     unique: true,
   },
   cooks: [{ type: mongoose.Types.ObjectId, ref: "Meal" }],
+  orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
 };
 const adminRoleUserObject = {
   user: {
@@ -74,7 +74,6 @@ const OperatorRoleUser = mongoose.model(
   "OperatorRoleUser",
   new mongoose.Schema(operatorRoleUserObject)
 );
-
 
 module.exports = {
   BaseUser,

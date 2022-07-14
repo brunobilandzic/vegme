@@ -20,6 +20,7 @@ export const sendOrder =
       delivery_address: deliveryAddress,
       active,
       meals: getState().meals.mealsToOrder?.map((meal) => meal._id),
+      cook: getState().meals.mealsToOrder[0].cook
     };
     const newOrder = await createOrder(order);
     dispatch({

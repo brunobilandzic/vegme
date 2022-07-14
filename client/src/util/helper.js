@@ -16,7 +16,6 @@ export const getRegularId = (getState) => {
 export const buildUrl = (baseUrl, queryObject) => {
   const url = new URL(baseUrl);
   Object.keys(queryObject).forEach((key) => {
-    const value = queryObject[key];
     url.searchParams.append(`filter.${key}`, queryObject[key]);
   });
 

@@ -8,6 +8,7 @@ const {
   getAllOrders,
   needNewPageMyOrder,
   getAllOrdersForUser,
+  getAllPersonalOrdersForCook,
 } = require("../controllers/order");
 const { requireRegular } = require("../helpers/roleCheck");
 const upload = multer();
@@ -19,7 +20,7 @@ router
   .post(requireRegular, upload.none(), createOrder);
 
 router.get("/my", requireRegular, getAllPaginatedOrdersForUser);
-router.get("/personal", requireRegular, getAllOrdersForUser);
+router.get("/personal", requireRegular, getAllPersonalOrdersForCook);
 router.get("/paginated", getAllPaginatedOrders);
 
 router.get("/neednew/:pageSize", needNewPageMyOrder);

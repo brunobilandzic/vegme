@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const orderObject = {
+  cook: { type: mongoose.Types.ObjectId, ref: "CookRoleUser" },
   remark: { type: String },
   delivery_address: { type: String, required: true },
   orderer: {

@@ -14,7 +14,7 @@ import cartStyles from "./cart.module.css";
 import { SPECIAL } from "../../../Shared/Constants/MealTypes";
 import PickOrder from "./PickOrder";
 import NewOrder from "./NewOrder";
-function Cart({ mealsToOrder, sendOrder }) {
+function Cart({ mealsToOrder }) {
   const [isAllSpecial, setIsAllSpecial] = useState(false);
   const [allSpecialPrompt, setAllSpecialPrompt] = useState();
   const [pickOrder, setPickOrder] = useState(false);
@@ -33,17 +33,17 @@ function Cart({ mealsToOrder, sendOrder }) {
   };
 
   const handleExistingClick = () => {
-    setAllSpecialPrompt(false)
+    setAllSpecialPrompt(false);
     setPickOrder(true);
   };
 
   const handleNewOrderClick = () => {
-    setAllSpecialPrompt(false)
+    setAllSpecialPrompt(false);
     setPickOrder(false);
   };
 
   const handleSpecialClose = () => {
-    setAllSpecialPrompt(false)
+    setPickOrder(false);
   };
 
   return (
@@ -64,7 +64,12 @@ function Cart({ mealsToOrder, sendOrder }) {
         }
       />
       {!pickOrder && <NewOrder />}
-      {pickOrder && <PickOrder />}
+      {pickOrder && (
+        <PickOrder
+          handleSpecialClose={handleSpecialClose}
+          cookId={mealsToOrder[0]?.cook._id}
+        />
+      )}
     </>
   );
 }

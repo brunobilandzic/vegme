@@ -25,7 +25,9 @@ export const loadPaginatedOrdersForUserFromServer = async (
   return response.data;
 };
 
-export const loadAllPersonalrOrders = async () => {
-  const response = await axiosInstance.get("/orders/personal");
+export const loadAllPersonalOrders = async (cookId) => {
+  const url = new URL(process.env.REACT_APP_ROOT_URL + "/orders/personal");
+  url.searchParams.append("cookId", cookId);
+  const response = await axios.get(url.href, { withCredentials: true });
   return response.data;
 };
