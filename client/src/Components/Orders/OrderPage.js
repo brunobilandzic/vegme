@@ -19,12 +19,12 @@ export const OrderPage = (props) => {
     return ingredientsString;
   };
   const getMeals = () => {
-    meals?.forEach((meal) => {});
     return (
       <div className={ordersStyles.mealList}>
         {meals?.map((meal) => (
           <div key={uuid()} className={ordersStyles.mealItem}>
             <div className={ordersStyles.mealName}>{meal.name}</div>
+            <div>{meal.type}</div>
             <div>{getIngredientsString(meal.ingredients)}</div>
           </div>
         ))}

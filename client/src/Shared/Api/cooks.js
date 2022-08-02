@@ -11,7 +11,7 @@ export const loadSingleCook = async (username) => {
 };
 
 
-export const loadAllCooks = async () => {
+export const loadAllCooksFromServer = async () => {
   const response = await axiosInstance.get("/cooks/roles");
   return response.data;
 };

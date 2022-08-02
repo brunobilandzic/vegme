@@ -25,9 +25,15 @@ export const loadPaginatedOrdersForUserFromServer = async (
   return response.data;
 };
 
-export const loadAllPersonalOrders = async (cookId) => {
+export const loadAllPersonalOrders = async (cookId, mealIds) => {
   const url = new URL(process.env.REACT_APP_ROOT_URL + "/orders/personal");
   url.searchParams.append("cookId", cookId);
+  url.searchParams.append("mealIds", mealIds)
+
   const response = await axios.get(url.href, { withCredentials: true });
   return response.data;
+};
+
+export const appendMealsToOrder = async (orderId, mealIds) => {
+  await axiosInstance.post("/orders/append", { orderId, mealIds });
 };

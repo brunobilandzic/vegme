@@ -1,22 +1,17 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { loadAllCooks } from "../../Shared/Api/cooks";
+import {loadAllCooks} from "../../Shared/Redux/cooks/cooksActions"
 import CookListItem from "./CookListItem";
-
-export const BrowseCooks = ({}) => {
-  const [cooks, setCooks] = useState([]);
+import Loading from "../../Shared/UserInterface/Loading";
+export const BrowseCooks = ({loadAllCooks, cooks}) => {
   useEffect(() => {
-    const loadCooksApi = async () => {
-      const cooksFromApi = await loadAllCooks();
-      setCooks(cooksFromApi);
-    };
-    loadCooksApi();
+    loadAllCooks()
   }, []);
-
   
   return (
     <div>
+    <Loading />
       {cooks?.map((cook, index) => (
         <CookListItem key={index} cook={cook} />
       ))}
@@ -24,10 +19,16 @@ export const BrowseCooks = ({}) => {
   );
 };
 
-BrowseCooks.propTypes = {};
+BrowseCooks.propTypes = {
+  cooks: PropTypes.array
+};
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  cooks: state.cooks.allCooks
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  loadAllCooks
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseCooks);

@@ -166,7 +166,7 @@ const writeOrders = async (orders) => {
   await orderer.save();
   await order.save();
   await cook.save()
-  console.log(`${order.id} saved, cookusername650 id ${cook.id}`);
+  console.log(`$Order id: ${order.id} saved, cookusername650 id: ${cook.id}`);
 
   orders = orders.slice(13);
   await orders.forEach(async (orderJSON) => {

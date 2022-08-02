@@ -12,13 +12,19 @@ const OrderItem = ({ order }) => {
   return (
     <div onClick={navigateToSingular} className={ordersStyles.container}>
       <div className={`${ordersStyles.remark} ${ordersStyles.box}`}>
-        <div className={ordersStyles.remarkHeading}>Remark:</div>
+        <div className={ordersStyles.remarkHeading}>Remark:&nbsp;</div>
         <div className={ordersStyles.remarkContent}>{order.remark}</div>
       </div>
       <div className={`${ordersStyles.address} ${ordersStyles.box}`}>
-        <div className={ordersStyles.addressHeading}>Address:</div>
+        <div className={ordersStyles.addressHeading}>Address:&nbsp; </div>
         <div className={ordersStyles.addressContent}>
-          {order.delivery_address}
+          {" "}{order.delivery_address}
+        </div>
+      </div>
+      <div className={`${ordersStyles.cook} ${ordersStyles.box}`}>
+        <div className={ordersStyles.cookHeading}>Cook:&nbsp;</div>
+        <div className={ordersStyles.cookContent}>
+          {order.cook.user.username}
         </div>
       </div>
       <div>

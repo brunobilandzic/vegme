@@ -2,9 +2,15 @@ const { PaginatedList, needNewPage } = require("../helpers/pagination.js");
 const { Order } = require("../models/order.js");
 const { Meal } = require("../models/meal.js");
 const url = require("url");
-const { RegularRoleUser, BaseUser } = require("../models/user.js");
+const {
+  RegularRoleUser,
+  BaseUser,
+  CookRoleUser,
+} = require("../models/user.js");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { REGULAR } = require("../constants/roles.js");
+const HttpError = require("../errors/http-error.js");
+const { default: mongoose } = require("mongoose");
 
 const getAllPaginatedOrdersForUser = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
@@ -18,6 +24,14 @@ const getAllPaginatedOrdersForUser = async (req, res) => {
     ).populate({
       path: "meals",
       select: "-orders -__v",
+    }).populate({
+      path: "cook",
+      select: "user",
+      populate: {
+        path: "user",
+        select: "username -_id"
+      }
+
     }),
     Number(queryObject.pageNumber),
     Number(queryObject.pageSize),
@@ -60,11 +74,17 @@ const getAllOrdersForCook = async (req, res) => {
 };
 
 const getAllPersonalOrdersForCook = async (req, res) => {
-  const queryObject = url.parse(req.url, true).query;
+  const mealIds = req.query.mealIds.split(",");
   const regular = await RegularRoleUser.findOne({ user: req.user.id });
   const regularId = regular.id;
-  const orders = await Order.find({
-    $and: [{ cook: queryObject.cookId }, { orderer: regularId }],
+  let orders = await Order.find({
+    $and: [{ cook: req.query.cookId }, { orderer: regularId }],
+  });
+  mealIds.forEach((mealId) => {
+    orders.forEach((order) => {
+      if (order.meals.includes(mealId)){
+        orders = orders.filter((o) => o.id != order.id);}
+    });
   });
   res.json(orders);
 };
@@ -76,16 +96,54 @@ const createOrder = async (req, res) => {
     meal.orders.push(newOrder.id);
     await meal.save();
   });
-  const cook = await CookRoleUser.findById(req.params.cook);
+  const cook = await CookRoleUser.findById(req.body.cook);
   cook.orders.push(newOrder.id);
+
   const client = await RegularRoleUser.findOne({ user: req.user.id });
+
   client.orders.push(newOrder.id);
   newOrder.orderer = client.id;
 
   await client.save();
   await newOrder.save();
-
+  await cook.save()
   res.json(newOrder);
+};
+
+const addMealToOrder = async (req, res, next) => {
+  const order = await Order.findById(req.body.orderId);
+  let requestFail = false;
+  let mealCount = 0;
+  await req.body.mealIds?.forEach(async (mealId, index) => {
+    const meal = await Meal.findById(mealId);
+    if (order.meals.includes(mealId)) {
+      requestFail = true;
+      return next(
+        new HttpError(`Meal ${meal.name} already in that order.`, 400)
+      );
+    }
+    if (order.cook.toString() != meal.cook.toString()) {
+      requestFail = true;
+      return next(
+        new HttpError(
+          `Meal ${meal.name} cook and order ${order.remark} cook not the same`,
+          400
+        )
+      );
+    }
+    meal?.orders.push(order.id);
+    order?.meals.push(meal.id);
+    mealCount = index;
+    await order.save();
+    await meal.save();
+
+    res.json(order)
+  });
+
+  if (mealCount == req.body.mealIds.length) {
+    console.log("in");
+    res.json(order);
+  }
 };
 
 const toggleOrderActive = async (req, res, next) => {
@@ -119,4 +177,5 @@ module.exports = {
   getAllOrdersForUser,
   getAllOrdersForCook,
   getAllPersonalOrdersForCook,
+  addMealToOrder,
 };

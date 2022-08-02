@@ -20,7 +20,7 @@ export const sendOrder =
       delivery_address: deliveryAddress,
       active,
       meals: getState().meals.mealsToOrder?.map((meal) => meal._id),
-      cook: getState().meals.mealsToOrder[0].cook
+      cook: getState().meals.mealsToOrder[0].cook._id
     };
     const newOrder = await createOrder(order);
     dispatch({
@@ -36,6 +36,21 @@ export const sendOrder =
       type: EMPTY_THE_CART
     })
   };
+
+export const clearOrdersCache = () => (dispatch) => {
+  dispatch({
+    type: DELETE_CACHE_ORDERS
+  })
+  dispatch({
+    type: RESET_PAGINATION_FOR_TYPE,
+    payload: {
+      type: "orders"
+    }
+  })
+  dispatch({
+    type: EMPTY_THE_CART
+  })
+}
 
 export const loadPaginatedOrdersForUser =
   (pageNumber = 1, pageSize = 5) =>

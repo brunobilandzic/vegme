@@ -68,6 +68,7 @@ function Cart({ mealsToOrder }) {
         <PickOrder
           handleSpecialClose={handleSpecialClose}
           cookId={mealsToOrder[0]?.cook._id}
+          mealsToOrder={mealsToOrder}
         />
       )}
     </>
