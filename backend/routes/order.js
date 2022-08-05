@@ -9,7 +9,10 @@ const {
   needNewPageMyOrder,
   getAllOrdersForUser,
   getAllPersonalOrdersForCook,
-  addMealToOrder,
+  appendMealsToOrder,
+  removeMealsFromOrder,
+  getOneOrder,
+  
 } = require("../controllers/order");
 const { requireRegular } = require("../helpers/roleCheck");
 const upload = multer();
@@ -19,13 +22,15 @@ router
   .route("/")
   .get(requireRegular, getAllOrders)
   .post(requireRegular, upload.none(), createOrder);
-
+router.get("/single/:orderId", getOneOrder)
 router.get("/my", requireRegular, getAllPaginatedOrdersForUser);
 router.get("/personal", requireRegular, getAllPersonalOrdersForCook);
 router.get("/paginated", getAllPaginatedOrders);
 
 router.get("/neednew/:pageSize", needNewPageMyOrder);
-router.post("/append",requireRegular, addMealToOrder)
+router.post("/append",requireRegular, appendMealsToOrder)
 router.post("/toggleactive/:order", toggleOrderActive);
+
+router.delete("/remove", removeMealsFromOrder)
 
 module.exports = router;

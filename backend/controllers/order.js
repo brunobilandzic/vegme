@@ -12,6 +12,17 @@ const { REGULAR } = require("../constants/roles.js");
 const HttpError = require("../errors/http-error.js");
 const { default: mongoose } = require("mongoose");
 
+const getOneOrder = async (req, res, next) => {
+  const order = await Order.findById(req.params.orderId);
+  if (!order) return next(new HttpError("Order not found", 404));
+  res.json(order);
+};
+
+const getAllOrders = async (req, res) => {
+  const orders = await Order.find();
+  res.json(orders);
+};
+
 const getAllPaginatedOrdersForUser = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   const ordererBaseUser = await BaseUser.findById(req.user.id);
@@ -19,20 +30,19 @@ const getAllPaginatedOrdersForUser = async (req, res) => {
     (role) => role.name === REGULAR
   )?.id;
   const ordersWithPagination = await PaginatedList.getPaginatedResult(
-    Order.find(
-      extractFiltersFromQuery(queryObject, { orderer: regularId })
-    ).populate({
-      path: "meals",
-      select: "-orders -__v",
-    }).populate({
-      path: "cook",
-      select: "user",
-      populate: {
-        path: "user",
-        select: "username -_id"
-      }
-
-    }),
+    Order.find(extractFiltersFromQuery(queryObject, { orderer: regularId }))
+      .populate({
+        path: "meals",
+        select: "-orders -__v",
+      })
+      .populate({
+        path: "cook",
+        select: "user",
+        populate: {
+          path: "user",
+          select: "username -_id",
+        },
+      }),
     Number(queryObject.pageNumber),
     Number(queryObject.pageSize),
     { date_ordered: -1 }
@@ -53,12 +63,6 @@ const getAllPaginatedOrders = async (req, res) => {
   );
 
   res.json(ordersWithPagination);
-};
-
-const getAllOrders = async (req, res) => {
-  const orders = await Order.find();
-
-  res.json(orders);
 };
 
 const getAllOrdersForUser = async (req, res) => {
@@ -82,8 +86,9 @@ const getAllPersonalOrdersForCook = async (req, res) => {
   });
   mealIds.forEach((mealId) => {
     orders.forEach((order) => {
-      if (order.meals.includes(mealId)){
-        orders = orders.filter((o) => o.id != order.id);}
+      if (order.meals.includes(mealId)) {
+        orders = orders.filter((o) => o.id != order.id);
+      }
     });
   });
   res.json(orders);
@@ -106,44 +111,67 @@ const createOrder = async (req, res) => {
 
   await client.save();
   await newOrder.save();
-  await cook.save()
+  await cook.save();
   res.json(newOrder);
 };
 
-const addMealToOrder = async (req, res, next) => {
-  const order = await Order.findById(req.body.orderId);
-  let requestFail = false;
-  let mealCount = 0;
-  await req.body.mealIds?.forEach(async (mealId, index) => {
-    const meal = await Meal.findById(mealId);
-    if (order.meals.includes(mealId)) {
-      requestFail = true;
-      return next(
-        new HttpError(`Meal ${meal.name} already in that order.`, 400)
-      );
-    }
-    if (order.cook.toString() != meal.cook.toString()) {
-      requestFail = true;
-      return next(
-        new HttpError(
-          `Meal ${meal.name} cook and order ${order.remark} cook not the same`,
-          400
-        )
-      );
-    }
-    meal?.orders.push(order.id);
-    order?.meals.push(meal.id);
-    mealCount = index;
-    await order.save();
-    await meal.save();
+const appendMealsToOrder = async (req, res, next) => {
+  const { orderId, mealIds } = req.body;
+  const order = await Order.findById(orderId);
+  const meals = await Meal.find({ _id: { $in: mealIds } });
 
-    res.json(order)
+  let mealWithDifferentCook = null;
+  let mealAlreadyInOrder = null;
+  
+  meals.forEach((meal) => {
+    if (meal.cook.toString() != order.cook.toString()) {
+      mealWithDifferentCook = meal;
+      return;
+    } else if (order.meals.includes(meal.id)) {
+      mealAlreadyInOrder = meal;
+      return;
+    }
+    meal.orders.push(orderId);
+    order.meals.push(meal.id);
   });
 
-  if (mealCount == req.body.mealIds.length) {
-    console.log("in");
-    res.json(order);
+  await meals.forEach(async meal => {
+    await meal.save()
+  })
+  await order.save()
+
+  if (mealWithDifferentCook) {
+    return res.json({
+      error: `Meal ${mealWithDifferentCook.name} has not the same cook as order ${order.remark}`,
+    });
   }
+  if (mealAlreadyInOrder) {
+    return res.json({
+      error: `Meal ${mealAlreadyInOrder.name} already in order ${order.remark}`,
+    });
+  }
+  
+  res.json(order);
+};
+
+const removeMealsFromOrder = async (req, res, next) => {
+  const { orderId, mealIds } = req.body;
+  const order = await Order.findById(orderId);
+
+  mealIds.forEach((mealId) => {
+    order.meals.pull(mealId);
+  });
+
+  await mealIds.forEach(async (mealId) => {
+    const meal = await Meal.findById(mealId);
+
+    meal.orders.pull(orderId);
+
+    await meal.save();
+  });
+
+  await order.save();
+  res.json(order);
 };
 
 const toggleOrderActive = async (req, res, next) => {
@@ -177,5 +205,7 @@ module.exports = {
   getAllOrdersForUser,
   getAllOrdersForCook,
   getAllPersonalOrdersForCook,
-  addMealToOrder,
+  appendMealsToOrder,
+  removeMealsFromOrder,
+  getOneOrder,
 };

@@ -6,6 +6,10 @@ const { orderMeals, orderByDateOrdered } = require("../helpers/sorting");
 const { CookRoleUser, BaseUser } = require("../models/user");
 const url = require("url");
 
+const getOneCook = async (req, res) => {
+  const cook = await CookRoleUser.findById(req.params.cookId);
+  res.json(cook);
+};
 
 const getAllCooks = async (req, res) => {
   const cooksDocuments = await CookRoleUser.find();
@@ -17,14 +21,12 @@ const getAllCooks = async (req, res) => {
   res.json(cooks);
 };
 
-
 const getAllCookRoles = async (req, res) => {
   const cookRoles = await CookRoleUser.find()
     .populate({ path: "user", select: "username name" })
     .populate({ path: "cooks" });
   res.json(cookRoles);
 };
-
 
 const createCook = async (req, res, next) => {
   let user;
@@ -39,7 +41,6 @@ const createCook = async (req, res, next) => {
   res.json(cookRoleUser);
 };
 
-
 const addToCook = async (userId) => {
   let user = await BaseUser.findById(userId);
   let cookRoleUser = new CookRoleUser({ user: userId });
@@ -51,7 +52,6 @@ const addToCook = async (userId) => {
   return cookRoleUser;
 };
 
-
 const getAllMealsForCook = async (req, res, next) => {
   const queryObject = url.parse(req.url, true).query;
 
@@ -59,7 +59,13 @@ const getAllMealsForCook = async (req, res, next) => {
     path: "cooks",
     populate: {
       path: "orders",
-      select: "-meals",
+      populate: {
+        path: "cook",
+        populate: {
+          path: "user",
+          select: "username",
+        },
+      },
     },
   });
   let mealsOrderArray = [];
@@ -80,7 +86,6 @@ const getAllMealsForCook = async (req, res, next) => {
   res.json(paginatedMealsOrderArray);
 };
 
-
 const getCookByUsername = async (req, res, next) => {
   const { username } = req.params;
   const user = await BaseUser.findOne({ username });
@@ -92,7 +97,6 @@ const getCookByUsername = async (req, res, next) => {
   res.json(cook);
 };
 
-
 module.exports = {
   getAllCooks,
   getAllCookRoles,
@@ -100,4 +104,5 @@ module.exports = {
   addToCook,
   getAllMealsForCook,
   getCookByUsername,
+  getOneCook,
 };

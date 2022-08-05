@@ -24,7 +24,7 @@ const OrderItem = ({ order }) => {
       <div className={`${ordersStyles.cook} ${ordersStyles.box}`}>
         <div className={ordersStyles.cookHeading}>Cook:&nbsp;</div>
         <div className={ordersStyles.cookContent}>
-          {order.cook.user.username}
+          {order.cook?.username || order.cook.user?.username}
         </div>
       </div>
       <div>

@@ -4,6 +4,12 @@ const url = require("url");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { CookRoleUser } = require("../models/user.js");
 
+const getOneMeal = async (req, res, next) => {
+  const meal = await Meal.findById(req.params.mealId);
+  if (!meal) return next(new HttpError("Meal not found", 404));
+  res.json(meal);
+};
+
 const getAllPaginatedMeals = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   const mealsWithPagination = await PaginatedList.getPaginatedResult(
@@ -74,5 +80,6 @@ module.exports = {
   getAllPaginatedMeals,
   getAllMealsForCook,
   needNewPageMeal,
-  getAllPaginatedSpecialMeals
+  getAllPaginatedSpecialMeals,
+  getOneMeal
 };
