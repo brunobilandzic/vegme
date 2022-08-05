@@ -23,6 +23,7 @@ import CookMeals from "../Components/Meals/CookMeals";
 import CookProfile from "../Components/Cook/CookProfile";
 import BrowseCooks from "../Components/Cook/BrowseCooks";
 import BrowseSpecialMeals from "../Components/Meals/BrowseSpecialMeals";
+import RegularOrCookShield from "./Shields/RegularOrCookShield";
 
 export default function Router(props) {
   return (
@@ -72,9 +73,9 @@ export default function Router(props) {
             <Route
               path="/order"
               element={
-                <RegularShield>
+                <RegularOrCookShield>
                   <OrderPage />
-                </RegularShield>
+                </RegularOrCookShield>
               }
             ></Route>
             <Route path="/cooks" element={<BrowseCooks />} />
