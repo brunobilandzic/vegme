@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import MealList from "../MealList";
 import { Button, FormCheck } from "react-bootstrap";
 import Modal from "../../../Shared/UserInterface/Modal";
-import { sendOrder } from "../../../Shared/Redux/orders/ordersActions.js";
+import { sendOrder } from "../../../Redux/orders/ordersActions.js";
 import { useForm } from "../../../Shared/CustomHooks/form-hook";
 import Input from "../../../Shared/Form/Input";
 import { VALIDATOR_REQUIRED } from "../../../util/validators";

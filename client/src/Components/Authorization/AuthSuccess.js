@@ -2,7 +2,7 @@ import React from "react";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { loadUser } from "../../Shared/Redux/auth/authActions.js";
+import { loadUser } from "../../Redux/auth/authActions.js";
 
 function AuthSuccess({ user }) {
 

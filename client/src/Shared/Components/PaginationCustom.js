@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { PageItem, Pagination } from "react-bootstrap";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
-import { updatePageNumber } from "../Redux/pagination/paginationActions.js";
+import { updatePageNumber } from "../../Redux/pagination/paginationActions.js";
 import paginationStyles from "./pagination.module.css";
 import { v4 as uuid } from "uuid";
 

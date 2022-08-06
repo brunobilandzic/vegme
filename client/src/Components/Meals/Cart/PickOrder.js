@@ -8,7 +8,7 @@ import {
 } from "../../../Shared/Api/orders";
 import { Form } from "react-bootstrap";
 import MealList from "../MealList";
-import { clearOrdersCache } from "../../../Shared/Redux/orders/ordersActions";
+import { clearOrdersCache } from "../../../Redux/orders/ordersActions";
 import Modal from "../../../Shared/UserInterface/Modal";
 export const PickOrder = ({
   handleSpecialClose,

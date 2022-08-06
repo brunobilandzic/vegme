@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {loadAllCooks} from "../../Shared/Redux/cooks/cooksActions"
+import {loadAllCooks} from "../../Redux/cooks/cooksActions"
 import CookListItem from "./CookListItem";
 import Loading from "../../Shared/UserInterface/Loading";
 export const BrowseCooks = ({loadAllCooks, cooks}) => {

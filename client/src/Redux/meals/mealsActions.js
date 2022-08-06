@@ -3,7 +3,7 @@ import {
   loadMealsWithOrders,
   loadPaginatedMealsFromServer,
   loadPaginatedSpecialMealsFromServer,
-} from "../../Api/meals";
+} from "../../Shared/Api/meals";
 import {
   ADD_MEAL_TO_CART,
   LOAD_ALL_PAGINATED_MEALS,
@@ -16,6 +16,8 @@ import {
   RESET_PAGINATION_FOR_TYPE,
   LOAD_ALL_PAGINATED_COOK_MEALS,
   LOAD_ALL_PAGINATED_SPECIAL_MEALS,
+  ADD_MEAL_TO_DELETE_FROM_ORDER,
+  REMOVE_MEAL_FROM_MEALS_TO_DELETE_FROM_ORDER,
 } from "../types";
 
 export const addMealToCart = (meal) => (dispatch, getState) => {
@@ -29,8 +31,19 @@ export const addMealToCart = (meal) => (dispatch, getState) => {
   dispatch({ type: ADD_MEAL_TO_CART, payload: meal });
 };
 
-export const removeMealFromCart = (meal) => (dispatch) => {
-  dispatch({ type: REMOVE_MEAL_FROM_CART, payload: meal });
+export const removeMealFromCart = (mealId) => (dispatch) => {
+  dispatch({ type: REMOVE_MEAL_FROM_CART, payload: mealId });
+};
+
+export const addMealToMealsToDeleteFromOrder = (meal) => (dispatch) => {
+  dispatch({ type: ADD_MEAL_TO_DELETE_FROM_ORDER, payload: meal });
+};
+
+export const removeMealFromMealsToDeleteFromOrder = (mealId) => (dispatch) => {
+  dispatch({
+    type: REMOVE_MEAL_FROM_MEALS_TO_DELETE_FROM_ORDER,
+    payload: mealId,
+  });
 };
 
 export const createMealAction = (meal) => async (dispatch, getState) => {

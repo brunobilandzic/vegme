@@ -9,7 +9,7 @@ import {
   VALIDATOR_MIN_LENGTH,
   VALIDATOR_NO_SPACE,
 } from "../../util/validators";
-import { loadUser } from "../../Shared/Redux/auth/authActions.js";
+import { loadUser } from "../../Redux/auth/authActions.js";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 

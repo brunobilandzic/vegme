@@ -1,4 +1,4 @@
-import { loadAllCooksFromServer } from "../../Api/cooks";
+import { loadAllCooksFromServer } from "../../Shared/Api/cooks";
 import { IS_LOADING, LOAD_ALL_COOKS, NOT_LOADING } from "../types";
 
 export const loadAllCooks = () => async (dispatch, getState) => {

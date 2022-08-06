@@ -1,4 +1,4 @@
-import { needAnotherPage } from "../Api/general";
+import { needAnotherPage } from "../Shared/Api/general";
 import { UPDATE_TOTAL_PAGES } from "./types";
 
 export const needNewPageMeal = async (pageSize) => {

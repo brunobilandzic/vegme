@@ -20,3 +20,7 @@
 .ingredientName {
     margin-right: .5rem;
 }
+
+.mealItem div{
+    margin-right: 0.5rem;
+}

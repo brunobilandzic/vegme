@@ -1,4 +1,4 @@
-import { loadUserFromServer, logoutUserFromServer } from "../../Api/auth";
+import { loadUserFromServer, logoutUserFromServer } from "../../Shared/Api/auth";
 import { LOGOUT, LOG_IN_THE_USER } from "../types";
 
 const loadUser = () => async (dispatch, getState) => {

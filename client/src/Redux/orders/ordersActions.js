@@ -1,7 +1,7 @@
 import {
   createOrder,
   loadPaginatedOrdersForUserFromServer,
-} from "../../Api/orders";
+} from "../../Shared/Api/orders";
 import {
   DELETE_CACHE_ORDERS,
   EMPTY_THE_CART,

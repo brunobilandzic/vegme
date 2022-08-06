@@ -7,7 +7,7 @@ import propTypes from "prop-types";
 import { connect } from "react-redux";
 import {v4 as uuid} from "uuid"
 import mealStyles from "./meal.module.css";
-import { createMealAction } from "../../Shared/Redux/meals/mealsActions";
+import { createMealAction } from "../../Redux/meals/mealsActions";
 import NewIngredient from "./Ingredients/NewIngredient";
 import IngredientPreview from "./Ingredients/IngredientPreview";
 

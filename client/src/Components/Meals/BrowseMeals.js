@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { propTypes } from "react-bootstrap/esm/Image";
 import { connect } from "react-redux";
 import PaginationCustom from "../../Shared/Components/PaginationCustom";
-import { loadPaginatedMeals } from "../../Shared/Redux/meals/mealsActions";
+import { loadPaginatedMeals } from "../../Redux/meals/mealsActions";
 import Loading from "../../Shared/UserInterface/Loading";
 import MealList from "./MealList";
 const BrowseMeals = ({ meals, loadPaginatedMeals, pageNumber, pageSize }) => {

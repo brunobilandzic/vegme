@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import mealStyles from "./meal.module.css";
 
-import { loadPaginatedMealsWithOrders } from "../../Shared/Redux/meals/mealsActions";
+import { loadPaginatedMealsWithOrders } from "../../Redux/meals/mealsActions";
 import PaginationCustom from "../../Shared/Components/PaginationCustom";
 import MealOrdersItem from "./MealOrdersItem";
 const CookMeals = ({

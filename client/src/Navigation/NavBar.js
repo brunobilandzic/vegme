@@ -12,7 +12,7 @@ import {
 } from "../Shared/Constants/Roles";
 import AdministratorNavList from "./RoleNavLinks/AdministratorNavList";
 import LoginNavList from "./RoleNavLinks/LoginNavList";
-import { logout } from "../Shared/Redux//auth/authActions.js";
+import { logout } from "../Redux//auth/authActions.js";
 import PropTypes from "prop-types";
 import RegularNavList from "./RoleNavLinks/RegularNavList";
 import CookNavList from "./RoleNavLinks/CookNavList.js";
