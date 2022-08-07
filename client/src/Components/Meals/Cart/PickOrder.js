@@ -8,13 +8,14 @@ import {
 } from "../../../Shared/Api/orders";
 import { Form } from "react-bootstrap";
 import MealList from "../MealList";
-import { clearOrdersCache } from "../../../Redux/orders/ordersActions";
+import { clearOrdersCache, emptyTheCart } from "../../../Redux/orders/ordersActions";
 import Modal from "../../../Shared/UserInterface/Modal";
 export const PickOrder = ({
   handleSpecialClose,
   cookId,
   mealsToOrder,
   clearOrdersCache,
+  emptyTheCart
 }) => {
   const [orders, setOrders] = useState([]);
   const [orderSuccess, setOrderSuccess] = useState(false);
@@ -46,6 +47,7 @@ export const PickOrder = ({
     );
     setOrderSuccess(true);
     clearOrdersCache();
+    emptyTheCart()
     
   };
 
@@ -105,12 +107,15 @@ export const PickOrder = ({
   );
 };
 
-PickOrder.propTypes = {};
+PickOrder.propTypes = {
+  emptyTheCart: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   clearOrdersCache,
+  emptyTheCart
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickOrder);

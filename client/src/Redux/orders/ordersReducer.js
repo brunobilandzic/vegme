@@ -1,4 +1,7 @@
-import { DELETE_CACHE_ORDERS, LOAD_PAGINATED_ORDERS_FOR_USER } from "../types";
+import {
+  DELETE_CACHE_ORDERS,
+  LOAD_PAGINATED_ORDERS_FOR_USER,
+} from "../types";
 
 const initialState = {
   browsing: {

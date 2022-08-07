@@ -7,7 +7,7 @@ import ordersStyles from "./orders.module.css";
 const OrderItem = ({ order }) => {
   const navigate = useNavigate();
   const navigateToSingular = () => {
-    navigate("/order", { state: { ...order } });
+    navigate(`/order/${order._id}`);
   };
   return (
     <div onClick={navigateToSingular} className={ordersStyles.container}>

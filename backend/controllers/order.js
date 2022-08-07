@@ -10,10 +10,14 @@ const {
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { REGULAR } = require("../constants/roles.js");
 const HttpError = require("../errors/http-error.js");
-const { default: mongoose } = require("mongoose");
 
 const getOneOrder = async (req, res, next) => {
-  const order = await Order.findById(req.params.orderId);
+  const order = await Order.findById(req.params.orderId)
+    .populate({
+      path: "meals",
+      select: "-orders",
+    })
+    .populate({ path: "cook", populate: { path: "user" } });
   if (!order) return next(new HttpError("Order not found", 404));
   res.json(order);
 };
@@ -122,7 +126,7 @@ const appendMealsToOrder = async (req, res, next) => {
 
   let mealWithDifferentCook = null;
   let mealAlreadyInOrder = null;
-  
+
   meals.forEach((meal) => {
     if (meal.cook.toString() != order.cook.toString()) {
       mealWithDifferentCook = meal;
@@ -135,10 +139,10 @@ const appendMealsToOrder = async (req, res, next) => {
     order.meals.push(meal.id);
   });
 
-  await meals.forEach(async meal => {
-    await meal.save()
-  })
-  await order.save()
+  await meals.forEach(async (meal) => {
+    await meal.save();
+  });
+  await order.save();
 
   if (mealWithDifferentCook) {
     return res.json({
@@ -150,7 +154,7 @@ const appendMealsToOrder = async (req, res, next) => {
       error: `Meal ${mealAlreadyInOrder.name} already in order ${order.remark}`,
     });
   }
-  
+
   res.json(order);
 };
 
@@ -172,6 +176,20 @@ const removeMealsFromOrder = async (req, res, next) => {
 
   await order.save();
   res.json(order);
+};
+
+const removeMealFromOrder = async (req, res, next) => {
+  const { orderId, mealId } = req.body;
+  const order = await Order.findById(orderId);
+  const meal = await Meal.findById(mealId)
+
+  order.meals.pull(mealId)
+  meal.orders.pull(orderId)
+  
+  await order.save()
+  await meal.save()
+
+  res.json(order)
 };
 
 const toggleOrderActive = async (req, res, next) => {
@@ -208,4 +226,5 @@ module.exports = {
   appendMealsToOrder,
   removeMealsFromOrder,
   getOneOrder,
+  removeMealFromOrder
 };

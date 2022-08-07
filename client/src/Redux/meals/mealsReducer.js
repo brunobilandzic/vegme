@@ -6,8 +6,6 @@ import {
   EMPTY_THE_CART,
   LOAD_ALL_PAGINATED_COOK_MEALS,
   LOAD_ALL_PAGINATED_SPECIAL_MEALS,
-  ADD_MEAL_TO_DELETE_FROM_ORDER,
-  REMOVE_MEAL_FROM_MEALS_TO_DELETE_FROM_ORDER,
 } from "../types";
 
 const initialState = {
@@ -21,7 +19,6 @@ const initialState = {
     items: {},
   },
   mealsToOrder: [],
-  mealsToDeleteFromOrder: []
 };
 
 export default function mealsReducer(state = initialState, action) {
@@ -80,20 +77,6 @@ export default function mealsReducer(state = initialState, action) {
         ...state,
         mealsToOrder: [],
       };
-    case ADD_MEAL_TO_DELETE_FROM_ORDER: {
-      return {
-        ...state,
-        mealsToDeleteFromOrder: [...state.mealsToDeleteFromOrder, action.payload]
-      }
-    }
-    case REMOVE_MEAL_FROM_MEALS_TO_DELETE_FROM_ORDER: {
-      return {
-        ...state,
-        mealsToDeleteFromOrder: [
-          ...state.mealsToDeleteFromOrder.filter((meal) => meal._id != action.payload),
-        ]
-      }
-    }
     case DELETE_CACHE_MEALS:
       return {
         ...state,

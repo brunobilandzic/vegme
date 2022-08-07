@@ -71,7 +71,7 @@ export default function Router(props) {
               }
             ></Route>
             <Route
-              path="/order"
+              path="/order/:orderId"
               element={
                 <RegularOrCookShield>
                   <OrderPage />

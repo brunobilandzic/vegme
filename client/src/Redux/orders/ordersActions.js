@@ -20,45 +20,48 @@ export const sendOrder =
       delivery_address: deliveryAddress,
       active,
       meals: getState().meals.mealsToOrder?.map((meal) => meal._id),
-      cook: getState().meals.mealsToOrder[0].cook._id
+      cook: getState().meals.mealsToOrder[0].cook._id,
     };
     const newOrder = await createOrder(order);
     dispatch({
-      type: DELETE_CACHE_ORDERS
-    })
+      type: DELETE_CACHE_ORDERS,
+    });
     dispatch({
       type: RESET_PAGINATION_FOR_TYPE,
       payload: {
-        type: "orders"
-      }
-    })
+        type: "orders",
+      },
+    });
     dispatch({
-      type: EMPTY_THE_CART
-    })
+      type: EMPTY_THE_CART,
+    });
   };
+
+export const emptyTheCart = () => (dispatch) => {
+  dispatch({
+    type: EMPTY_THE_CART,
+  });
+};
 
 export const clearOrdersCache = () => (dispatch) => {
   dispatch({
-    type: DELETE_CACHE_ORDERS
-  })
+    type: DELETE_CACHE_ORDERS,
+  });
   dispatch({
     type: RESET_PAGINATION_FOR_TYPE,
     payload: {
-      type: "orders"
-    }
-  })
-  dispatch({
-    type: EMPTY_THE_CART
-  })
-}
+      type: "orders",
+    },
+  });
+};
 
 export const loadPaginatedOrdersForUser =
   (pageNumber = 1, pageSize = 5) =>
   async (dispatch, getState) => {
     if (getState().orders.browsing.items[pageNumber + "-" + pageSize]) return;
     dispatch({
-      type: IS_LOADING
-    })
+      type: IS_LOADING,
+    });
     const paginatedOrders = await loadPaginatedOrdersForUserFromServer(
       pageNumber,
       pageSize
@@ -80,6 +83,6 @@ export const loadPaginatedOrdersForUser =
       payload: { type: "orders", totalPages: paginatedOrders.totalPages },
     });
     dispatch({
-      type: NOT_LOADING
-    })
+      type: NOT_LOADING,
+    });
   };

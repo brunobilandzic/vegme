@@ -1,25 +1,41 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { fetchOrderFromServer, removeMealFromOrder } from "../../Shared/Api/orders";
 import { COOK, REGULAR } from "../../Shared/Constants/Roles";
 import OrderForCook from "./OrderForCook";
 import OrderForRegular from "./OrderForRegular";
 
 export const OrderPage = ({ user }) => {
-  const { state } = useLocation();
+  const [order, setOrder] = useState();
+  const { orderId } = useParams();
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      const fetchedOrder = await fetchOrderFromServer(orderId);
+      setOrder(fetchedOrder);
+    };
+    fetchOrder();
+  }, []);
+
+  const removeMeal = async (mealId) => {
+    setOrder({ ...order, meals: order.meals.filter((m) => m._id != mealId) });
+    await removeMealFromOrder(orderId, mealId);
+  };
 
   return (
     <>
-      {user?.roles.map((r) => r.name).includes(REGULAR) &&
+      {order &&
+        user?.roles.map((r) => r.name).includes(REGULAR) &&
         !user?.roles.map((r) => r.name).includes(COOK) && (
-          <OrderForRegular order={state} />
+          <OrderForRegular removeMeal={removeMeal} order={order} />
         )}
-        {user?.roles.map((r) => r.name).includes(COOK) &&
+      {order &&
+        user?.roles.map((r) => r.name).includes(COOK) &&
         !user?.roles.map((r) => r.name).includes(REGULAR) && (
-          <OrderForCook order={state} />
+          <OrderForCook order={order} />
         )}
-     
     </>
   );
 };
