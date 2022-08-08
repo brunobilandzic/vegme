@@ -21,64 +21,113 @@
   ],
   "cooks": [
     {
-      "name": "cook name",
-      "username": "cookusername650",
+      "name": "deserunt cook name",
+      "username": "cookusername872",
       "password": "password",
-      "email": "minim.culpa@mail.com"
+      "email": "voluptate.ipsum@mail.com",
+      "min_days_to_edit_order": 2,
+      "order_times": [
+        3
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername727",
+      "name": "mollit cook name",
+      "username": "cookusername314",
       "password": "password",
-      "email": "sunt.excepteur@mail.com"
+      "email": "esse.culpa@mail.com",
+      "min_days_to_edit_order": 2,
+      "order_times": [
+        5,
+        5
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername133",
+      "name": "ea cook name",
+      "username": "cookusername782",
       "password": "password",
-      "email": "id.sint@mail.com"
+      "email": "sunt.deserunt@mail.com",
+      "min_days_to_edit_order": 3,
+      "order_times": [
+        2,
+        5,
+        4
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername425",
+      "name": "duis cook name",
+      "username": "cookusername361",
       "password": "password",
-      "email": "fugiat.laborum@mail.com"
+      "email": "qui.sint@mail.com",
+      "min_days_to_edit_order": 2,
+      "order_times": [
+        5
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername659",
+      "name": "ex cook name",
+      "username": "cookusername378",
       "password": "password",
-      "email": "non.aliquip@mail.com"
+      "email": "aliqua.ut@mail.com",
+      "min_days_to_edit_order": 3,
+      "order_times": [
+        5
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername320",
+      "name": "duis cook name",
+      "username": "cookusername743",
       "password": "password",
-      "email": "sunt.proident@mail.com"
+      "email": "ullamco.labore@mail.com",
+      "min_days_to_edit_order": 2,
+      "order_times": [
+        4
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername164",
+      "name": "deserunt cook name",
+      "username": "cookusername658",
       "password": "password",
-      "email": "quis.labore@mail.com"
+      "email": "culpa.anim@mail.com",
+      "min_days_to_edit_order": 2,
+      "order_times": [
+        7
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername548",
+      "name": "ex cook name",
+      "username": "cookusername933",
       "password": "password",
-      "email": "proident.adipisicing@mail.com"
+      "email": "voluptate.qui@mail.com",
+      "min_days_to_edit_order": 3,
+      "order_times": [
+        7,
+        1,
+        1
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername178",
+      "name": "eu cook name",
+      "username": "cookusername987",
       "password": "password",
-      "email": "aliquip.do@mail.com"
+      "email": "Lorem.laborum@mail.com",
+      "min_days_to_edit_order": 2,
+      "order_times": [
+        3,
+        4,
+        7
+      ]
     },
     {
-      "name": "cook name",
-      "username": "cookusername732",
+      "name": "aute cook name",
+      "username": "cookusername542",
       "password": "password",
-      "email": "quis.labore@mail.com"
+      "email": "qui.aliquip@mail.com",
+      "min_days_to_edit_order": 3,
+      "order_times": [
+        4,
+        1,
+        4
+      ]
     }
   ],
   "operators": [

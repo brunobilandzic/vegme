@@ -23,10 +23,24 @@ export const buildUrl = (baseUrl, queryObject) => {
 };
 
 export const buildUrlWithPagination = (baseUrl, pageNumber, pageSize) => {
-    const url = new URL(baseUrl)
+  const url = new URL(baseUrl);
 
-    url.searchParams.append("pageNumber",  pageNumber)
-    url.searchParams.append("pageSize", pageSize)
+  url.searchParams.append("pageNumber", pageNumber);
+  url.searchParams.append("pageSize", pageSize);
 
-    return url
-}
+  return url;
+};
+
+export const capitalizeString = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export const dayOfWeek = {
+  1: "monday",
+  2: "tuesday",
+  3: "wendesday",
+  4: "thursday",
+  5: "friday",
+  6: "saturday",
+  7: "sunday",
+};

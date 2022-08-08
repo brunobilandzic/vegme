@@ -7,6 +7,8 @@ import classnames from "classnames";
 import cookStyles from "./cook.module.css";
 import MealItem from "../Meals/MealItem";
 import { v4 as uuid } from "uuid";
+import { dayOfWeek, capitalizeString } from "../../util/helper";
+
 const CookProfile = ({ isLoggedin }) => {
   const { username } = useParams();
   const [cook, setCook] = useState();
@@ -18,19 +20,38 @@ const CookProfile = ({ isLoggedin }) => {
     fetchCook();
   }, []);
 
-
   const handleShowMealsClick = () => {
     setShowMeals((prevShowMeals) => !prevShowMeals);
   };
 
+  const getOrderTimes = (orderTimesNumbers) => {
+    orderTimesNumbers?.sort();
+    let orderTimesString = "";
+    orderTimesNumbers?.forEach((orderTimeNumber, index) => {
+      orderTimesString +=
+        index != orderTimesNumbers?.length - 1
+          ? `${capitalizeString(dayOfWeek[orderTimeNumber])}, `
+          : `${capitalizeString(dayOfWeek[orderTimeNumber])}`;
+    });
+    return orderTimesString;
+  };
 
   return (
     <div>
       <div className={cookStyles.name}>{cook?.user.name}</div>
-      <div onClick={handleShowMealsClick} className={cookStyles.mealCount + " mt-2"}>
+      <div className={cookStyles.daysToEdit}>
+        Minimum {cook?.min_days_to_edit_order} to edit order
+      </div>
+      <div className={cookStyles.orderTimes}>
+        Order delivery on: {getOrderTimes(cook?.order_times)}{" "}
+      </div>
+      <div
+        onClick={handleShowMealsClick}
+        className={cookStyles.mealCount + " mt-2"}
+      >
         Cooked {cook?.cooks.length} meals
       </div>
-      <div className={classnames({ hidden: !showMeals})}>
+      <div className={classnames({ hidden: !showMeals })}>
         {cook?.cooks.map((meal) => (
           <MealItem meal={meal} key={uuid()} showAdd={isLoggedin} />
         ))}
@@ -43,13 +64,10 @@ CookProfile.propTypes = {
   user: PropTypes.object,
 };
 
-
 const mapStateToProps = (state) => ({
   isLoggedin: state.auth.is_logged_in,
 });
 
-
 const mapDispatchToProps = {};
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(CookProfile);

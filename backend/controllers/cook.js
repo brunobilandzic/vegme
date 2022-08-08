@@ -41,9 +41,13 @@ const createCook = async (req, res, next) => {
   res.json(cookRoleUser);
 };
 
-const addToCook = async (userId) => {
+const addToCook = async (userId, cook) => {
   let user = await BaseUser.findById(userId);
-  let cookRoleUser = new CookRoleUser({ user: userId });
+  let cookRoleUser = new CookRoleUser({
+    user: userId,
+    min_days_to_edit_order: cook.min_days_to_edit_order,
+    order_times: cook.order_times,
+  });
   user.roles.push({ name: COOK, id: cookRoleUser.id });
 
   await user.save();

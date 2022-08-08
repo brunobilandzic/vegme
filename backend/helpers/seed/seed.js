@@ -63,7 +63,8 @@ const writeCooks = async (cooks) => {
 
 const addCook = async (cook) => {
   const userId = await createNewUserManually(cook);
-  await addToCook(userId);
+  cook.order_times = [...new Set(cook.order_times)];
+  await addToCook(userId, cook);
   console.log(`${cook.username} saved`);
 };
 
@@ -126,10 +127,9 @@ const writeOrders = async (orders) => {
       Math.floor(Math.random() * 8)
     );
 
-    
-    order.cook = cookId
-    const cook = await CookRoleUser.findById(cookId)
-    cook.orders.push(order.id)
+    order.cook = cookId;
+    const cook = await CookRoleUser.findById(cookId);
+    cook.orders.push(order.id);
 
     await randomMealIds.forEach(async (randomMealId) => {
       const meal = await Meal.findById(randomMealId);
@@ -141,7 +141,7 @@ const writeOrders = async (orders) => {
 
     await orderer.save();
     await order.save();
-    await cook.save()
+    await cook.save();
     console.log(`${order.remark} saved`);
   }
 
@@ -150,11 +150,11 @@ const writeOrders = async (orders) => {
   const orderer = await RegularRoleUser.findById(await getRegular330Id());
   orderer.orders.push(order.id);
 
-  const cookId = await getCookUsername650Id()
-  const cook = await CookRoleUser.findById(cookId).populate({path: "cooks"})
+  const cookId = await getCookUsername872Id();
+  const cook = await CookRoleUser.findById(cookId).populate({ path: "cooks" });
 
-  order.cook = cookId
-  cook.orders.push(order.id)
+  order.cook = cookId;
+  cook.orders.push(order.id);
 
   await cook.cooks.forEach(async (meal) => {
     meal.orders.push(order.id);
@@ -165,8 +165,8 @@ const writeOrders = async (orders) => {
 
   await orderer.save();
   await order.save();
-  await cook.save()
-  console.log(`$Order id: ${order.id} saved, cookusername650 id: ${cook.id}`);
+  await cook.save();
+  console.log(`$Order id: ${order.id} saved, cookusername872 id: ${cook.id}`);
 
   orders = orders.slice(13);
   await orders.forEach(async (orderJSON) => {
@@ -174,17 +174,17 @@ const writeOrders = async (orders) => {
 
     orderJSON.orderer = ordererId;
 
-    const  [randomMealIds, cookId] = await getMealIdsFromSameCook(
+    const [randomMealIds, cookId] = await getMealIdsFromSameCook(
       Math.floor(Math.random() * 8)
     );
 
-    orderJSON.cook = cookId
-    const cook = await CookRoleUser.findById(cookId)
-  
+    orderJSON.cook = cookId;
+    const cook = await CookRoleUser.findById(cookId);
+
     const order = new Order(orderJSON);
     const orderer = await RegularRoleUser.findById(ordererId);
     orderer.orders.push(order.id);
-    cook.orders.push(order.id)
+    cook.orders.push(order.id);
 
     await randomMealIds.forEach(async (randomMealId) => {
       const meal = await Meal.findById(randomMealId);
@@ -196,7 +196,7 @@ const writeOrders = async (orders) => {
 
     await orderer.save();
     await order.save();
-    await cook.save()
+    await cook.save();
     console.log(`${order.remark} saved`);
   });
 };
@@ -228,10 +228,10 @@ const getRegular330Id = async () => {
   return regular.roles.find((role) => role.name == REGULAR)?.id;
 };
 
-const getCookUsername650Id = async () => {
-  const cook = await BaseUser.findOne({ username: "cookusername650" });
+const getCookUsername872Id = async () => {
+  const cook = await BaseUser.findOne({ username: "cookusername872" });
   return cook.roles.find((role) => role.name == COOK)?.id;
-}
+};
 
 const getRandomCookId = async () => {
   const randomCook = await CookRoleUser.findOne().skip(
@@ -255,7 +255,9 @@ const cookUsernameMostOrders = async () => {
       mealWithMostOrders = meal;
     }
   });
-  console.log(`${mealWithMostOrders.cook.user.username} has meal with most orders`);
+  console.log(
+    `${mealWithMostOrders.cook.user.username} has meal with most orders`
+  );
 };
 
 const seedData = async () => {

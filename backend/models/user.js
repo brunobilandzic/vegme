@@ -11,7 +11,7 @@ const baseUserObject = {
   username: { type: String, required: true, validate: /^\S*$/ },
   email: { type: String },
   email_verified: { type: Boolean, default: false },
-  date_registered: { type: Date, default: Date.now() },
+  date_registered: { type: Date, default: () => Date.now() },
   changed_username: { type: Boolean, default: true },
   roles: [roleObject],
 };
@@ -33,6 +33,8 @@ const cookRoleUserObject = {
   },
   cooks: [{ type: mongoose.Types.ObjectId, ref: "Meal" }],
   orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
+  min_days_to_edit_order: { type: Number, default: 3 },
+  order_times: [{ type: Number }],
 };
 const adminRoleUserObject = {
   user: {
