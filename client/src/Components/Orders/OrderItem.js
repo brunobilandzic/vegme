@@ -4,6 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { format } from "date-fns";
 import ordersStyles from "./orders.module.css";
+import { capitalizeString, dayOfWeek } from "../../util/helper";
 const OrderItem = ({ order }) => {
   const navigate = useNavigate();
   const navigateToSingular = () => {
@@ -15,10 +16,16 @@ const OrderItem = ({ order }) => {
         <div className={ordersStyles.remarkHeading}>Remark:&nbsp;</div>
         <div className={ordersStyles.remarkContent}>{order.remark}</div>
       </div>
+
+      <div className={`${ordersStyles.time} ${ordersStyles.box}`}>
+        <div className={ordersStyles.timeHeading}>Delivery:&nbsp;</div>
+        <div>{capitalizeString(dayOfWeek[order.order_time])} </div>
+      </div>
+
       <div className={`${ordersStyles.address} ${ordersStyles.box}`}>
         <div className={ordersStyles.addressHeading}>Address:&nbsp; </div>
         <div className={ordersStyles.addressContent}>
-          {" "}{order.delivery_address}
+          {order.delivery_address}
         </div>
       </div>
       <div className={`${ordersStyles.cook} ${ordersStyles.box}`}>

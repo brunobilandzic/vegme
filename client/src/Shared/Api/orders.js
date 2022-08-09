@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 });
 
 export const createOrder = async (order) => {
-  const response = await axiosInstance.post("/", order);
+  const response = await axiosInstance.post("", order);
   return response.data;
 };
 

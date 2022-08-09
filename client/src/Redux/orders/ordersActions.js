@@ -14,11 +14,11 @@ import {
 } from "../types";
 
 export const sendOrder =
-  (remark, deliveryAddress, active) => async (dispatch, getState) => {
+  (remark, deliveryAddress, orderTime) => async (dispatch, getState) => {
     const order = {
       remark,
       delivery_address: deliveryAddress,
-      active,
+      order_time: orderTime,
       meals: getState().meals.mealsToOrder?.map((meal) => meal._id),
       cook: getState().meals.mealsToOrder[0].cook._id,
     };

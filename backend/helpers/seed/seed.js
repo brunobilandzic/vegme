@@ -12,6 +12,7 @@ const {
   RegularRoleUser,
   BaseUser,
 } = require("../../models/user");
+const { pickRandomElement } = require("../numbers");
 
 const readJsonData = (filename) => {
   const jsonString = fs.readFileSync(filename);
@@ -130,7 +131,8 @@ const writeOrders = async (orders) => {
     order.cook = cookId;
     const cook = await CookRoleUser.findById(cookId);
     cook.orders.push(order.id);
-
+    order.order_time = pickRandomElement(cook.order_times);
+    
     await randomMealIds.forEach(async (randomMealId) => {
       const meal = await Meal.findById(randomMealId);
       meal.orders.push(order.id);
@@ -155,6 +157,7 @@ const writeOrders = async (orders) => {
 
   order.cook = cookId;
   cook.orders.push(order.id);
+  order.order_time = pickRandomElement(cook.order_times);
 
   await cook.cooks.forEach(async (meal) => {
     meal.orders.push(order.id);
@@ -185,6 +188,7 @@ const writeOrders = async (orders) => {
     const orderer = await RegularRoleUser.findById(ordererId);
     orderer.orders.push(order.id);
     cook.orders.push(order.id);
+    order.order_time = pickRandomElement(cook.order_times);
 
     await randomMealIds.forEach(async (randomMealId) => {
       const meal = await Meal.findById(randomMealId);

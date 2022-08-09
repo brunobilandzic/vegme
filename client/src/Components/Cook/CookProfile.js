@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { loadSingleCook } from "../../Shared/Api/cooks";
+import { loadSingleCookByUsername } from "../../Shared/Api/cooks";
 import classnames from "classnames";
 import cookStyles from "./cook.module.css";
 import MealItem from "../Meals/MealItem";
 import { v4 as uuid } from "uuid";
-import { dayOfWeek, capitalizeString } from "../../util/helper";
+import { getOrderTimes } from "../../util/helper";
 
 const CookProfile = ({ isLoggedin }) => {
   const { username } = useParams();
@@ -15,25 +15,13 @@ const CookProfile = ({ isLoggedin }) => {
   const [showMeals, setShowMeals] = useState(false);
   useEffect(() => {
     const fetchCook = async () => {
-      setCook(await loadSingleCook(username));
+      setCook(await loadSingleCookByUsername(username));
     };
     fetchCook();
   }, []);
 
   const handleShowMealsClick = () => {
     setShowMeals((prevShowMeals) => !prevShowMeals);
-  };
-
-  const getOrderTimes = (orderTimesNumbers) => {
-    orderTimesNumbers?.sort();
-    let orderTimesString = "";
-    orderTimesNumbers?.forEach((orderTimeNumber, index) => {
-      orderTimesString +=
-        index != orderTimesNumbers?.length - 1
-          ? `${capitalizeString(dayOfWeek[orderTimeNumber])}, `
-          : `${capitalizeString(dayOfWeek[orderTimeNumber])}`;
-    });
-    return orderTimesString;
   };
 
   return (

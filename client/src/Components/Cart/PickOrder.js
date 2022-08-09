@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import {
   appendMealsToOrder,
   loadAllPersonalOrders,
-} from "../../../Shared/Api/orders";
+} from "../../Shared/Api/orders";
 import { Form } from "react-bootstrap";
-import MealList from "../MealList";
-import { clearOrdersCache, emptyTheCart } from "../../../Redux/orders/ordersActions";
-import Modal from "../../../Shared/UserInterface/Modal";
+import MealList from "../Meals/MealList";
+import { clearOrdersCache, emptyTheCart } from "../../Redux/orders/ordersActions";
+import Modal from "../../Shared/UserInterface/Modal";
 export const PickOrder = ({
   handleSpecialClose,
   cookId,

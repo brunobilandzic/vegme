@@ -98,14 +98,17 @@ const getAllPersonalOrdersForCook = async (req, res) => {
   res.json(orders);
 };
 
-const createOrder = async (req, res) => {
+const createOrder = async (req, res, next) => {
+  const cook = await CookRoleUser.findById(req.body.cook);
+  if (!cook.order_times.includes(req.body.order_time)) {
+    return next(new HttpError("Cook does not have specified order time!", 400));
+  }
   const newOrder = new Order(req.body);
   req.body.meals?.forEach(async (mealId) => {
     const meal = await Meal.findById(mealId);
     meal.orders.push(newOrder.id);
     await meal.save();
   });
-  const cook = await CookRoleUser.findById(req.body.cook);
   cook.orders.push(newOrder.id);
 
   const client = await RegularRoleUser.findOne({ user: req.user.id });
@@ -181,15 +184,15 @@ const removeMealsFromOrder = async (req, res, next) => {
 const removeMealFromOrder = async (req, res, next) => {
   const { orderId, mealId } = req.body;
   const order = await Order.findById(orderId);
-  const meal = await Meal.findById(mealId)
+  const meal = await Meal.findById(mealId);
 
-  order.meals.pull(mealId)
-  meal.orders.pull(orderId)
-  
-  await order.save()
-  await meal.save()
+  order.meals.pull(mealId);
+  meal.orders.pull(orderId);
 
-  res.json(order)
+  await order.save();
+  await meal.save();
+
+  res.json(order);
 };
 
 const toggleOrderActive = async (req, res, next) => {
@@ -226,5 +229,5 @@ module.exports = {
   appendMealsToOrder,
   removeMealsFromOrder,
   getOneOrder,
-  removeMealFromOrder
+  removeMealFromOrder,
 };

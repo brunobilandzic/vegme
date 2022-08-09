@@ -32,7 +32,19 @@ export const buildUrlWithPagination = (baseUrl, pageNumber, pageSize) => {
 };
 
 export const capitalizeString = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  return string?.charAt(0).toUpperCase() + string?.slice(1);
+};
+
+export  const getOrderTimes = (orderTimesNumbers) => {
+  orderTimesNumbers?.sort();
+  let orderTimesString = "";
+  orderTimesNumbers?.forEach((orderTimeNumber, index) => {
+    orderTimesString +=
+      index != orderTimesNumbers?.length - 1
+        ? `${capitalizeString(dayOfWeek[orderTimeNumber])}, `
+        : `${capitalizeString(dayOfWeek[orderTimeNumber])}`;
+  });
+  return orderTimesString;
 };
 
 export const dayOfWeek = {

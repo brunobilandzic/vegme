@@ -12,6 +12,7 @@ const orderObject = {
   meals: [{ type: mongoose.Types.ObjectId, ref: "Meal" }],
   active: { type: Boolean, default: true },
   date_ordered: { type: Date, default: () => Date.now() },
+  order_time: { type: Number },
 };
 
 const Order = mongoose.model("Order", new mongoose.Schema(orderObject));

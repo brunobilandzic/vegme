@@ -7,7 +7,7 @@ import AdministratorShield from "./Shields/AdministratorShield";
 import NewOperator from "../Components/Authorization/NewOperator";
 import Signup from "../Components/Authorization/Signup";
 import NewMeal from "../Components/Meals/NewMeal";
-import Cart from "../Components//Meals/Cart/Cart";
+import Cart from "../Components/Cart/Cart";
 import RegularShield from "./Shields/RegularShield";
 import MealsMainPage from "../Components/Meals/MealsMainPage";
 import BrowseMeals from "../Components/Meals/BrowseMeals";

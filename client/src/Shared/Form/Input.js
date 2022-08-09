@@ -88,7 +88,7 @@ export default function Input(props) {
     );
   return (
     <div className="form-group">
-      <label htmlFor={props.id}>{props.label}</label>
+      <label className="form-label" htmlFor={props.id}>{props.label}</label>
       {elementToRender}
     </div>
   );

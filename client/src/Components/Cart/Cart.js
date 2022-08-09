@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
 import propTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-import MealList from "../MealList";
 import { Button, FormCheck } from "react-bootstrap";
-import Modal from "../../../Shared/UserInterface/Modal";
-import { sendOrder } from "../../../Redux/orders/ordersActions.js";
-import { useForm } from "../../../Shared/CustomHooks/form-hook";
-import Input from "../../../Shared/Form/Input";
-import { VALIDATOR_REQUIRED } from "../../../util/validators";
-import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
+import Modal from "../../Shared/UserInterface/Modal";
+import { sendOrder } from "../../Redux/orders/ordersActions.js";
 import cartStyles from "./cart.module.css";
-import { SPECIAL } from "../../../Shared/Constants/MealTypes";
+import { SPECIAL } from "../../Shared/Constants/MealTypes";
 import PickOrder from "./PickOrder";
 import NewOrder from "./NewOrder";
 function Cart({ mealsToOrder }) {
-  const [isAllSpecial, setIsAllSpecial] = useState(false);
   const [allSpecialPrompt, setAllSpecialPrompt] = useState();
   const [pickOrder, setPickOrder] = useState(false);
 
@@ -25,11 +18,10 @@ function Cart({ mealsToOrder }) {
 
   const getIsAllSpecial = () => {
     if (mealsToOrder.length == 0) {
-      setIsAllSpecial(false);
+      setPickOrder(false);
       return;
     }
     setAllSpecialPrompt(mealsToOrder.every((meal) => meal.type == SPECIAL));
-    setIsAllSpecial(mealsToOrder.every((meal) => meal.type == SPECIAL));
   };
 
   const handleExistingClick = () => {
