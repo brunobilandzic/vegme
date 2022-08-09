@@ -15,7 +15,8 @@ const getAllCooks = async (req, res) => {
   const cooksDocuments = await CookRoleUser.find();
   const cooksIds = cooksDocuments.map((cd) =>
     mongoose.Types.ObjectId(cd.user).toString()
-  );
+  ); 
+  
   const cooks = await BaseUser.find({ _id: { $in: cooksIds } });
 
   res.json(cooks);
