@@ -5,15 +5,19 @@ import Router from "./Routes/Router";
 import propTypes from "prop-types";
 import { loadUser } from "./Redux/auth/authActions.js";
 import { useEffect } from "react";
-import SocketComponent from "./Socket/SocketComponent";
+import { COOK } from "./Shared/Constants/Roles";
+import CookSocket from "./Socket/CookSocket";
 
-function App({ loadUser }) {
+function App({ loadUser, user }) {
   useEffect(() => {
     loadUser();
   }, []);
+
   return (
     <>
-      <SocketComponent />
+      {user?.roles.map((role) => role.name).includes(COOK) && (
+        <CookSocket userId={user._id} />
+      )}
       <Router navbar={<NavBar />} />
     </>
   );
@@ -21,8 +25,11 @@ function App({ loadUser }) {
 
 App.propTypes = {
   loadUser: propTypes.func.isRequired,
+  user: propTypes.object,
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
 
 export default connect(mapStateToProps, { loadUser })(App);

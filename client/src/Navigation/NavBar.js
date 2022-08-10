@@ -17,6 +17,7 @@ import PropTypes from "prop-types";
 import RegularNavList from "./RoleNavLinks/RegularNavList";
 import CookNavList from "./RoleNavLinks/CookNavList.js";
 import OperatorNavList from "./RoleNavLinks/OperatorNavList";
+import Notifications from "../Components/Notifications/Notifications";
 
 function NavBar(props) {
   const getNavLinks = () => {
@@ -37,6 +38,7 @@ function NavBar(props) {
   };
   return (
     <>
+      <Notifications />
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <LinkContainer to="/">

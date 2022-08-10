@@ -3,6 +3,7 @@ import apiReducer from "./api/apiReducer";
 import authReducer from "./auth/authReducer";
 import cooksReducer from "./cooks/cooksReducer";
 import mealsReducer from "./meals/mealsReducer";
+import notificationsReducer from "./notifications/notificationsReducer";
 import ordersReducer from "./orders/ordersReducer";
 import paginationReducer from "./pagination/paginationReducer";
 
@@ -13,6 +14,7 @@ export default combineReducers(
     meals: mealsReducer,
     orders: ordersReducer,
     api: apiReducer,
-    cooks: cooksReducer
+    cooks: cooksReducer,
+    notifications: notificationsReducer
 }
 )
