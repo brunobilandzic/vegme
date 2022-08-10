@@ -7,9 +7,10 @@ const config = require("./config");
 const cors = require("cors");
 var fs = require("fs");
 var https = require("https");
+const app = express();
 
+const { createIo } = require("./socket");
 const { seedData } = require("./helpers/seed/seed.js");
-
 const mealRoutes = require("./routes/meal.js");
 const regularRoutes = require("./routes/regular.js");
 const authRoutes = require("./routes/auth.js");
@@ -19,7 +20,6 @@ const operatorRoutes = require("./routes/operator.js");
 const orderRoutes = require("./routes/order");
 const cookRoutes = require("./routes/cook.js");
 
-const app = express();
 const httpsConfiguration = {
   key: fs.readFileSync("../server.key"),
   cert: fs.readFileSync("../server.cert"),
@@ -52,18 +52,20 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || "An uknown error occured!" });
 });
 
-mongoose
-  .connect(config.MONGO_CONNECTION_STRING)
-  .then(() => {
-    seedData();
-    https
-      .createServer(httpsConfiguration, app)
-      .listen(process.env.PORT || 5000, () => {
-        console.log(
-          `Server running on port ${
-            process.env.PORT || 5000
-          }. Go to https://localhost:5000/.`
-        );
-      });
-  })
-  .catch((err) => console.log(err));
+const runServer = async () => {
+  await mongoose.connect(config.MONGO_CONNECTION_STRING);
+  await seedData();
+  const httpsServer = https.createServer(httpsConfiguration, app);
+
+  httpsServer.listen(process.env.PORT || 5000, () => {
+    const io = createIo(httpsServer);
+    app.io = io;
+    console.log(
+      `Server running on port ${
+        process.env.PORT || 5000
+      }. Go to https://localhost:5000/.`
+    );
+  });
+};
+
+runServer();
