@@ -119,6 +119,12 @@ const createOrder = async (req, res, next) => {
   await client.save();
   await newOrder.save();
   await cook.save();
+
+  req.app.io.sockets.emit("new order", {
+    userId: cook.user,
+    newOrder,
+  });
+  
   res.json(newOrder);
 };
 
