@@ -7,7 +7,7 @@ const { createNewUser } = require("../controllers/user");
 const HttpError = require("../errors/http-error");
 const router = express.Router();
 const upload = multer();
-
+"test"
 router.get(
   "/google",
   passport.authenticate("google", {
