@@ -1,4 +1,4 @@
-const { default: mongoose} = require("mongoose");
+const { default: mongoose } = require("mongoose");
 const { COOK } = require("../constants/roles");
 const HttpError = require("../errors/http-error");
 const { PaginatedList } = require("../helpers/pagination");
@@ -26,7 +26,6 @@ const getAllCookRoles = async (req, res) => {
   const cookRoles = await CookRoleUser.find()
     .populate({ path: "user", select: "username name" })
     .populate({ path: "cooks" });
-  req.app.io.sockets.emit("test", {test: "test"});
   res.json(cookRoles);
 };
 

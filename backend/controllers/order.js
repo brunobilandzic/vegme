@@ -120,11 +120,14 @@ const createOrder = async (req, res, next) => {
   await newOrder.save();
   await cook.save();
 
-  req.app.io.sockets.emit("new order", {
-    userId: cook.user,
-    newOrder,
-  });
-  
+  const coockSocketId = req.app.io.onlineUsers?.find(
+    (ou) => ou.id === cook.user.toString()
+  ).room;
+
+  if (coockSocketId) {
+    req.app.io.to(coockSocketId).emit("new-order", newOrder);
+  }
+
   res.json(newOrder);
 };
 

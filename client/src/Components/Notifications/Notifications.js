@@ -6,7 +6,7 @@ export const Notifications = ({ notifications }) => {
   return (
     <>
       <div>Notifications:</div>
-      <div>{JSON.stringify(notifications)}</div>
+      <div>{notifications?.length}</div>
     </>
   );
 };

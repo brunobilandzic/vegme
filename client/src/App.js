@@ -7,6 +7,7 @@ import { loadUser } from "./Redux/auth/authActions.js";
 import { useEffect } from "react";
 import { COOK } from "./Shared/Constants/Roles";
 import CookSocket from "./Socket/CookSocket";
+import SocketComponent from "./Socket/SocketComponent";
 
 function App({ loadUser, user }) {
   useEffect(() => {
@@ -15,9 +16,7 @@ function App({ loadUser, user }) {
 
   return (
     <>
-      {user?.roles.map((role) => role.name).includes(COOK) && (
-        <CookSocket userId={user._id} />
-      )}
+      <SocketComponent />
       <Router navbar={<NavBar />} />
     </>
   );
