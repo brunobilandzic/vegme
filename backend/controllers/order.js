@@ -133,10 +133,7 @@ const createOrder = async (req, res, next) => {
 
   const newAlert = new Alert({
     user: cook.user,
-    text: `${client.user.username} made an order ${newOrder.remark.slice(
-      0,
-      30
-    )}.`,
+    text: `${client.user.username} made an order ${newOrder.remark}.`,
   });
 
   const cookBaseUser = await BaseUser.findById(cook.user);
@@ -215,8 +212,20 @@ const removeMealFromOrder = async (req, res, next) => {
   order.meals.pull(mealId);
   meal.orders.pull(orderId);
 
+  const cook = await CookRoleUser.findById(order.cook);
+  const cookBaseUser = await BaseUser.findById(cook.user);
+  const orderer = await BaseUser.findById(req.user.id);
+
+  const newAlert = new Alert({
+    user: cookBaseUser.id,
+    text: `${orderer.username} removed ${meal.name} from ${order.remark}`,
+  });
+  cookBaseUser.alerts.push(newAlert.id);
+
   await order.save();
   await meal.save();
+  await newAlert.save();
+  await cookBaseUser.save();
 
   res.json(order);
 };
