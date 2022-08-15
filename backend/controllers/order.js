@@ -122,7 +122,7 @@ const createOrder = async (req, res, next) => {
 
   const cookSocketId = req.app.io.onlineUsers?.find(
     (ou) => ou.id === cook.user.toString()
-  ).room;
+  ).socketId;
 
   if (cookSocketId) {
     req.app.io.to(cookSocketId).emit("new-order", newOrder);
