@@ -18,13 +18,7 @@ const createIo = (httpsServer) => {
         socketId: socket.id,
       };
       if (io.onlineUsers === undefined) {
-        io.onlineUsers = [
-          {
-            ...userSocket,
-            socketIds: [userSocket.socketId],
-            room: userSocket.socketId,
-          },
-        ];
+        io.onlineUsers = [userSocket];
       } else {
         if (
           io.onlineUsers?.map((uSocket) => uSocket.id).includes(userSocket.id)
@@ -32,15 +26,10 @@ const createIo = (httpsServer) => {
           const existingOnlineUserSocket = io.onlineUsers?.find(
             (uSocket) => uSocket.id === userSocket.id
           );
-          existingOnlineUserSocket.socketIds.push(userSocket.socketId);
-          socket.join(existingOnlineUserSocket.room);
+          existingOnlineUserSocket.socketId = userSocket.socketId;
           return;
         }
-        io.onlineUsers.push({
-          ...userSocket, 
-          socketIds: [userSocket.socketId],
-          room: userSocket.socketId,
-        });
+        io.onlineUsers.push(userSocket);
       }
     });
   });
