@@ -14,6 +14,7 @@ const baseUserObject = {
   date_registered: { type: Date, default: () => Date.now() },
   changed_username: { type: Boolean, default: true },
   roles: [roleObject],
+  alerts: [{ type: mongoose.Types.ObjectId, default: [], ref: "Alert" }],
 };
 const regularRoleUserObject = {
   user: {

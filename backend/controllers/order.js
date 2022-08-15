@@ -10,6 +10,7 @@ const {
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { REGULAR } = require("../constants/roles.js");
 const HttpError = require("../errors/http-error.js");
+const { Alert } = require("../models/alert.js");
 
 const getOneOrder = async (req, res, next) => {
   const order = await Order.findById(req.params.orderId)
@@ -111,7 +112,9 @@ const createOrder = async (req, res, next) => {
   });
   cook.orders.push(newOrder.id);
 
-  const client = await RegularRoleUser.findOne({ user: req.user.id });
+  const client = await RegularRoleUser.findOne({ user: req.user.id }).populate({
+    path: "user",
+  });
 
   client.orders.push(newOrder.id);
   newOrder.orderer = client.id;
@@ -127,6 +130,20 @@ const createOrder = async (req, res, next) => {
   if (cookSocketId) {
     req.app.io.to(cookSocketId).emit("new-order", newOrder);
   }
+
+  const newAlert = new Alert({
+    user: cook.user,
+    text: `${client.user.username} made an order ${newOrder.remark.slice(
+      0,
+      30
+    )}.`,
+  });
+
+  const baseUser = await BaseUser.findById(req.user.id);
+  baseUser.alerts.push(newAlert.id);
+
+  await baseUser.save();
+  await newAlert.save();
 
   res.json(newOrder);
 };
