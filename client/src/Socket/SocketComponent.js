@@ -17,7 +17,7 @@ const SocketComponent = ({ user, newNotification }) => {
       newNotification(newOrder);
     });
 
-  }, []);
+  }, [user]);
 
   return <div>SocketComponent</div>;
 };
