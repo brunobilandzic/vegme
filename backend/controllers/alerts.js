@@ -1,6 +1,6 @@
 const { Alert } = require("../models/alert")
 
-const getAllAlerts = (req, res) => {
+const getAllAlerts = async (req, res) => {
     const allAlerts = await Alert.find({user: req.user.id})
     res.json(allAlerts)
 }

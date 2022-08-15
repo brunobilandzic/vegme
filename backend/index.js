@@ -19,6 +19,7 @@ const adminRoutes = require("./routes/admin.js");
 const operatorRoutes = require("./routes/operator.js");
 const orderRoutes = require("./routes/order");
 const cookRoutes = require("./routes/cook.js");
+const alertRoutes = require("./routes/alert")
 
 const httpsConfiguration = {
   key: fs.readFileSync("../server.key"),
@@ -44,6 +45,7 @@ app.use("/api/operators", operatorRoutes);
 app.use("/api/meals", mealRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/cooks", cookRoutes);
+app.use("/api/alerts", alertRoutes)
 
 app.use((error, req, res, next) => {
   if (res.headerSent) return next(error);
