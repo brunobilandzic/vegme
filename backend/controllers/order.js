@@ -139,10 +139,10 @@ const createOrder = async (req, res, next) => {
     )}.`,
   });
 
-  const baseUser = await BaseUser.findById(req.user.id);
-  baseUser.alerts.push(newAlert.id);
+  const cookBaseUser = await BaseUser.findById(cook.user);
+  cookBaseUser.alerts.push(newAlert.id);
 
-  await baseUser.save();
+  await cookBaseUser.save();
   await newAlert.save();
 
   res.json(newOrder);

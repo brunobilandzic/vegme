@@ -5,6 +5,7 @@ const { addToCook } = require("../../controllers/cook");
 const { addToOperatorRole } = require("../../controllers/operator");
 const { addToRegularRole } = require("../../controllers/regular");
 const { createNewUserManually } = require("../../controllers/user");
+const { Alert } = require("../../models/alert");
 const { Meal } = require("../../models/meal");
 const { Order } = require("../../models/order");
 const {
@@ -121,7 +122,9 @@ const writeOrders = async (orders) => {
   for (let i = 0; i <= 11; i++) {
     const order = new Order(orders[i]);
     order.orderer = await getRegular330Id();
-    const orderer = await RegularRoleUser.findById(await getRegular330Id());
+    const orderer = await RegularRoleUser.findById(
+      await getRegular330Id()
+    ).populate({ path: "user" });
     orderer.orders.push(order.id);
 
     const [randomMealIds, cookId] = await getMealIdsFromSameCook(
@@ -131,8 +134,14 @@ const writeOrders = async (orders) => {
     order.cook = cookId;
     const cook = await CookRoleUser.findById(cookId);
     cook.orders.push(order.id);
+    const cookBaseUser = await BaseUser.findById(cook.user);
+    const newAlert = new Alert({
+      user: cookBaseUser.id,
+      text: `${orderer.user.username} made an order.`,
+    });
+    cookBaseUser.alerts.push(newAlert.id);
     order.order_time = pickRandomElement(cook.order_times);
-    
+
     await randomMealIds.forEach(async (randomMealId) => {
       const meal = await Meal.findById(randomMealId);
       meal.orders.push(order.id);
@@ -144,12 +153,16 @@ const writeOrders = async (orders) => {
     await orderer.save();
     await order.save();
     await cook.save();
+    await newAlert.save();
+    await cookBaseUser.save();
     console.log(`${order.remark} saved`);
   }
 
   const order = new Order(orders[12]);
   order.orderer = await getRegular330Id();
-  const orderer = await RegularRoleUser.findById(await getRegular330Id());
+  const orderer = await RegularRoleUser.findById(
+    await getRegular330Id()
+  ).populate({ path: "user" });
   orderer.orders.push(order.id);
 
   const cookId = await getCookUsername872Id();
@@ -169,6 +182,18 @@ const writeOrders = async (orders) => {
   await orderer.save();
   await order.save();
   await cook.save();
+
+  const cookBaseUser = await BaseUser.findById(cook.user);
+  const newAlert = new Alert({
+    user: cookBaseUser.id,
+    text: `${orderer.user.username} made an order.`,
+  });
+
+  cookBaseUser.alerts.push(newAlert.id);
+
+  await newAlert.save();
+  await cookBaseUser.save();
+
   console.log(`$Order id: ${order.id} saved, cookusername872 id: ${cook.id}`);
 
   orders = orders.slice(13);
@@ -185,7 +210,9 @@ const writeOrders = async (orders) => {
     const cook = await CookRoleUser.findById(cookId);
 
     const order = new Order(orderJSON);
-    const orderer = await RegularRoleUser.findById(ordererId);
+    const orderer = await RegularRoleUser.findById(ordererId).populate({
+      path: "user",
+    });
     orderer.orders.push(order.id);
     cook.orders.push(order.id);
     order.order_time = pickRandomElement(cook.order_times);
@@ -197,6 +224,17 @@ const writeOrders = async (orders) => {
 
       await meal.save();
     });
+
+    const cookBaseUser = await BaseUser.findById(cook.user);
+    const newAlert = new Alert({
+      user: cookBaseUser.id,
+      text: `${orderer.user.username} made an order.`,
+    });
+
+    cookBaseUser.alerts.push(newAlert.id);
+
+    await newAlert.save();
+    await cookBaseUser.save();
 
     await orderer.save();
     await order.save();
