@@ -1,27 +1,23 @@
-import { LOAD_SINGLE_ALERT, LOAD_ALL_ALERTS } from "../types";
+import { LOAD_SINGLE_ALERT, LOAD_ALL_PAGINATED_ALERTS } from "../types";
 
 const initialState = {
-  alerts: [],
+  alerts: {
+    items: {}
+  },
 };
 
 export default function alertsReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_ALL_ALERTS:
+    case LOAD_ALL_PAGINATED_ALERTS:
       return {
         ...state,
-        alerts: action.payload.map((alert) => {
-          if (alert.seen) {
-            return {
-              ...alert,
-              seen: true,
-            };
-          } else {
-            return {
-              ...alert,
-              seen: false,
-            };
+        alerts: {
+          ...state.alerts,
+          items: {
+            ...state.alerts.items,
+            [action.payload.pageNumber + "-" + action.payload.pageSize]: action.payload.items
           }
-        }),
+        }
       };
     case LOAD_SINGLE_ALERT:
       return {

@@ -6,17 +6,16 @@ import { updatePageNumber } from "../../Redux/pagination/paginationActions.js";
 import paginationStyles from "./pagination.module.css";
 import { v4 as uuid } from "uuid";
 
-function PaginationCustom(props) {
-  const {
-    meals,
-    orders,
-    cookMeals,
-    specialMeals,
-    loadItems,
-    updatePageNumber,
-    type,
-  } = props;
-
+function PaginationCustom({
+  meals,
+  orders,
+  cookMeals,
+  specialMeals,
+  loadItems,
+  updatePageNumber,
+  type,
+  alerts,
+}) {
   const { pageNumber, pageSize, totalPages } =
     type == "meals"
       ? meals
@@ -26,6 +25,8 @@ function PaginationCustom(props) {
       ? cookMeals
       : type == "specialMeals"
       ? specialMeals
+      : type == "alerts"
+      ? alerts
       : {
           pageNumber: 1,
           pageSize: 5,
@@ -54,14 +55,14 @@ function PaginationCustom(props) {
               loadItems(i, pageSize);
             }}
             active={i === pageNumber}
-            key={i}
+            key={uuid()}
           >
             {i}
           </PageItem>
         );
       }
       if (pageNumber < totalPages - 2)
-        pageItems.push(<PageItem disabled>{"..."}</PageItem>);
+        pageItems.push(<PageItem key={uuid()} disabled>{"..."}</PageItem>);
     } else {
       for (let i = 1; i <= totalPages; i++) {
         pageItems.push(
@@ -71,7 +72,7 @@ function PaginationCustom(props) {
               loadItems(i, pageSize);
             }}
             active={i === pageNumber}
-            key={i}
+            key={uuid()}
           >
             {i}
           </PageItem>
@@ -142,14 +143,16 @@ PaginationCustom.propTypes = {
   orders: propTypes.object,
   meals: propTypes.object,
   cookMeals: propTypes.object,
-  specialMeals: propTypes.object
+  specialMeals: propTypes.object,
+  alerts: propTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   orders: state.pagination.orders,
   meals: state.pagination.meals,
   cookMeals: state.pagination.cookMeals,
-  specialMeals: state.pagination.specialMeals
+  specialMeals: state.pagination.specialMeals,
+  alerts: state.pagination.alerts,
 });
 
 export default connect(mapStateToProps, {

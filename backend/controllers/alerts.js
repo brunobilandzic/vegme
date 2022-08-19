@@ -1,8 +1,17 @@
+const { extractFiltersFromQuery } = require("../helpers/extractFilters");
 const { Alert } = require("../models/alert");
+const url = require("url");
+const { PaginatedList } = require("../helpers/pagination");
 
-const getAllAlerts = async (req, res) => {
-  const allAlerts = await Alert.find({ user: req.user.id }).sort({date: -1});
-  res.json(allAlerts);
+const getAllPaginatedAlerts = async (req, res) => {
+  const queryObject = url.parse(req.url, true).query;
+  const alertsWithPaginaton = await PaginatedList.getPaginatedResult(
+    Alert.find(extractFiltersFromQuery(queryObject, { user: req.user.id })),
+    Number(queryObject.pageNumber),
+    Number(queryObject.pageSize),
+    { date: -1 }
+  );
+  res.json(alertsWithPaginaton);
 };
 
 const readAlerts = async (req, res) => {
@@ -18,6 +27,6 @@ const readAlerts = async (req, res) => {
 };
 
 module.exports = {
-  getAllAlerts,
+  getAllPaginatedAlerts,
   readAlerts,
 };
