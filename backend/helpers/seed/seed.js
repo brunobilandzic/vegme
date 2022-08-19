@@ -197,6 +197,50 @@ const writeOrders = async (orders) => {
   console.log(`$Order id: ${order.id} saved, cookusername872 id: ${cook.id}`);
 
   orders = orders.slice(13);
+
+  for (let i = 0; i <= 15; i++) {
+    const order = new Order(orders[i]);
+
+    order.orderer = await getRegular330Id();
+    const orderer = await RegularRoleUser.findById(
+      await getRegular330Id()
+    ).populate({ path: "user" });
+    orderer.orders.push(order.id);
+
+    const cookId = await getCookUsername872Id();
+    const cook = await CookRoleUser.findById(cookId).populate({
+      path: "cooks",
+    });
+
+    order.cook = cookId;
+    cook.orders.push(order.id);
+
+    const cookBaseUser = await BaseUser.findById(cook.user);
+    const newAlert = new Alert({
+      user: cookBaseUser.id,
+      text: `${orderer.user.username} made an order ${order.remark}.`,
+    });
+    cookBaseUser.alerts.push(newAlert.id);
+    order.order_time = pickRandomElement(cook.order_times);
+
+    await cook.cooks.forEach(async (meal) => {
+      meal.orders.push(order.id);
+      order.meals.push(meal.id);
+
+      await meal.save();
+    });
+
+    await orderer.save();
+    await order.save();
+    await cook.save();
+    await newAlert.save();
+    await cookBaseUser.save();
+
+    console.log(`${order.remark} saved`);
+  }
+
+  orders = orders.slice(16);
+
   await orders.forEach(async (orderJSON) => {
     const ordererId = await getOrdererId();
 

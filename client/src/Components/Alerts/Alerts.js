@@ -2,15 +2,21 @@ import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { loadAllAlerts } from "../../Redux/alerts/alertsActions";
+import AlertItem from "./AlertItem";
+import { v4 as uuid } from "uuid";
 
-export const Alerts = ({ alerts, is_logged_in , loadAllAlerts}) => {
+export const Alerts = ({ alerts, is_logged_in, loadAllAlerts }) => {
   useEffect(() => {
-    is_logged_in && loadAllAlerts()
-  }, [is_logged_in])
+    is_logged_in && loadAllAlerts();
+  }, [is_logged_in]);
   return (
     <>
-      <div>alerts:</div>
-      <div>{alerts?.length}</div>
+      <div>alerts: {alerts.length}</div>
+      <div>
+        {alerts?.map((alert) => (
+          <AlertItem key={uuid()} alert={alert} />
+        ))}
+      </div>
     </>
   );
 };
@@ -18,7 +24,7 @@ export const Alerts = ({ alerts, is_logged_in , loadAllAlerts}) => {
 Alerts.propTypes = {
   alerts: PropTypes.array,
   is_logged_in: PropTypes.bool,
-  loadAllAlerts: PropTypes.func.isRequired
+  loadAllAlerts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -26,6 +32,6 @@ const mapStateToProps = (state) => ({
   is_logged_in: state.auth.is_logged_in,
 });
 
-const mapDispatchToProps = {loadAllAlerts};
+const mapDispatchToProps = { loadAllAlerts };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alerts);

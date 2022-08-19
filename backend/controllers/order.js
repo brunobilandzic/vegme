@@ -123,14 +123,6 @@ const createOrder = async (req, res, next) => {
   await newOrder.save();
   await cook.save();
 
-  const cookSocketId = req.app.io.onlineUsers?.find(
-    (ou) => ou.id === cook.user.toString()
-  ).socketId;
-
-  if (cookSocketId) {
-    req.app.io.to(cookSocketId).emit("new-order", newOrder);
-  }
-
   const newAlert = new Alert({
     user: cook.user,
     text: `${client.user.username} made an order ${newOrder.remark}.`,
@@ -141,6 +133,14 @@ const createOrder = async (req, res, next) => {
 
   await cookBaseUser.save();
   await newAlert.save();
+
+  const cookSocketId = req.app.io.onlineUsers?.find(
+    (ou) => ou.id === cook.user.toString()
+  ).socketId;
+
+  if (cookSocketId) {
+    req.app.io.to(cookSocketId).emit("new-alert", newAlert);
+  }
 
   res.json(newOrder);
 };

@@ -13,11 +13,10 @@ const SocketComponent = ({ user, newAlert }) => {
       socket.emit("log-in", { id: user?._id, roles: user?.roles });
     }
 
-    socket.on("new-order", (newOrder) => {
-      newAlert(newOrder);
-    });
+    socket.on("new-alert", (alert) => {
+      newAlert(alert)
+    })
 
-    socket.on("new-alert", (alert) => {});
   }, [user]);
 
   return <></>;
