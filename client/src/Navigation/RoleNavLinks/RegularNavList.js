@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import AlertNavItem from "./AlertNavItem";
 
 export default function RegularNavList() {
   return (
@@ -17,6 +18,7 @@ export default function RegularNavList() {
       <LinkContainer to="/cooks">
         <NavLink>Cooks</NavLink>
       </LinkContainer>
+      <AlertNavItem />
     </>
   );
 }

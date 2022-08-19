@@ -1,64 +1,69 @@
 .checkboxContainer {
-    display: flex;
-    margin: 1rem 0 0.5rem;
+  display: flex;
+  margin: 1rem 0 0.5rem;
 }
 
 .checkboxContainer input {
-    margin-left: 1rem
+  margin-left: 1rem;
 }
 
 .action:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .loading-wrap {
-    padding: 10rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .showOrders:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .showOrders {
-    color: blue
+  color: blue;
 }
 
 .flex-row-item {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }
 
 .different-cook {
-    width: 9rem;
+  width: 9rem;
 }
 
 .hover-box {
-    position: relative
+  position: relative;
 }
 
-
 .hover-box:hover .hover-text {
-    visibility: visible;
+  visibility: visible;
 }
 
 .hover-text {
-    position: absolute;
-    text-align: center;
-    background-color: black;
-    color: white;
-    padding: 0.4rem 0.4rem;
-    right: -50px;
-    border-radius: 20px;
-    top: 40px;
-    visibility: hidden;
+  position: absolute;
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 0.4rem 0.4rem;
+  right: -50px;
+  border-radius: 20px;
+  top: 40px;
+  visibility: hidden;
 }
 
 .clickable-icon:hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+.alert-nav-link {
+  padding-bottom: 0.08rem;
+  margin-top: -0.08rem;
+  margin-left: -0.12rem;
 }
