@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
+import alertsReducer from "./alerts/alertsReducer";
 import apiReducer from "./api/apiReducer";
 import authReducer from "./auth/authReducer";
 import cooksReducer from "./cooks/cooksReducer";
 import mealsReducer from "./meals/mealsReducer";
-import notificationsReducer from "./notifications/notificationsReducer";
 import ordersReducer from "./orders/ordersReducer";
 import paginationReducer from "./pagination/paginationReducer";
 
@@ -15,6 +15,6 @@ export default combineReducers(
     orders: ordersReducer,
     api: apiReducer,
     cooks: cooksReducer,
-    notifications: notificationsReducer
+    alerts: alertsReducer
 }
 )

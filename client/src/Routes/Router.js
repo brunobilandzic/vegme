@@ -24,6 +24,7 @@ import CookProfile from "../Components/Cook/CookProfile";
 import BrowseCooks from "../Components/Cook/BrowseCooks";
 import BrowseSpecialMeals from "../Components/Meals/BrowseSpecialMeals";
 import RegularOrCookShield from "./Shields/RegularOrCookShield";
+import Alerts from "../Components/Alerts/Alerts";
 
 export default function Router(props) {
   return (
@@ -99,6 +100,14 @@ export default function Router(props) {
               path="/auth/google/success"
               element={<GoogleAuthSuccess />}
             ></Route>
+            <Route
+              path="/alerts"
+              element={
+                <AuthorizationShield>
+                  <Alerts />
+                </AuthorizationShield>
+              }
+            />
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/" element={<MainPage />}></Route>
           </Routes>

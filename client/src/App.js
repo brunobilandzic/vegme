@@ -5,8 +5,6 @@ import Router from "./Routes/Router";
 import propTypes from "prop-types";
 import { loadUser } from "./Redux/auth/authActions.js";
 import { useEffect } from "react";
-import { COOK } from "./Shared/Constants/Roles";
-import CookSocket from "./Socket/CookSocket";
 import SocketComponent from "./Socket/SocketComponent";
 
 function App({ loadUser, user }) {

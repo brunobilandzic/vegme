@@ -137,7 +137,7 @@ const writeOrders = async (orders) => {
     const cookBaseUser = await BaseUser.findById(cook.user);
     const newAlert = new Alert({
       user: cookBaseUser.id,
-      text: `${orderer.user.username} made an order.`,
+      text: `${orderer.user.username} made an order ${order.remark}.`,
     });
     cookBaseUser.alerts.push(newAlert.id);
     order.order_time = pickRandomElement(cook.order_times);
@@ -186,7 +186,7 @@ const writeOrders = async (orders) => {
   const cookBaseUser = await BaseUser.findById(cook.user);
   const newAlert = new Alert({
     user: cookBaseUser.id,
-    text: `${orderer.user.username} made an order.`,
+    text: `${orderer.user.username} made an order ${order.remark}.`,
   });
 
   cookBaseUser.alerts.push(newAlert.id);
@@ -228,7 +228,7 @@ const writeOrders = async (orders) => {
     const cookBaseUser = await BaseUser.findById(cook.user);
     const newAlert = new Alert({
       user: cookBaseUser.id,
-      text: `${orderer.user.username} made an order.`,
+      text: `${orderer.user.username} made an order ${order.remark}.`,
     });
 
     cookBaseUser.alerts.push(newAlert.id);

@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { newNotification } from "../Redux/notifications/notificationsActions";
+import { newAlert } from "../Redux/alerts/alertsActions";
 
-const SocketComponent = ({ user, newNotification }) => {
+const SocketComponent = ({ user, newAlert }) => {
   useEffect(() => {
     const socket = io("https://localhost:5000");
 
@@ -14,16 +14,17 @@ const SocketComponent = ({ user, newNotification }) => {
     }
 
     socket.on("new-order", (newOrder) => {
-      newNotification(newOrder);
+      newAlert(newOrder);
     });
 
+    socket.on("new-alert", (alert) => {});
   }, [user]);
 
-  return <div>SocketComponent</div>;
+  return <></>;
 };
 
 SocketComponent.propTyles = {
-  newNotification: PropTypes.func.isRequired,
+  newAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  newNotification,
+  newAlert,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SocketComponent);
