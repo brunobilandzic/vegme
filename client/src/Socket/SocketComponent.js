@@ -14,9 +14,8 @@ const SocketComponent = ({ user, newAlert }) => {
     }
 
     socket.on("new-alert", (alert) => {
-      newAlert(alert)
-    })
-
+      newAlert(alert);
+    });
   }, [user]);
 
   return <></>;

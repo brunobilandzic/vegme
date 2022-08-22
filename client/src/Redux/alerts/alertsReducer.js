@@ -1,9 +1,13 @@
-import { LOAD_SINGLE_ALERT, LOAD_ALL_PAGINATED_ALERTS } from "../types";
+import {
+  LOAD_SINGLE_ALERT,
+  LOAD_ALL_PAGINATED_ALERTS,
+  READ_ALERTS,
+  SET_UNREAD_ALERTS_COUNT,
+} from "../types";
 
 const initialState = {
-  alerts: {
-    items: {}
-  },
+  items: {},
+  unreadAlertsCount: 0,
 };
 
 export default function alertsReducer(state = initialState, action) {
@@ -11,19 +15,27 @@ export default function alertsReducer(state = initialState, action) {
     case LOAD_ALL_PAGINATED_ALERTS:
       return {
         ...state,
-        alerts: {
-          ...state.alerts,
-          items: {
-            ...state.alerts.items,
-            [action.payload.pageNumber + "-" + action.payload.pageSize]: action.payload.items
-          }
-        }
+        items: {
+          ...state.items,
+          [action.payload.pageNumber + "-" + action.payload.pageSize]:
+            action.payload.items,
+        },
       };
     case LOAD_SINGLE_ALERT:
       return {
         ...state,
-        alerts: [action.payload, ...state.alerts],
+        items: {},
       };
+    case READ_ALERTS:
+      return {
+        ...state,
+        unreadAlertsCount: state.unreadAlertsCount - action.payload,
+      };
+    case SET_UNREAD_ALERTS_COUNT:
+      return {
+        ...state,
+        unreadAlertsCount: action.payload
+      }
     default:
       return state;
   }

@@ -350,7 +350,6 @@ const seedData = async () => {
   await seedUsers();
   await seedMeals();
   await seedOrders();
-  await cookUsernameMostOrders();
 };
 
 module.exports = { seedData };

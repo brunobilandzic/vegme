@@ -17,3 +17,13 @@ export const loadAllPaginatedAlerts = async (pageNumber, pageSize) => {
   });
   return response.data;
 };
+
+export const fetchUnreadAlertsCount = async () => {
+  const response = await axiosInstance.get("/unread");
+  return response.data;
+};
+
+export const readAlertsServer = async (alertIds) => {
+  const response = await axiosInstance.patch("/read", { alertIds });
+  return response.data;
+};

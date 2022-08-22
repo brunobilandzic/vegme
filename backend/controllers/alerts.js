@@ -17,16 +17,29 @@ const getAllPaginatedAlerts = async (req, res) => {
 const readAlerts = async (req, res) => {
   const result = await Alert.updateMany(
     {
-      _id: {
-        $in: req.body.alertIds,
-      },
+      $and: [
+        {
+          _id: {
+            $in: req.body.alertIds,
+          },
+        },
+        { user: req.user.id },
+      ],
     },
-    { read: false }
+    { read: true }
   );
-  res.json({ modifiedCount: result.modifiedCount });
+  res.json( result.modifiedCount );
+};
+
+const getUnreadAlertsCount = async (req, res) => {
+  const unreadAlertsCount = await Alert.where({
+    $and: [{ read: false }, { user: req.user.id }],
+  }).count();
+  res.json(unreadAlertsCount);
 };
 
 module.exports = {
   getAllPaginatedAlerts,
   readAlerts,
+  getUnreadAlertsCount,
 };
