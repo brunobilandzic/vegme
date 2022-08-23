@@ -6,6 +6,7 @@ import {
 import {
   IS_LOADING,
   LOAD_ALL_PAGINATED_ALERTS,
+  NEW_ALERT,
   NOT_LOADING,
   READ_ALERTS,
   SET_UNREAD_ALERTS_COUNT,
@@ -14,6 +15,7 @@ import {
 } from "../types";
 
 export const newAlert = () => async (dispatch) => {
+  dispatch({type: NEW_ALERT})
   dispatch({
     type: IS_LOADING,
   });

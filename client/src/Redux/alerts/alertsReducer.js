@@ -1,5 +1,5 @@
 import {
-  LOAD_SINGLE_ALERT,
+  NEW_ALERT,
   LOAD_ALL_PAGINATED_ALERTS,
   READ_ALERTS,
   SET_UNREAD_ALERTS_COUNT,
@@ -21,10 +21,10 @@ export default function alertsReducer(state = initialState, action) {
             action.payload.items,
         },
       };
-    case LOAD_SINGLE_ALERT:
+    case NEW_ALERT:
       return {
         ...state,
-        items: {},
+        unreadAlertsCount: state.unreadAlertsCount + 1,
       };
     case READ_ALERTS:
       return {

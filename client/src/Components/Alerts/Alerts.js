@@ -33,7 +33,6 @@ export const Alerts = ({
   return (
     <>
       <Loading />
-      <div>alerts: {alerts?.items[pageNumber + "-" + pageSize]?.length}</div>
       <div>
         {alerts?.items[pageNumber + "-" + pageSize]?.map((alert) => (
           <AlertItem key={uuid()} alert={alert} />
