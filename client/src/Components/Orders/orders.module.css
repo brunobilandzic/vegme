@@ -1,26 +1,52 @@
 .container {
-    border: 1px solid;
-    margin: 1rem 0;
-    padding: 1rem;
+  border: 1px solid;
+  margin: 1rem 0;
+  padding: 1rem;
 }
 
 .container:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .box {
-    display: flex;
+  display: flex;
 }
 
 .ingredient {
-    display: flex;
-    margin: 0.2rem 0;
+  display: flex;
+  margin: 0.2rem 0;
 }
 
 .ingredientName {
-    margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
-.mealItem div{
-    margin-right: 0.5rem;
+.mealItem div {
+  margin-right: 0.5rem;
+}
+
+.orderForRegular {
+  padding: 1rem 0.5rem;
+}
+
+.btnGroup {
+  margin-top: 1rem;
+}
+
+.remarkTextarea {
+  width: 100%;
+}
+
+.deliveryFormGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox label {
+  margin: 1rem 1rem 0 0;
+}
+
+.checkbox {
+    margin: 1rem 0
+
 }

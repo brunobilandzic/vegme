@@ -1,5 +1,5 @@
 const { PaginatedList } = require("../helpers/pagination.js");
-const { BaseUser } = require("../models/user.js");
+const { BaseUser, RegularRoleUser } = require("../models/user.js");
 const passport = require("passport");
 const { addToRegularRole } = require("./regular.js");
 const { sendVerificationMail } = require("../helpers/mail.js");
@@ -58,9 +58,16 @@ const updateUsername = async (req, res, next) => {
 
   user.username = req.body.username;
   user.changed_username = true;
-  
+
   await user.save();
   res.json(user);
+};
+
+const getRegular = async (req, res, next) => {
+  const regular = await RegularRoleUser.findById(req.params.regularId).populate(
+    { path: "user" }
+  );
+  res.json(regular);
 };
 
 module.exports = {
@@ -69,4 +76,5 @@ module.exports = {
   createNewUserManually,
   checkVerificationLink,
   updateUsername,
+  getRegular,
 };

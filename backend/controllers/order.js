@@ -11,6 +11,7 @@ const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { REGULAR } = require("../constants/roles.js");
 const HttpError = require("../errors/http-error.js");
 const { Alert } = require("../models/alert.js");
+const { sendAlert } = require("../helpers/alert.js");
 
 const getOneOrder = async (req, res, next) => {
   const order = await Order.findById(req.params.orderId)
@@ -123,24 +124,12 @@ const createOrder = async (req, res, next) => {
   await newOrder.save();
   await cook.save();
 
-  const newAlert = new Alert({
-    user: cook.user,
-    text: `${client.user.username} made an order ${newOrder.remark}.`,
-  });
-
-  const cookBaseUser = await BaseUser.findById(cook.user);
-  cookBaseUser.alerts.push(newAlert.id);
-
-  await cookBaseUser.save();
-  await newAlert.save();
-
-  const cookSocketId = req.app.io.onlineUsers?.find(
-    (ou) => ou.id === cook.user.toString()
-  ).socketId;
-
-  if (cookSocketId) {
-    req.app.io.to(cookSocketId).emit("new-alert", newAlert);
-  }
+  await sendAlert(
+    CookRoleUser,
+    `${client.user.username} made an order ${newOrder.remark}.`,
+    cook.id,
+    req.app.io
+  );
 
   res.json(newOrder);
 };
@@ -148,6 +137,18 @@ const createOrder = async (req, res, next) => {
 const appendMealsToOrder = async (req, res, next) => {
   const { orderId, mealIds } = req.body;
   const order = await Order.findById(orderId);
+
+  const regular = await RegularRoleUser.findOne({ user: req.user.id }).populate(
+    { path: "user" }
+  );
+  const regularId = regular.id;
+
+  if (order.orderer != regularId) {
+    return res.json({
+      error: `Order ${order.remark} orderer not the same as issuer.`,
+    });
+  }
+
   const meals = await Meal.find({ _id: { $in: mealIds } });
 
   let mealWithDifferentCook = null;
@@ -157,18 +158,14 @@ const appendMealsToOrder = async (req, res, next) => {
     if (meal.cook.toString() != order.cook.toString()) {
       mealWithDifferentCook = meal;
       return;
-    } else if (order.meals.includes(meal.id)) {
+    }
+    if (order.meals.includes(meal.id)) {
       mealAlreadyInOrder = meal;
       return;
     }
     meal.orders.push(orderId);
     order.meals.push(meal.id);
   });
-
-  await meals.forEach(async (meal) => {
-    await meal.save();
-  });
-  await order.save();
 
   if (mealWithDifferentCook) {
     return res.json({
@@ -180,6 +177,18 @@ const appendMealsToOrder = async (req, res, next) => {
       error: `Meal ${mealAlreadyInOrder.name} already in order ${order.remark}`,
     });
   }
+
+  await meals.forEach(async (meal) => {
+    await meal.save();
+  });
+  await order.save();
+
+  await sendAlert(
+    CookRoleUser,
+    `${regular.user.username} appended ${meals?.length} meals to order ${order.remark}.`,
+    order.cook,
+    req.app.io
+  );
 
   res.json(order);
 };
@@ -206,26 +215,34 @@ const removeMealsFromOrder = async (req, res, next) => {
 
 const removeMealFromOrder = async (req, res, next) => {
   const { orderId, mealId } = req.body;
+
   const order = await Order.findById(orderId);
+
+  const regular = await RegularRoleUser.findOne({ user: req.user.id });
+  const regularId = regular.id;
+
+  if (order.orderer != regularId) {
+    return res.json({
+      error: `Order ${order.remark} orderer not the same as issuer.`,
+    });
+  }
+
   const meal = await Meal.findById(mealId);
 
   order.meals.pull(mealId);
   meal.orders.pull(orderId);
 
-  const cook = await CookRoleUser.findById(order.cook);
-  const cookBaseUser = await BaseUser.findById(cook.user);
   const orderer = await BaseUser.findById(req.user.id);
 
-  const newAlert = new Alert({
-    user: cookBaseUser.id,
-    text: `${orderer.username} removed ${meal.name} from ${order.remark}`,
-  });
-  cookBaseUser.alerts.push(newAlert.id);
+  await sendAlert(
+    CookRoleUser,
+    `${orderer.username} removed ${meal.name} from ${order.remark}`,
+    order.cook,
+    req.app.io
+  );
 
   await order.save();
   await meal.save();
-  await newAlert.save();
-  await cookBaseUser.save();
 
   res.json(order);
 };
@@ -251,6 +268,63 @@ const needNewPageMyOrder = async (req, res) => {
   );
 };
 
+const updateOrderRegular = async (req, res, next) => {
+  const { orderId, remark, delivery_address, active, order_time } = req.body;
+
+  const regularUser = await RegularRoleUser.findOne({ user: req.user.id });
+  const regularId = regularUser.id;
+
+  const oldOrder = await Order.findById(orderId);
+
+  if (oldOrder.orderer != regularId)
+    return next(
+      new HttpError("Order not owned by the issuer of request.", 403)
+    );
+
+  if (order_time && !cook.order_times.includes(order_time)) {
+    return next(new HttpError("New order time not allowed!", 400));
+  }
+
+  let order_time_out_of_boundary = false;
+  if (order_time && order_time != oldOrder.order_time) {
+    const today = new Date();
+    let todayDow = today.getDay();
+    let diff = 0;
+    console.log(order_time, oldOrder.order_time, todayDow);
+
+    if (todayDow == oldOrder.order_time) {
+      diff = 7;
+    }
+
+    if (todayDow - oldOrder.order_time > 0) {
+      if (todayDow == 0) {
+        diff = oldOrder.order_time - 1;
+      } else {
+        diff = oldOrder.order_time - 1 + 6 - todayDow;
+      }
+    }
+
+    if (oldOrder.order_time - todayDow > 0) {
+      diff = oldOrder.order_time - todayDow - 1;
+    }
+
+    if (diff < cook.min_days_to_edit_order) {
+      order_time_out_of_boundary = true;
+    }
+
+    console.log(`diff: ${diff}`);
+  }
+
+  if (order_time && order_time_out_of_boundary) {
+    req.body.order_time = oldOrder.order_time;
+  }
+  const newOrder = await Order.findByIdAndUpdate(req.body.orderId, req.body, {
+    new: true,
+  });
+
+  res.json(newOrder);
+};
+
 module.exports = {
   getAllPaginatedOrdersForUser,
   getAllPaginatedOrders,
@@ -265,4 +339,5 @@ module.exports = {
   removeMealsFromOrder,
   getOneOrder,
   removeMealFromOrder,
+  updateOrderRegular,
 };

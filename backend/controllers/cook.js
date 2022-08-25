@@ -25,7 +25,6 @@ const getAllCooks = async (req, res) => {
 const getAllCookRoles = async (req, res) => {
   const cookRoles = await CookRoleUser.find()
     .populate({ path: "user", select: "username name" })
-    .populate({ path: "cooks" });
   res.json(cookRoles);
 };
 

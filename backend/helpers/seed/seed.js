@@ -158,56 +158,20 @@ const writeOrders = async (orders) => {
     console.log(`${order.remark} saved`);
   }
 
-  const order = new Order(orders[12]);
-  order.orderer = await getRegular330Id();
-  const orderer = await RegularRoleUser.findById(
-    await getRegular330Id()
-  ).populate({ path: "user" });
-  orderer.orders.push(order.id);
-
-  const cookId = await getCookUsername872Id();
-  const cook = await CookRoleUser.findById(cookId).populate({ path: "cooks" });
-
-  order.cook = cookId;
-  cook.orders.push(order.id);
-  order.order_time = pickRandomElement(cook.order_times);
-
-  await cook.cooks.forEach(async (meal) => {
-    meal.orders.push(order.id);
-    order.meals.push(meal.id);
-
-    await meal.save();
-  });
-
-  await orderer.save();
-  await order.save();
-  await cook.save();
-
-  const cookBaseUser = await BaseUser.findById(cook.user);
-  const newAlert = new Alert({
-    user: cookBaseUser.id,
-    text: `${orderer.user.username} made an order ${order.remark}.`,
-  });
-
-  cookBaseUser.alerts.push(newAlert.id);
-
-  await newAlert.save();
-  await cookBaseUser.save();
-
-  console.log(`$Order id: ${order.id} saved, cookusername872 id: ${cook.id}`);
-
-  orders = orders.slice(13);
+  orders = orders.slice(12);
 
   for (let i = 0; i <= 15; i++) {
     const order = new Order(orders[i]);
 
-    order.orderer = await getRegular330Id();
-    const orderer = await RegularRoleUser.findById(
-      await getRegular330Id()
-    ).populate({ path: "user" });
+    const ordererId = await getOrdererId();
+
+    order.orderer = ordererId;
+    const orderer = await RegularRoleUser.findById(ordererId).populate({
+      path: "user",
+    });
     orderer.orders.push(order.id);
 
-    const cookId = await getCookUsername872Id();
+    const cookId = await getCook872Id();
     const cook = await CookRoleUser.findById(cookId).populate({
       path: "cooks",
     });
@@ -224,6 +188,7 @@ const writeOrders = async (orders) => {
     order.order_time = pickRandomElement(cook.order_times);
 
     await cook.cooks.forEach(async (meal) => {
+      if (Math.random() > 0.5) return;
       meal.orders.push(order.id);
       order.meals.push(meal.id);
 
@@ -314,7 +279,7 @@ const getRegular330Id = async () => {
   return regular.roles.find((role) => role.name == REGULAR)?.id;
 };
 
-const getCookUsername872Id = async () => {
+const getCook872Id = async () => {
   const cook = await BaseUser.findOne({ username: "cookusername872" });
   return cook.roles.find((role) => role.name == COOK)?.id;
 };

@@ -25,6 +25,7 @@ import BrowseCooks from "../Components/Cook/BrowseCooks";
 import BrowseSpecialMeals from "../Components/Meals/BrowseSpecialMeals";
 import RegularOrCookShield from "./Shields/RegularOrCookShield";
 import Alerts from "../Components/Alerts/Alerts";
+import EditOrderRegular from "../Components/Orders/EditOrderRegular";
 
 export default function Router(props) {
   return (
@@ -76,6 +77,14 @@ export default function Router(props) {
               element={
                 <RegularOrCookShield>
                   <OrderPage />
+                </RegularOrCookShield>
+              }
+            ></Route>
+            <Route
+              path="/order/edit"
+              element={
+                <RegularOrCookShield>
+                  <EditOrderRegular />
                 </RegularOrCookShield>
               }
             ></Route>
