@@ -7,6 +7,10 @@
     align-items: center;
 }
 
+.input, .checkbox {
+    margin-right: 1rem;
+}
+
 .listItem {
     display: flex;
     align-items: center;

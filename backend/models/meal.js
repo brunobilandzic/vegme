@@ -34,6 +34,7 @@ const mealObject = {
     default: mealTypes.REGULAR,
   },
   date_created: { type: Date, default: () => Date.now() },
+  offered_dates: [{type: Number}]
 };
 
 

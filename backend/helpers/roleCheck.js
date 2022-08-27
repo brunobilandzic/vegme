@@ -5,8 +5,8 @@ const { BaseUser } = require("../models/user");
 const requireLogin = async (req, res, next) => {
   if (!req.user) {
     return res.json({
-      message: "You need to login"
-    })
+      message: "You need to login",
+    });
   } else next();
 };
 
@@ -20,7 +20,7 @@ const isInRole = async (userId, roleName, next) => {
 };
 
 const requireRegular = async (req, res, next) => {
-  return isInRole(req.user?.id, REGULAR, next)
+  return await isInRole(req.user?.id, REGULAR, next)
     ? next()
     : next(
         new HttpError("You have to be in regular role to access this.", 401)
@@ -28,19 +28,19 @@ const requireRegular = async (req, res, next) => {
 };
 
 const requireOperator = async (req, res, next) => {
-  return isInRole(req.user?.id, OPERATOR, next)
+  return await isInRole(req.user?.id, OPERATOR, next)
     ? next()
     : next(new HttpError("You have to be a operator to access this.", 401));
 };
 
 const requireCook = async (req, res, next) => {
-  return isInRole(req.user?.id, COOK, next)
+  return await isInRole(req.user?.id, COOK, next)
     ? next()
     : next(new HttpError("You have to be a cook to access this.", 401));
 };
 
 const requireAdministrator = async (req, res, next) => {
-  return isInRole(req.user?.id, ADINISTRATOR, next)
+  return await isInRole(req.user?.id, ADINISTRATOR, next)
     ? next()
     : next(
         new HttpError("You have to be a coadministratorok to access this.", 401)
@@ -53,5 +53,5 @@ module.exports = {
   requireCook,
   requireAdministrator,
   requireOperator,
-  requireLogin
+  requireLogin,
 };

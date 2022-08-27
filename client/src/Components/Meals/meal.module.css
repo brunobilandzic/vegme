@@ -33,3 +33,16 @@
   border: 1px solid;
   margin: 1rem 0;
 }
+
+.typePrompt {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.type:hover{
+  cursor: pointer;
+}
+
+.regularOption {
+  margin-right: 1rem;
+}

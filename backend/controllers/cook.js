@@ -23,8 +23,10 @@ const getAllCooks = async (req, res) => {
 };
 
 const getAllCookRoles = async (req, res) => {
-  const cookRoles = await CookRoleUser.find()
-    .populate({ path: "user", select: "username name" })
+  const cookRoles = await CookRoleUser.find().populate({
+    path: "user",
+    select: "username name",
+  });
   res.json(cookRoles);
 };
 
@@ -45,8 +47,8 @@ const addToCook = async (userId, cook) => {
   let user = await BaseUser.findById(userId);
   let cookRoleUser = new CookRoleUser({
     user: userId,
-    min_days_to_edit_order: cook.min_days_to_edit_order,
-    order_times: cook.order_times,
+    edit_time_allowance: cook.min_days_to_edit_order,
+    allowed_order_times: cook.allowed_order_times,
   });
   user.roles.push({ name: COOK, id: cookRoleUser.id });
 
@@ -96,7 +98,12 @@ const getCookByUsername = async (req, res, next) => {
   const cook = await CookRoleUser.findById(
     user?.roles.find((role) => role.name === COOK).id
   )
-    .populate({ path: "cooks", populate: "cook" })
+    .populate({
+      path: "cooks",
+      populate: { path: "cook" },
+      options: { sort: { date_created: -1 } },
+    })
+
     .populate({ path: "user" });
   res.json(cook);
 };

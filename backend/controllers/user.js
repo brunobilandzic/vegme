@@ -14,6 +14,11 @@ const getAllUsers = async (req, res) => {
   res.json(usersWithPagination);
 };
 
+const getUser = async (req, res) => {
+  const user = await BaseUser.findById(req.params.userId);
+  res.json(user);
+};
+
 const createNewUser = async (req, res, next) => {
   let user;
   try {
@@ -77,4 +82,5 @@ module.exports = {
   checkVerificationLink,
   updateUsername,
   getRegular,
+  getUser,
 };

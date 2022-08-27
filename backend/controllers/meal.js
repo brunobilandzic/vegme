@@ -3,6 +3,7 @@ const { Meal, mealTypes } = require("../models/meal.js");
 const url = require("url");
 const { extractFiltersFromQuery } = require("../helpers/extractFilters.js");
 const { CookRoleUser } = require("../models/user.js");
+const HttpError = require("../errors/http-error.js");
 
 const getOneMeal = async (req, res, next) => {
   const meal = await Meal.findById(req.params.mealId);
@@ -37,9 +38,12 @@ const getAllPaginatedSpecialMeals = async (req, res) => {
     Number(queryObject.pageSize),
     { date_created: -1 }
   );
-  res.json(mealsWithPagination)
+  res.json(mealsWithPagination);
 };
 
+const getAllPaginatedOfferedSpecialMeals = async (req, res) => {
+
+}
 
 const getAllMeals = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
@@ -73,6 +77,36 @@ const needNewPageMeal = async (req, res) => {
   res.send(await needNewPage(Meal.find(), parseInt(req.params.pageSize)));
 };
 
+const offerMeal = async (req, res, next) => {
+  const { mealId } = req.params;
+  const meal = await Meal.findById(mealId);
+  const cook = await CookRoleUser.findOne({ user: req.user.id });
+  const cookId = cook.id;
+
+  if (meal.cook != cookId)
+    return next(new HttpError("Meal cook not the same as the issuer.", 400));
+
+  meal.is_offered = true;
+  meal.offered_dates.push(Date.now());
+
+  await meal.save();
+
+  res.json(meal);
+};
+
+const unofferMeal = async (req, res) => {
+  const meal = await Meal.findById(req.params.mealId);
+  const cook = await CookRoleUser.findOne({ user: req.user.id });
+  const cookId = cook.id;
+
+  if (meal.cook != cookId)
+    return next(new HttpError("Meal cook not the same as the issuer.", 400));
+
+  meal.is_offered = false;
+  await meal.save();
+  res.json(meal);
+};
+
 module.exports = {
   getAllMeals,
   toggleOfferMeal,
@@ -81,5 +115,7 @@ module.exports = {
   getAllMealsForCook,
   needNewPageMeal,
   getAllPaginatedSpecialMeals,
-  getOneMeal
+  getOneMeal,
+  offerMeal,
+  unofferMeal
 };

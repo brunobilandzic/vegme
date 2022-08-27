@@ -34,8 +34,8 @@ const cookRoleUserObject = {
   },
   cooks: [{ type: mongoose.Types.ObjectId, ref: "Meal" }],
   orders: [{ type: mongoose.Types.ObjectId, ref: "Order" }],
-  min_days_to_edit_order: { type: Number, default: 3 },
-  order_times: [{ type: Number }],
+  edit_time_allowance: { type: Number, default: 3 },
+  allowed_order_times: [{ type: Number }],
 };
 const adminRoleUserObject = {
   user: {

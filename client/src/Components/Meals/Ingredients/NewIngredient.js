@@ -37,9 +37,10 @@ export const NewIngredient = ({ addIngredient }) => {
             onChange={onIngredientNameChange}
             placeholder="Ingredient name"
             value={name}
+            className={ingredientsStyles.input}
           ></input>
         </FormGroup>
-        <div className="checkboxContainer">
+        <div className={`checkboxContainer ${ingredientsStyles.checkbox}`}>
           <FormCheckLabel>Allergen</FormCheckLabel>
           <FormCheck
             onChange={handleAlllergenCheck}

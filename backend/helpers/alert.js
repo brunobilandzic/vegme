@@ -18,8 +18,6 @@ const sendAlert = async (model, alertText, toAlertId, io) => {
     (ou) => ou.id === baseUser.id.toString()
   )?.socketId;
 
-  console.log(cookSocketId);
-
   if (cookSocketId) {
     io.to(cookSocketId).emit("new-alert", newAlert);
   }

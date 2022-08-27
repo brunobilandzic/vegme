@@ -308,7 +308,7 @@ const updateOrderRegular = async (req, res, next) => {
       diff = oldOrder.order_time - todayDow - 1;
     }
 
-    if (diff < cook.min_days_to_edit_order) {
+    if (diff < cook.edit_time_allowance) {
       order_time_out_of_boundary = true;
     }
 
