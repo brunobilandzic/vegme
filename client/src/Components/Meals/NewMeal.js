@@ -15,6 +15,7 @@ import {
   MdOutlineRadioButtonChecked,
   MdOutlineRadioButtonUnchecked,
 } from "react-icons/md";
+import Modal from "../../Shared/UserInterface/Modal";
 
 function NewMeal({ createMealAction }) {
   const [formState, inputHandler, clearForm] = useForm(
@@ -28,6 +29,7 @@ function NewMeal({ createMealAction }) {
   );
   const [ingredients, setIngredients] = useState([]);
   const [type, setType] = useState(REGULAR);
+  const [success, setSuccess] = useState(false)
 
   const getIngredientsPreviewItems = () =>
     ingredients?.map((ingredient) => (
@@ -48,6 +50,7 @@ function NewMeal({ createMealAction }) {
     createMealAction(newMeal);
     setIngredients([]);
     clearForm();
+    setSuccess(true)
   };
 
   const addIngredient = (ingredient) => {
@@ -67,6 +70,19 @@ function NewMeal({ createMealAction }) {
   const getTypePromptIcons = () => {
     return (
       <>
+      <Modal
+        show={success}
+        content={`You've successfully made an meal!`}
+        header="Success"
+        footer={
+          <div className="modal-footer-buttons">
+            <Button variant="success" onClick={() => setSuccess(false)}>
+              Ok
+            </Button>
+          </div>
+        }
+        onCancel={() => setSuccess(false)}
+      ></Modal>
         <div className={`${mealStyles.type} ${mealStyles.regularOption}`} onClick={changeType}>
           Regular{" "}
           {type == REGULAR ? (

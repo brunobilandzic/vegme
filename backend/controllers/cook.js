@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 const { COOK } = require("../constants/roles");
 const HttpError = require("../errors/http-error");
 const { PaginatedList } = require("../helpers/pagination");
-const { orderMeals, orderByDateOrdered } = require("../helpers/sorting");
+const { orderMeals, orderByDateOrdered, orderByDateCreated } = require("../helpers/sorting");
 const { CookRoleUser, BaseUser } = require("../models/user");
 const url = require("url");
 
@@ -83,6 +83,8 @@ const getAllMealsForCook = async (req, res, next) => {
     });
   });
   mealsOrderArray.sort(orderMeals);
+  mealsOrderArray.sort(orderByDateCreated)
+  
   const paginatedMealsOrderArray = PaginatedList.getPaginatedArray(
     mealsOrderArray,
     Number(queryObject.pageNumber),
