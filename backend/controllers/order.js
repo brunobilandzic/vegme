@@ -102,7 +102,7 @@ const getAllPersonalOrdersForCook = async (req, res) => {
 
 const createOrder = async (req, res, next) => {
   const cook = await CookRoleUser.findById(req.body.cook);
-  if (!cook.order_times.includes(req.body.order_time)) {
+  if (!cook.allowed_order_times.includes(req.body.order_time)) {
     return next(new HttpError("Cook does not have specified order time!", 400));
   }
   const newOrder = new Order(req.body);

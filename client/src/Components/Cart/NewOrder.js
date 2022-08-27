@@ -77,8 +77,8 @@ function NewOrder({ mealsToOrder, sendOrder }) {
   };
 
   const getOptions = () => {
-    cook?.order_times.sort()
-    return cook?.order_times.map((orderTime, i) => (
+    cook?.allowed_order_times.sort()
+    return cook?.allowed_order_times.map((orderTime, i) => (
       <option key={i} value={orderTime}>
         {capitalizeString(dayOfWeek[orderTime])}
       </option>
