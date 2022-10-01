@@ -49,3 +49,12 @@ export const removeMealFromOrder = async (orderId, mealId) => {
     withCredentials: true,
   });
 };
+
+export const editOrder = async (orderData) => {
+  const newOrder = await axiosInstance.patch("/updateregular", orderData);
+};
+
+export const canEditTime = async (orderId) => {
+  const response = await axiosInstance.get(`/time/${orderId}`);
+  return response.data;
+};

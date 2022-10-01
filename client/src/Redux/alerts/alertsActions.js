@@ -10,19 +10,20 @@ import {
   NOT_LOADING,
   READ_ALERTS,
   SET_UNREAD_ALERTS_COUNT,
+  UPDATE_PAGE_NUMBER,
   UPDATE_TOTAL_ITEMS,
   UPDATE_TOTAL_PAGES,
 } from "../types";
 
-export const newAlert = () => async (dispatch) => {
+export const newAlert = (pageSize) => async (dispatch) => {
   dispatch({type: NEW_ALERT})
   dispatch({
     type: IS_LOADING,
   });
-  const allPaginatedAlerts = await loadAllPaginatedAlerts(1, 5);
+  const allPaginatedAlerts = await loadAllPaginatedAlerts(1, pageSize);
   dispatch({
     type: LOAD_ALL_PAGINATED_ALERTS,
-    payload: { pageNumber: 1, pageSize: 5, items: allPaginatedAlerts.items },
+    payload: { pageNumber: 1, pageSize, items: allPaginatedAlerts.items },
   });
   dispatch({
     type: UPDATE_TOTAL_ITEMS,
@@ -38,6 +39,14 @@ export const newAlert = () => async (dispatch) => {
       totalPages: allPaginatedAlerts.totalPages,
     },
   });
+  dispatch({
+    type: UPDATE_PAGE_NUMBER,
+    payload: {
+      type: "alerts",
+      pageNumber: 1
+    }
+
+  })
   dispatch({
     type: NOT_LOADING,
   });

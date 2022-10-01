@@ -126,7 +126,9 @@ const createOrder = async (req, res, next) => {
 
   await sendAlert(
     CookRoleUser,
-    `${client.user.username} made an order ${newOrder.remark}.`,
+    `${
+      client.user.username
+    } made an order with remark ${newOrder.remark?.substring(0, 10)}.`,
     cook.id,
     req.app.io
   );
@@ -269,60 +271,62 @@ const needNewPageMyOrder = async (req, res) => {
 };
 
 const updateOrderRegular = async (req, res, next) => {
-  const { orderId, remark, delivery_address, active, order_time } = req.body;
+  const regular = await RegularRoleUser.findOne({ user: req.user.id });
+  const regularId = regular.id;
+  const order = await Order.findById(req.body._id);
+  const cook = await CookRoleUser.findById(order.cook);
 
-  const regularUser = await RegularRoleUser.findOne({ user: req.user.id });
-  const regularId = regularUser.id;
-
-  const oldOrder = await Order.findById(orderId);
-
-  if (oldOrder.orderer != regularId)
-    return next(
-      new HttpError("Order not owned by the issuer of request.", 403)
-    );
-
-  if (order_time && !cook.order_times.includes(order_time)) {
-    return next(new HttpError("New order time not allowed!", 400));
+  if (order.orderer != regularId) {
+    return next(new HttpError(`Orderer not same as request issuer!`, 403));
   }
 
-  let order_time_out_of_boundary = false;
-  if (order_time && order_time != oldOrder.order_time) {
-    const today = new Date();
-    let todayDow = today.getDay();
-    let diff = 0;
-    console.log(order_time, oldOrder.order_time, todayDow);
-
-    if (todayDow == oldOrder.order_time) {
-      diff = 7;
-    }
-
-    if (todayDow - oldOrder.order_time > 0) {
-      if (todayDow == 0) {
-        diff = oldOrder.order_time - 1;
-      } else {
-        diff = oldOrder.order_time - 1 + 6 - todayDow;
-      }
-    }
-
-    if (oldOrder.order_time - todayDow > 0) {
-      diff = oldOrder.order_time - todayDow - 1;
-    }
-
-    if (diff < cook.edit_time_allowance) {
-      order_time_out_of_boundary = true;
-    }
-
-    console.log(`diff: ${diff}`);
+  if (!allowEditTime(order.order_time, cook.edit_time_allowance)) {
+    req.body.order_time = order.order_time;
   }
 
-  if (order_time && order_time_out_of_boundary) {
-    req.body.order_time = oldOrder.order_time;
-  }
-  const newOrder = await Order.findByIdAndUpdate(req.body.orderId, req.body, {
+  const newOrder = await Order.findByIdAndUpdate(req.body._id, req.body, {
     new: true,
   });
 
+  await sendAlert(
+    CookRoleUser,
+    `${regular.username} updated ${order.remark?.substring(0,10)} ${
+      order.remark != newOrder.remark &&( "to " + newOrder.remark?.substring(0,10))
+    }.`,
+    order.cook,
+    req.app.io
+  );
+
   res.json(newOrder);
+};
+
+const editOrderPrompt = async (req, res, next) => {
+  const order = await Order.findById(req.params.orderId);
+  const cook = await CookRoleUser.findById(order.cook);
+  const diff = allowEditTime(order.order_time, cook.edit_time_allowance);
+
+  res.json({
+    diff,
+    edit_time_allowance: cook.edit_time_allowance,
+  });
+};
+
+const allowEditTime = (old_order_time, edit_time_allowance) => {
+  const today = new Date();
+  let todayDow = today.getDay();
+  let diff = 0;
+
+  if (todayDow == old_order_time) {
+    diff = 7;
+  } else if (todayDow - old_order_time > 0) {
+    diff = old_order_time - 1 + 6 - todayDow;
+  } else {
+    diff = old_order_time - todayDow - 1;
+  }
+
+  console.log(old_order_time, diff, edit_time_allowance);
+
+  return diff;
 };
 
 module.exports = {
@@ -340,4 +344,5 @@ module.exports = {
   getOneOrder,
   removeMealFromOrder,
   updateOrderRegular,
+  editOrderPrompt,
 };

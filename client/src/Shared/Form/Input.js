@@ -80,6 +80,7 @@ export default function Input(props) {
       <textarea
         className={`form-control ${props.className}`}
         id={props.id}
+        rows={props.rows}
         onChange={handleChange}
         onBlur={handleTouch}
         placeholder={props.placeholder}

@@ -70,20 +70,8 @@ function NewMeal({ createMealAction }) {
   const getTypePromptIcons = () => {
     return (
       <>
-      <Modal
-        show={success}
-        content={`You've successfully made an meal!`}
-        header="Success"
-        footer={
-          <div className="modal-footer-buttons">
-            <Button variant="success" onClick={() => setSuccess(false)}>
-              Ok
-            </Button>
-          </div>
-        }
-        onCancel={() => setSuccess(false)}
-      ></Modal>
-        <div className={`${mealStyles.type} ${mealStyles.regularOption}`} onClick={changeType}>
+      
+        <div className={`${mealStyles.typeCheck} ${mealStyles.regularOption}`} onClick={changeType}>
           Regular{" "}
           {type == REGULAR ? (
             <MdOutlineRadioButtonChecked />
@@ -92,7 +80,7 @@ function NewMeal({ createMealAction }) {
           )}
         </div>
         
-        <div className={mealStyles.type} onClick={changeType}>
+        <div className={mealStyles.typeCheck} onClick={changeType}>
           {type == SPECIAL ? (
             <MdOutlineRadioButtonChecked />
           ) : (
@@ -106,6 +94,19 @@ function NewMeal({ createMealAction }) {
 
   return (
     <>
+    <Modal
+        show={success}
+        content={`You've successfully made an meal!`}
+        header="Success"
+        footer={
+          <div className="modal-footer-buttons">
+            <Button variant="success" onClick={() => setSuccess(false)}>
+              Ok
+            </Button>
+          </div>
+        }
+        onCancel={() => setSuccess(false)}
+      ></Modal>
       <form onSubmit={handleMealSubmit}>
         <Input
           onInput={inputHandler}

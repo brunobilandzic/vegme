@@ -1,6 +1,10 @@
 import axios from "axios";
 import { buildUrlWithPagination } from "../../util/helper";
 
+const axiosInstance = axios.create({
+  withCredentials: true,
+  baseURL: process.env.REACT_APP_ROOT_URL + "/meals",
+});
 
 export const loadPaginatedMealsFromServer = async (
   pageNumber = 1,
@@ -17,16 +21,10 @@ export const loadPaginatedMealsFromServer = async (
   return response.data;
 };
 
-
 export const createMeal = async (meal) => {
-  const response = await axios.post(
-    process.env.REACT_APP_ROOT_URL + "/meals",
-    meal,
-    { withCredentials: true }
-  );
+  const response = await axiosInstance.post("/", meal);
   return response.data;
 };
-
 
 export const loadMealsWithOrders = async (pageNumber = 1, pageSize = 5) => {
   const urlWithPagination = buildUrlWithPagination(
@@ -40,7 +38,10 @@ export const loadMealsWithOrders = async (pageNumber = 1, pageSize = 5) => {
   return response.data;
 };
 
-export const loadPaginatedSpecialMealsFromServer = async (pageNumber = 1, pageSize = 5) => {
+export const loadPaginatedSpecialMealsFromServer = async (
+  pageNumber = 1,
+  pageSize = 5
+) => {
   const urlWithPagination = buildUrlWithPagination(
     process.env.REACT_APP_ROOT_URL + "/meals/special",
     pageNumber,
@@ -50,4 +51,9 @@ export const loadPaginatedSpecialMealsFromServer = async (pageNumber = 1, pageSi
     withCredentials: true,
   });
   return response.data;
-}
+};
+
+export const getMealById = async (mealId) => {
+  const response = await axiosInstance.get(`/single/${mealId}`);
+  return response.data;
+};

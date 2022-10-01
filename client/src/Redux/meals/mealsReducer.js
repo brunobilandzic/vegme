@@ -6,6 +6,7 @@ import {
   EMPTY_THE_CART,
   LOAD_ALL_PAGINATED_COOK_MEALS,
   LOAD_ALL_PAGINATED_SPECIAL_MEALS,
+  REMOVE_PAGINATED_COOK_MEALS,
 } from "../types";
 
 const initialState = {
@@ -47,6 +48,14 @@ export default function mealsReducer(state = initialState, action) {
           },
         },
       };
+    case REMOVE_PAGINATED_COOK_MEALS:
+      return {
+        ...state,
+        cookMeals: {
+          ...state.cookMeals,
+          items: {},
+        },
+      };
     case LOAD_ALL_PAGINATED_SPECIAL_MEALS:
       return {
         ...state,
@@ -80,9 +89,8 @@ export default function mealsReducer(state = initialState, action) {
     case DELETE_CACHE_MEALS:
       return {
         ...state,
-        browsing: {
+        meals: {
           items: {},
-          pagination: false,
         },
         mealsToOrder: [],
       };

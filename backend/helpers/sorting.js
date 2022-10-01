@@ -14,7 +14,7 @@ const orderMeals = (m1, m2) => {
 
 const orderByDateOrdered = (o1, o2) => {
   return (
-    new Date(o1.date_ordered).getTime() - new Date(o2.date_ordered).getTime()
+    new Date(o2.date_ordered).getTime() - new Date(o1.date_ordered).getTime()
   );
 };
 

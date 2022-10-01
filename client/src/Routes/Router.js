@@ -26,6 +26,7 @@ import BrowseSpecialMeals from "../Components/Meals/BrowseSpecialMeals";
 import RegularOrCookShield from "./Shields/RegularOrCookShield";
 import Alerts from "../Components/Alerts/Alerts";
 import EditOrderRegular from "../Components/Orders/EditOrderRegular";
+import MealMainPage from "../Components/Meals/MealMainPage"
 
 export default function Router(props) {
   return (
@@ -64,6 +65,7 @@ export default function Router(props) {
               path="/meals/special"
               element={<BrowseSpecialMeals />}
             ></Route>
+            <Route path="/meals/:mealId" element={<MealMainPage />} />
             <Route
               path="/orders/my"
               element={

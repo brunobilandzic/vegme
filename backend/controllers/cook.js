@@ -98,7 +98,7 @@ const getCookByUsername = async (req, res, next) => {
   const { username } = req.params;
   const user = await BaseUser.findOne({ username });
   const cook = await CookRoleUser.findById(
-    user?.roles.find((role) => role.name === COOK).id
+    user?.roles.find((role) => role.name === COOK)?.id
   )
     .populate({
       path: "cooks",

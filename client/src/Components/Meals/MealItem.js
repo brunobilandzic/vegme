@@ -10,6 +10,7 @@ import {
   addMealToCart,
   removeMealFromCart,
 } from "../../Redux/meals/mealsActions";
+import { useNavigate } from "react-router-dom";
 
 function MealItem({
   meal,
@@ -18,20 +19,22 @@ function MealItem({
   removeMealFromCart,
   showAdd,
 }) {
+  const navigate = useNavigate();
   const handleMealAddClick = (e) => {
     isMealInCart() ? removeMealFromCart(meal._id) : addMealToCart(meal);
   };
 
-
   const getIcon = () => {
-    return isMealInCart() ? <AiOutlineMinusCircle /> : <AiOutlinePlusCircle />;
+    return isMealInCart() ? (
+      <AiOutlineMinusCircle onClick={handleMealAddClick} />
+    ) : (
+      <AiOutlinePlusCircle onClick={handleMealAddClick} />
+    );
   };
-
 
   const isMealInCart = () => {
     return mealsToOrder?.map((meal) => meal._id).includes(meal._id);
   };
-
 
   const determineIcon = () => {
     if (mealsToOrder.length == 0) return getIcon();
@@ -49,10 +52,17 @@ function MealItem({
     );
   };
 
+  const openMeal = (e) => {
+    if (
+      e.target.tagName.toLowerCase() != "path" &&
+      e.target.tagName.toLowerCase() != "svg"
+    )
+      navigate(`/meals/${meal._id}`);
+  };
 
   return (
     <>
-      <div className={mealStyles.wrap}>
+      <div className={mealStyles.wrap} onClick={openMeal}>
         <div className="d-flex flex-row justify-content-start">
           <div className="flex-row-item">
             <h6>{meal?.name}</h6>
@@ -62,14 +72,14 @@ function MealItem({
               <IngredientList ingredients={meal.ingredients}></IngredientList>
             </div>
           )}
-          <div className={"flex-row-item " + mealStyles.cookName}>{meal.cook.user?.username}</div>
+          <div className={"flex-row-item " + mealStyles.cookName}>
+            {meal.cook.user?.username}
+          </div>
           <div className={mealStyles.type}>{meal.type}</div>
         </div>
         {showAdd && (
           <div className="last-item">
-            <div onClick={handleMealAddClick} className={mealStyles.addIcon}>
-              {determineIcon()}
-            </div>
+            <div className={mealStyles.addIcon}>{determineIcon()}</div>
           </div>
         )}
       </div>
@@ -83,11 +93,9 @@ MealItem.propTypes = {
   addMealToCart: propTypes.func.isRequired,
 };
 
-
 const mapStateToProps = (state) => ({
   mealsToOrder: state.meals.mealsToOrder,
 });
-
 
 export default connect(mapStateToProps, { addMealToCart, removeMealFromCart })(
   MealItem

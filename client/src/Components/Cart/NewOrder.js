@@ -66,6 +66,7 @@ function NewOrder({ mealsToOrder, sendOrder }) {
     setShowConfirmOrder(false);
     setOrderSuccess(true);
     clearForm();
+    orderTime.current.value = 0;
   };
 
   const handleOrderCancel = (e) => {
@@ -77,7 +78,7 @@ function NewOrder({ mealsToOrder, sendOrder }) {
   };
 
   const getOptions = () => {
-    cook?.allowed_order_times.sort()
+    cook?.allowed_order_times.sort();
     return cook?.allowed_order_times.map((orderTime, i) => (
       <option key={i} value={orderTime}>
         {capitalizeString(dayOfWeek[orderTime])}

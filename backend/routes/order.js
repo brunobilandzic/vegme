@@ -12,6 +12,7 @@ const {
   getOneOrder,
   removeMealFromOrder,
   updateOrderRegular,
+  editOrderPrompt
 } = require("../controllers/order");
 const { requireRegular, requireLogin } = require("../helpers/roleCheck");
 const upload = multer();
@@ -25,7 +26,7 @@ router.get("/single/:orderId", getOneOrder);
 router.get("/my", requireRegular, getAllPaginatedOrdersForUser);
 router.get("/personal", requireRegular, getAllPersonalOrdersForCook);
 router.get("/paginated", getAllPaginatedOrders);
-
+router.get("/time/:orderId", editOrderPrompt)
 router.get("/neednew/:pageSize", needNewPageMyOrder);
 router.post("/append", requireRegular, appendMealsToOrder);
 router.post("/toggleactive/:order", toggleOrderActive);

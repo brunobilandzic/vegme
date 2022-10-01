@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { newAlert } from "../Redux/alerts/alertsActions";
 
-const SocketComponent = ({ user, newAlert }) => {
+const SocketComponent = ({ user, newAlert, alertsPageSize }) => {
   useEffect(() => {
     const socket = io("https://localhost:5000");
 
@@ -14,7 +14,7 @@ const SocketComponent = ({ user, newAlert }) => {
     }
 
     socket.on("new-alert", (alert) => {
-      newAlert(alert);
+      newAlert(alertsPageSize);
     });
   }, [user]);
 
@@ -27,6 +27,7 @@ SocketComponent.propTyles = {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  alertsPageSize: state.pagination.alerts.pageSize
 });
 
 const mapDispatchToProps = {

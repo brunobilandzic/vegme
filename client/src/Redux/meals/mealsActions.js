@@ -16,6 +16,7 @@ import {
   RESET_PAGINATION_FOR_TYPE,
   LOAD_ALL_PAGINATED_COOK_MEALS,
   LOAD_ALL_PAGINATED_SPECIAL_MEALS,
+  REMOVE_PAGINATED_COOK_MEALS,
 } from "../types";
 
 export const addMealToCart = (meal) => (dispatch, getState) => {
@@ -44,6 +45,15 @@ export const createMealAction = (meal) => async (dispatch, getState) => {
       type: "meals",
     },
   });
+  dispatch({
+    type: REMOVE_PAGINATED_COOK_MEALS
+  })
+  dispatch({
+    type: RESET_PAGINATION_FOR_TYPE,
+    payload: {
+      type: "cookMeals",
+    },
+  })
 };
 
 export const loadPaginatedMeals =
