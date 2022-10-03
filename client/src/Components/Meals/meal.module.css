@@ -12,13 +12,9 @@
   margin-right: 2rem;
 }
 
-.addIcon {
-  padding: 0.2rem;
-}
-
-.addIcon:hover {
+.icon {
   cursor: pointer;
-  color: green;
+  padding: 0.4rem;
 }
 
 .ingredientsContainer {
@@ -44,10 +40,23 @@
   margin-top: 1rem;
 }
 
-.typeCheck:hover{
+.typeCheck:hover {
   cursor: pointer;
 }
 
 .regularOption {
   margin-right: 1rem;
+}
+
+.bigIcon {
+  font-size: 2rem;
+}
+
+.addIcon:hover {
+  color: green;
+}
+
+.removeIcon:hover,
+.forbidIcon:hover {
+  color: red;
 }

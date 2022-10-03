@@ -49,6 +49,7 @@
 .hover-text {
   position: absolute;
   text-align: center;
+  font-size: 1rem;
   background-color: black;
   color: white;
   padding: 0.4rem 0.4rem;

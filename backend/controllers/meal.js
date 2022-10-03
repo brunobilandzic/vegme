@@ -6,7 +6,11 @@ const { CookRoleUser } = require("../models/user.js");
 const HttpError = require("../errors/http-error.js");
 
 const getOneMeal = async (req, res, next) => {
-  const meal = await Meal.findById(req.params.mealId);
+  const meal = await Meal.findById(req.params.mealId).populate({
+    path: "cook",
+    select: "cook",
+    populate: { path: "user", select: "username" },
+  });
   if (!meal) return next(new HttpError("Meal not found", 404));
   res.json(meal);
 };
@@ -41,9 +45,7 @@ const getAllPaginatedSpecialMeals = async (req, res) => {
   res.json(mealsWithPagination);
 };
 
-const getAllPaginatedOfferedSpecialMeals = async (req, res) => {
-
-}
+const getAllPaginatedOfferedSpecialMeals = async (req, res) => {};
 
 const getAllMeals = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
@@ -117,5 +119,5 @@ module.exports = {
   getAllPaginatedSpecialMeals,
   getOneMeal,
   offerMeal,
-  unofferMeal
+  unofferMeal,
 };

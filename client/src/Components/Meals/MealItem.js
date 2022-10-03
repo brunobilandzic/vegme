@@ -11,6 +11,7 @@ import {
   removeMealFromCart,
 } from "../../Redux/meals/mealsActions";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 function MealItem({
   meal,
@@ -26,9 +27,15 @@ function MealItem({
 
   const getIcon = () => {
     return isMealInCart() ? (
-      <AiOutlineMinusCircle onClick={handleMealAddClick} />
+      <AiOutlineMinusCircle
+        className={mealStyles.removeIcon}
+        onClick={handleMealAddClick}
+      />
     ) : (
-      <AiOutlinePlusCircle onClick={handleMealAddClick} />
+      <AiOutlinePlusCircle
+        className={mealStyles.addIcon}
+        onClick={handleMealAddClick}
+      />
     );
   };
 
@@ -46,7 +53,7 @@ function MealItem({
       return getIcon();
     return (
       <div className="hover-box">
-        <RiForbid2Line />
+        <RiForbid2Line className={mealStyles.forbidIcon} />
         <div className="hover-text different-cook">Different cook!</div>
       </div>
     );
@@ -75,7 +82,10 @@ function MealItem({
           <div className={"flex-row-item " + mealStyles.cookName}>
             {meal.cook.user?.username}
           </div>
-          <div className={mealStyles.type}>{meal.type}</div>
+          <div className={"flex-row-item " + mealStyles.type}>{meal.type}</div>
+          <div className={"flex-rew-item " + mealStyles.dateCreated}>
+            {format(new Date(meal.date_created), "MM/dd/yy, hh:mmaa")}
+          </div>
         </div>
         {showAdd && (
           <div className="last-item">
