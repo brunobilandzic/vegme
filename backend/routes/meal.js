@@ -9,6 +9,7 @@ const {
   getOneMeal,
   offerMeal,
   unofferMeal,
+  getAllMeals
 } = require("../controllers/meal");
 const router = express.Router();
 const multer = require("multer");
@@ -19,6 +20,8 @@ router
   .route("/")
   .get(getAllPaginatedMeals)
   .post(requireCook, upload.none(), createMeal);
+
+router.get("/all", getAllMeals)
 
 router.get("/cook/:cook", getAllMealsForCook);
 router.get("/special", getAllPaginatedSpecialMeals);

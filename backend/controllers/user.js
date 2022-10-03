@@ -6,7 +6,7 @@ const { sendVerificationMail } = require("../helpers/mail.js");
 const HttpError = require("../errors/http-error.js");
 const { compareHashes } = require("../helpers/hashing.js");
 
-const getAllUsers = async (req, res) => {
+const getAllPaginatedUsers = async (req, res) => {
   const usersWithPagination = await PaginatedList.getPaginatedResult(
     BaseUser.find()
   );
@@ -76,7 +76,7 @@ const getRegular = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllUsers,
+  getAllPaginatedUsers,
   createNewUser,
   createNewUserManually,
   checkVerificationLink,

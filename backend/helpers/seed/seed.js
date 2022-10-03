@@ -27,6 +27,10 @@ const seedUsers = async () => {
     "./helpers/seed/data.json"
   );
 
+  console.log(
+    `${admins.length + cooks.length + operators.length + regulars.length} users`
+  );
+
   await writeAdmins(admins);
   await writeCooks(cooks);
   await writeOperators(operators);
@@ -86,7 +90,7 @@ const seedMeals = async () => {
   if (!(await CookRoleUser.count())) return;
   if (await Meal.count()) return;
   const { meals } = await readJsonData("./helpers/seed/data.json");
-  console.log(meals.length);
+  console.log(`${meals.length} meals`);
   writeMeals(meals);
 };
 
@@ -102,11 +106,30 @@ const writeMeals = async (meals) => {
       const offered_date =
         mealJSON.offered_dates -
         Math.floor(1000 * 60 * 60 * 24 * 14 * Math.random());
-      mealJSON.is_offered = mealJSON.offered_dates - offered_date <= 1000 * 60 * 60 * 24 * 7 ? true : false
+      mealJSON.is_offered =
+        mealJSON.offered_dates - offered_date <= 1000 * 60 * 60 * 24 * 7
+          ? true
+          : false;
       mealJSON.offered_dates = [offered_date];
     }
 
     const meal = new Meal(mealJSON);
+    await meal.save();
+
+    if (Math.random() < 0.8) {
+      while (Math.random() < 0.7) {
+        const regulars = await RegularRoleUser.find();
+        const regularsIds = regulars.map((r) => r.id);
+        const regularId =
+          regularsIds[Math.floor(Math.random() * regularsIds.length)];
+
+        const regular = await RegularRoleUser.findById(regularId);
+        regular.favourite_meals.push(meal.id);
+        meal.favourited_by.push(regularId.toString());
+
+        await regular.save();
+      }
+    }
 
     const cook = await CookRoleUser.findById(cookId);
     cook.cooks.push(meal.id);
@@ -122,7 +145,7 @@ const seedOrders = async () => {
   if (!(await Meal.count())) return;
   if (await Order.count()) return;
   const { orders } = await readJsonData("./helpers/seed/data.json");
-  console.log(orders.length);
+  console.log(`${orders.length} orders`);
   writeOrders(orders);
 };
 
@@ -130,21 +153,17 @@ const writeOrders = async (orders) => {
   for (let i = 0; i <= 11; i++) {
     const order = new Order(orders[i]);
 
-    const regularId = await getRegular330Id()
+    const regularId = await getRegularId();
+    order.orderer = regularId;
 
-    console.log(`regular: ${regularId}`);
-    order.orderer = regularId
-
-    const orderer = await RegularRoleUser.findById(
-     regularId
-    ).populate({ path: "user" });
+    const orderer = await RegularRoleUser.findById(regularId).populate({
+      path: "user",
+    });
     orderer.orders.push(order.id);
 
     const [randomMealIds, cookId] = await getMealIdsFromSameCook(
       Math.floor(Math.random() * 10)
     );
-
-    console.log(`cook: ${cookId}`);
 
     order.cook = cookId;
     const cook = await CookRoleUser.findById(cookId);
@@ -164,8 +183,6 @@ const writeOrders = async (orders) => {
 
       await meal.save();
     });
-
-    console.log(`order: ${order}`);
 
     await orderer.save();
     await order.save();
@@ -232,7 +249,7 @@ const writeOrders = async (orders) => {
       Math.floor(Math.random() * 10)
     );
 
-    if(typeof(cookId) == "undefined" || !cookId) return
+    if (typeof cookId == "undefined" || !cookId) return;
 
     orderJSON.cook = cookId;
     const cook = await CookRoleUser.findById(cookId);
@@ -278,12 +295,8 @@ const getMealIdsFromSameCook = async (numberOfitems) => {
   });
   const allMealIds = allMeals?.map((meal) => meal.id);
   const maxMealsCount = allMealIds.length;
-  if (numberOfitems >= maxMealsCount) {
-    numberOfitems = Math.floor(maxMealsCount / 2);
-  }
-  if (maxMealsCount < numberOfitems) {
-    if (maxMealsCount < 2) numberOfitems = 0;
-    else numberOfitems = Math.floor(maxMealsCount / 3);
+  if (numberOfitems >= maxMealsCount / 2) {
+    numberOfitems = Math.floor(maxMealsCount / 3);
   }
   const shuffledMeals = allMealIds.sort(() => 0.5 - Math.random());
   return [shuffledMeals.slice(0, numberOfitems), cookId];
@@ -295,7 +308,7 @@ const getOrdererId = async () => {
   return regularIds[Math.floor(Math.random() * regularIds.length)];
 };
 
-const getRegular330Id = async () => {
+const getRegularId = async () => {
   const regular = await BaseUser.findOne({ username: "regular441" });
   return regular.roles.find((role) => role.name == REGULAR)?.id;
 };

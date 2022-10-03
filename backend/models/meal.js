@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const mealCategories = {
   MAIN: "MAIN",
   DESSERT: "DESSERT",
@@ -8,12 +7,10 @@ const mealCategories = {
   DRINK: "DRINK",
 };
 
-
 const mealTypes = {
   REGULAR: "REGULAR",
   SPECIAL: "SPECIAL",
 };
-
 
 const mealObject = {
   name: { type: String },
@@ -34,12 +31,13 @@ const mealObject = {
     default: mealTypes.REGULAR,
   },
   date_created: { type: Date, default: () => Date.now() },
-  offered_dates: [{type: Number}]
+  offered_dates: [{ type: Number }],
+  favourited_by: [
+    { type: mongoose.Types.ObjectId, ref: "RegularRoleUser", default: [] },
+  ],
 };
-
 
 const mealSchema = new mongoose.Schema(mealObject);
 const Meal = mongoose.model("Meal", mealSchema);
-
 
 module.exports = { Meal, mealTypes };

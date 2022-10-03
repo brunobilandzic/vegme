@@ -1,8 +1,9 @@
 const express = require("express");
 const multer = require("multer");
+const { getAllRegularUsers } = require("../controllers/regular");
 const {
   createNewUser,
-  getAllUsers,
+  getAllPaginatedUsers,
   checkVerificationLink,
   updateUsername,
   getRegular,
@@ -12,7 +13,10 @@ const router = express.Router();
 
 const upload = multer();
 
-router.route("/").get(getAllUsers).post(upload.none(), createNewUser);
+router.post("/", upload.none(), createNewUser);
+
+router.get("/paginated", getAllPaginatedUsers)
+router.get("/regular", getAllRegularUsers)
 
 router.get("/verify/:username/:verification_hash", checkVerificationLink);
 

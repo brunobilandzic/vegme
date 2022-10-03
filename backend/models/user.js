@@ -24,6 +24,7 @@ const regularRoleUserObject = {
     unique: true,
   },
   orders: [{ type: mongoose.Types.ObjectId, ref: "Order", default: [] }],
+  favourite_meals: [{type: mongoose.Types.ObjectId, ref: "Meal", default: []}]
 };
 const cookRoleUserObject = {
   user: {
