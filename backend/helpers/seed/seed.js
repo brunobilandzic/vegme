@@ -95,7 +95,7 @@ const seedMeals = async () => {
 };
 
 const writeMeals = async (meals) => {
-  await meals.forEach(async (mealJSON) => {
+  await meals.forEach(async (mealJSON, i) => {
     const cooks = await CookRoleUser.find();
     const cookIds = cooks.map((cook) => cook.id);
     const cookId = cookIds[Math.floor(Math.random() * cookIds.length)];
@@ -114,19 +114,22 @@ const writeMeals = async (meals) => {
     }
 
     const meal = new Meal(mealJSON);
-    await meal.save();
 
-    if (Math.random() < 0.8) {
-      while (Math.random() < 0.7) {
-        const regulars = await RegularRoleUser.find();
-        const regularsIds = regulars.map((r) => r.id);
-        const regularId =
-          regularsIds[Math.floor(Math.random() * regularsIds.length)];
+    if (i <= 20) {
+      const regularId = await getRegularId();
+      const regular = await RegularRoleUser.findById(regularId);
 
-        const regular = await RegularRoleUser.findById(regularId);
+      meal.favourited_by.push(regularId);
+      regular.favourite_meals.push(meal.id);
+      await regular.save();
+    } else {
+      while (Math.random() < 0.8) {
+        const regular = await RegularRoleUser.findOne().skip(
+          Math.floor(Math.random() * (await RegularRoleUser.count()))
+        );
+        const regularId = regular.id;
         regular.favourite_meals.push(meal.id);
-        meal.favourited_by.push(regularId.toString());
-
+        meal.favourited_by.push(regularId);
         await regular.save();
       }
     }

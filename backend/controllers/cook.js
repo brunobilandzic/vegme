@@ -102,7 +102,6 @@ const getCookByUsername = async (req, res, next) => {
   )
     .populate({
       path: "cooks",
-      populate: { path: "cook" },
       options: { sort: { date_created: -1 } },
     })
 

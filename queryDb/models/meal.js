@@ -34,6 +34,9 @@ const mealObject = {
     default: mealTypes.REGULAR,
   },
   date_created: { type: Date, default: () => Date.now() },
+  favourited_by: [
+    { type: mongoose.Types.ObjectId, ref: "RegularRoleUser", default: [] },
+  ],
 };
 
 

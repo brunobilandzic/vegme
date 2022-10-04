@@ -19,6 +19,7 @@ function MealItem({
   addMealToCart,
   removeMealFromCart,
   showAdd,
+  cookUsername
 }) {
   const navigate = useNavigate();
   const handleMealAddClick = (e) => {
@@ -80,7 +81,7 @@ function MealItem({
             </div>
           )}
           <div className={"flex-row-item " + mealStyles.cookName}>
-            {meal.cook.user?.username}
+            {cookUsername ? cookUsername : meal.cook.user?.username}
           </div>
           <div className={"flex-row-item " + mealStyles.type}>{meal.type}</div>
           <div className={"flex-rew-item " + mealStyles.dateCreated}>

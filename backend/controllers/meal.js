@@ -20,7 +20,8 @@ const getAllPaginatedMeals = async (req, res) => {
   const mealsWithPagination = await PaginatedList.getPaginatedResult(
     Meal.find(extractFiltersFromQuery(queryObject)).populate({
       path: "cook",
-      populate: { path: "user" },
+      select: "user",
+      populate: { path: "user", select: "username" },
     }),
     Number(queryObject.pageNumber),
     Number(queryObject.pageSize),

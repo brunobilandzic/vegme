@@ -41,7 +41,12 @@ const CookProfile = ({ isLoggedin }) => {
       </div>
       <div className={classnames({ hidden: !showMeals })}>
         {cook?.cooks.map((meal) => (
-          <MealItem meal={meal} key={uuid()} showAdd={isLoggedin} />
+          <MealItem
+            meal={meal}
+            cookUsername={username}
+            key={uuid()}
+            showAdd={isLoggedin}
+          />
         ))}
       </div>
     </div>
