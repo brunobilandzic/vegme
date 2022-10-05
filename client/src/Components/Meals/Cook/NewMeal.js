@@ -1,21 +1,21 @@
 import React, { useRef, useState } from "react";
 import { Button } from "react-bootstrap";
-import { useForm } from "../../Shared/CustomHooks/form-hook";
-import Input from "../../Shared/Form/Input";
-import { VALIDATOR_REQUIRED } from "../../util/validators";
+import { useForm } from "../../../Shared/CustomHooks/form-hook";
+import Input from "../../../Shared/Form/Input";
+import { VALIDATOR_REQUIRED } from "../../../util/validators";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
-import mealStyles from "./meal.module.css";
-import { createMealAction } from "../../Redux/meals/mealsActions";
-import NewIngredient from "./Ingredients/NewIngredient";
-import IngredientPreview from "./Ingredients/IngredientPreview";
-import { REGULAR, SPECIAL } from "../../Shared/Constants/MealTypes";
+import mealStyles from "../meal.module.css";
+import { createMealAction } from "../../../Redux/meals/mealsActions";
+import NewIngredient from "../Ingredients/NewIngredient";
+import IngredientPreview from "../Ingredients/IngredientPreview";
+import { REGULAR, SPECIAL } from "../../../Shared/Constants/MealTypes";
 import {
   MdOutlineRadioButtonChecked,
   MdOutlineRadioButtonUnchecked,
 } from "react-icons/md";
-import Modal from "../../Shared/UserInterface/Modal";
+import Modal from "../../../Shared/UserInterface/Modal";
 
 function NewMeal({ createMealAction }) {
   const [formState, inputHandler, clearForm] = useForm(

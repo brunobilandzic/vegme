@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import PaginationCustom from "../../Shared/Components/PaginationCustom";
-import { loadPaginatedSpecialMeals } from "../../Redux/meals/mealsActions";
+import PaginationCustom from "../../../Shared/Components/PaginationCustom";
+import { loadPaginatedSpecialMeals } from "../../../Redux/meals/mealsActions";
 import MealList from "./MealList";
 
 export const BrowseSpecialMeals = ({ loadPaginatedSpecialMeals, pageNumber, pageSize, meals }) => {

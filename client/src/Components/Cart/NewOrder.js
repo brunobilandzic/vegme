@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
-import MealList from "../Meals/MealList";
+import MealList from "../Meals/Render/MealList";
 import { Button, Form, FormCheck } from "react-bootstrap";
 import Modal from "../../Shared/UserInterface/Modal";
 import { sendOrder } from "../../Redux/orders/ordersActions.js";

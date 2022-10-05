@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { loadSingleCookByUsername } from "../../Shared/Api/cooks";
 import classnames from "classnames";
 import cookStyles from "./cook.module.css";
-import MealItem from "../Meals/MealItem";
+import MealItem from "../Meals/Render/MealItem";
 import { v4 as uuid } from "uuid";
 import { getOrderTimes } from "../../util/helper";
 

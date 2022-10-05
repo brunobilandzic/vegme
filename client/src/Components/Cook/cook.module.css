@@ -15,10 +15,10 @@
 }
 
 .listLink {
-    color: inherit;
-    text-decoration: none;
+    margin-bottom: 2rem;
 }
 
-.listLink:hover {
+.anchor {
     color: inherit;
+    text-decoration: none;
 }

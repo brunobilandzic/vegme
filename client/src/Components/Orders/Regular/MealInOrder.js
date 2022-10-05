@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import ordersStyles from "./orders.module.css";
+import ordersStyles from "../orders.module.css";
 import { AiFillDelete } from "react-icons/ai";
-import Modal from "../../Shared/UserInterface/Modal";
+import Modal from "../../../Shared/UserInterface/Modal";
 import { Button } from "react-bootstrap";
-import { clearOrdersCache } from "../../Redux/orders/ordersActions";
+import { clearOrdersCache } from "../../../Redux/orders/ordersActions";
 
 export const MealInOrder = ({
   meal,

@@ -1,5 +1,5 @@
 import React from "react";
-import ordersStyles from "./orders.module.css";
+import ordersStyles from "../orders.module.css";
 import { format } from "date-fns";
 import MealInOrder from "./MealInOrder";
 import { v4 as uuid } from "uuid";

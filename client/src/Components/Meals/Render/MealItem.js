@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { isArrayNullOrEmpty } from "../../util/helper";
-import IngredientList from "./Ingredients/IngredientList";
+import { isArrayNullOrEmpty } from "../../../util/helper";
+import IngredientList from "../Ingredients/IngredientList";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import { RiForbid2Line } from "react-icons/ri";
 import propTypes from "prop-types";
-import mealStyles from "./meal.module.css";
+import mealStyles from "../meal.module.css";
 import { connect } from "react-redux";
 import {
   addMealToCart,
   removeMealFromCart,
-} from "../../Redux/meals/mealsActions";
+} from "../../../Redux/meals/mealsActions";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 

@@ -7,7 +7,7 @@ import {
   loadAllPersonalOrders,
 } from "../../Shared/Api/orders";
 import { Form } from "react-bootstrap";
-import MealList from "../Meals/MealList";
+import MealList from "../Meals/Render/MealList";
 import { clearOrdersCache, emptyTheCart } from "../../Redux/orders/ordersActions";
 import Modal from "../../Shared/UserInterface/Modal";
 export const PickOrder = ({

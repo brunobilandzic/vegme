@@ -3,14 +3,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, ButtonGroup, Form, FormGroup } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { clearOrdersCache } from "../../Redux/orders/ordersActions";
-import { loadSingleCookById } from "../../Shared/Api/cooks";
-import { canEditTime, editOrder } from "../../Shared/Api/orders";
-import { useForm } from "../../Shared/CustomHooks/form-hook";
-import Input from "../../Shared/Form/Input";
-import Modal from "../../Shared/UserInterface/Modal";
-import { capitalizeString, dayOfWeek } from "../../util/helper";
-import ordersStyles from "./orders.module.css";
+import { clearOrdersCache } from "../../../Redux/orders/ordersActions";
+import { loadSingleCookById } from "../../../Shared/Api/cooks";
+import { canEditTime, editOrder } from "../../../Shared/Api/orders";
+import { useForm } from "../../../Shared/CustomHooks/form-hook";
+import Input from "../../../Shared/Form/Input";
+import Modal from "../../../Shared/UserInterface/Modal";
+import { capitalizeString, dayOfWeek } from "../../../util/helper";
+import ordersStyles from "../orders.module.css";
 
 export const EditOrderRegular = ({ clearOrdersCache }) => {
   const { state } = useLocation();

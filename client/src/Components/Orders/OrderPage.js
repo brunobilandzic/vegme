@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchOrderFromServer, removeMealFromOrder } from "../../Shared/Api/orders";
 import { COOK, REGULAR } from "../../Shared/Constants/Roles";
-import OrderForCook from "./OrderForCook";
-import OrderForRegular from "./OrderForRegular";
+import OrderForCook from "./Cook/OrderForCook";
+import OrderForRegular from "./Regular/OrderForRegular";
 
 export const OrderPage = ({ user }) => {
   const [order, setOrder] = useState();

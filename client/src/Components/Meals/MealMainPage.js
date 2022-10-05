@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getMealById } from "../../Shared/Api/meals";
 import { COOK, REGULAR } from "../../Shared/Constants/Roles";
-import MealForCook from "./MealForCook";
+import MealForCook from "./Cook/MealForCook";
 import MealForRegular from "./MealForRegular";
 
 export const MealMainPage = ({ user }) => {

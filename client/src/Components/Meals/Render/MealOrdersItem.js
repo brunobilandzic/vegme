@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import IngredientList from "./Ingredients/IngredientList";
+import IngredientList from "../Ingredients/IngredientList";
 import classnames from "classnames";
-import OrderItem from "../Orders/OrderItem";
+import OrderItem from "../../Orders/Render/OrderItem";
 import { v4 as uuid } from "uuid";
-import mealsStyles from "./meal.module.css";
+import mealsStyles from "../meal.module.css";
 const MealOrdersItem = ({ meal, orders }) => {
   const [showOrders, setShowOrders] = useState(false);
   const toggleShowOrders = () => {

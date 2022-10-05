@@ -6,26 +6,26 @@ import OperatorShield from "./Shields/OperatorShield";
 import AdministratorShield from "./Shields/AdministratorShield";
 import NewOperator from "../Components/Authorization/NewOperator";
 import Signup from "../Components/Authorization/Signup";
-import NewMeal from "../Components/Meals/NewMeal";
+import NewMeal from "../Components/Meals/Cook/NewMeal";
 import Cart from "../Components/Cart/Cart";
 import RegularShield from "./Shields/RegularShield";
 import MealsMainPage from "../Components/Meals/MealsMainPage";
-import BrowseMeals from "../Components/Meals/BrowseMeals";
+import BrowseMeals from "../Components/Meals/Render/BrowseMeals";
 import CookShield from "./Shields/CookShield";
 import UsernamePrompt from "../Components/Authorization/UsernamePrompt";
 import AuthSuccess from "../Components/Authorization/AuthSuccess";
 import GoogleAuthSuccess from "../Components/Authorization/GoogleAuthSuccess";
-import BrowseOrders from "../Components/Orders/BrowseOrders";
+import BrowseOrders from "../Components/Orders/Render/BrowseOrders";
 import MainPage from "../Shared/Components/MainPage";
 import AuthorizationShield from "./Shields/AuthorizationShield";
 import OrderPage from "../Components/Orders/OrderPage";
-import CookMeals from "../Components/Meals/CookMeals";
+import CookMeals from "../Components/Meals/Cook/CookMeals";
 import CookProfile from "../Components/Cook/CookProfile";
-import BrowseCooks from "../Components/Cook/BrowseCooks";
-import BrowseSpecialMeals from "../Components/Meals/BrowseSpecialMeals";
+import BrowseCooks from "../Components/Cook/Render/BrowseCooks";
+import BrowseSpecialMeals from "../Components/Meals/Render/BrowseSpecialMeals";
 import RegularOrCookShield from "./Shields/RegularOrCookShield";
 import Alerts from "../Components/Alerts/Alerts";
-import EditOrderRegular from "../Components/Orders/EditOrderRegular";
+import EditOrderRegular from "../Components/Orders/Regular/EditOrderRegular";
 import MealMainPage from "../Components/Meals/MealMainPage"
 
 export default function Router(props) {

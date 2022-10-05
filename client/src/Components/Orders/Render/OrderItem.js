@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { connect } from "react-redux";
 import { format } from "date-fns";
-import ordersStyles from "./orders.module.css";
-import { capitalizeString, dayOfWeek } from "../../util/helper";
+import ordersStyles from "../orders.module.css";
+import { capitalizeString, dayOfWeek } from "../../../util/helper";
 const OrderItem = ({ order }) => {
   const navigate = useNavigate();
   const navigateToSingular = () => {
