@@ -7,6 +7,7 @@ import {
   LOAD_ALL_PAGINATED_COOK_MEALS,
   LOAD_ALL_PAGINATED_SPECIAL_MEALS,
   REMOVE_PAGINATED_COOK_MEALS,
+  LOAD_PAGINATED_FAVOURITES_FOR_USERNAME,
 } from "../types";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   specialMeals: {
     items: {},
   },
+  favouriteMeals: {},
   mealsToOrder: [],
 };
 
@@ -68,7 +70,18 @@ export default function mealsReducer(state = initialState, action) {
           },
         },
       };
-
+    case LOAD_PAGINATED_FAVOURITES_FOR_USERNAME:
+      return {
+        ...state,
+        favouriteMeals: {
+          ...state.favouriteMeals,
+          [action.payload.username]: {
+            ...state.favouriteMeals[action.payload.username],
+            [action.payload.pageNumber + "-" + action.payload.pageSize]:
+              action.payload.items,
+          },
+        },
+      };
     case ADD_MEAL_TO_CART:
       return {
         ...state,

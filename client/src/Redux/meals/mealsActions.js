@@ -4,6 +4,7 @@ import {
   loadPaginatedMealsFromServer,
   loadPaginatedSpecialMealsFromServer,
 } from "../../Shared/Api/meals";
+import { getFavourites } from "../../Shared/Api/regular";
 import {
   ADD_MEAL_TO_CART,
   LOAD_ALL_PAGINATED_MEALS,
@@ -17,6 +18,7 @@ import {
   LOAD_ALL_PAGINATED_COOK_MEALS,
   LOAD_ALL_PAGINATED_SPECIAL_MEALS,
   REMOVE_PAGINATED_COOK_MEALS,
+  LOAD_PAGINATED_FAVOURITES_FOR_USERNAME,
 } from "../types";
 
 export const addMealToCart = (meal) => (dispatch, getState) => {
@@ -46,14 +48,14 @@ export const createMealAction = (meal) => async (dispatch, getState) => {
     },
   });
   dispatch({
-    type: REMOVE_PAGINATED_COOK_MEALS
-  })
+    type: REMOVE_PAGINATED_COOK_MEALS,
+  });
   dispatch({
     type: RESET_PAGINATION_FOR_TYPE,
     payload: {
       type: "cookMeals",
     },
-  })
+  });
 };
 
 export const loadPaginatedMeals =
@@ -160,6 +162,54 @@ export const loadPaginatedSpecialMeals =
         totalPages: paginatedSpecialMeals.totalPages,
       },
     });
+    dispatch({
+      type: NOT_LOADING,
+    });
+  };
+
+export const loadPaginatedFavouritesForUsername =
+  (username, pageNumber = 1, pageSize = 5) =>
+  async (dispatch, getState) => {
+    if (
+      getState().meals.favouriteMeals[username] &&
+      getState().meals.favouriteMeals[username][pageNumber + "-" + pageSize]
+    )
+      return;
+    console.log(username);
+    dispatch({
+      type: IS_LOADING,
+    });
+
+    const paginatedFavourites = await getFavourites(
+      username,
+      pageNumber,
+      pageSize
+    );
+
+    dispatch({
+      type: LOAD_PAGINATED_FAVOURITES_FOR_USERNAME,
+      payload: {
+        username,
+        pageNumber,
+        pageSize,
+        items: paginatedFavourites.items,
+      },
+    });
+    dispatch({
+      type: UPDATE_TOTAL_ITEMS,
+      payload: {
+        type: "favouriteMeals",
+        totalItems: paginatedFavourites.totalItems,
+      },
+    });
+    dispatch({
+      type: UPDATE_TOTAL_PAGES,
+      payload: {
+        type: "favouriteMeals",
+        totalPages: paginatedFavourites.totalPages,
+      },
+    });
+
     dispatch({
       type: NOT_LOADING,
     });

@@ -1,18 +1,24 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { connect } from 'react-redux'
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+import MealList from "../Render/MealList";
 
-export const OtherPersonFavourites = (props) => {
+export const OtherPersonFavourites = ({username, meals}) => {
   return (
-    <div>OtherPersonFavourites</div>
-  )
-}
+    <div>
+      {`${username} favourite meals:`}
+      <MealList meals={meals} showAdd={true} />
+    </div>
+  );
+};
 
-OtherPersonFavourites.propTypes = {
-}
+OtherPersonFavourites.propTypes = {};
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(OtherPersonFavourites)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OtherPersonFavourites);

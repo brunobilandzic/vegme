@@ -11,6 +11,7 @@ function PaginationCustom({
   orders,
   cookMeals,
   specialMeals,
+  favouriteMeals,
   loadItems,
   updatePageNumber,
   type,
@@ -27,6 +28,8 @@ function PaginationCustom({
       ? specialMeals
       : type == "alerts"
       ? alerts
+      : type == "favouriteMeals"
+      ? favouriteMeals
       : {
           pageNumber: 1,
           pageSize: 5,
@@ -62,7 +65,11 @@ function PaginationCustom({
         );
       }
       if (pageNumber < totalPages - 2)
-        pageItems.push(<PageItem key={uuid()} disabled>{"..."}</PageItem>);
+        pageItems.push(
+          <PageItem key={uuid()} disabled>
+            {"..."}
+          </PageItem>
+        );
     } else {
       for (let i = 1; i <= totalPages; i++) {
         pageItems.push(
@@ -145,6 +152,7 @@ PaginationCustom.propTypes = {
   cookMeals: propTypes.object,
   specialMeals: propTypes.object,
   alerts: propTypes.object,
+  favouriteMeals: propTypes.object,
 };
 
 const mapStateToProps = (state) => ({
@@ -153,6 +161,7 @@ const mapStateToProps = (state) => ({
   cookMeals: state.pagination.cookMeals,
   specialMeals: state.pagination.specialMeals,
   alerts: state.pagination.alerts,
+  favouriteMeals: state.pagination.favouriteMeals,
 });
 
 export default connect(mapStateToProps, {
