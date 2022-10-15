@@ -10,6 +10,9 @@ export default function AdministratorNavList() {
       <LinkContainer to="operators/new">
         <NavLink>New operator</NavLink>
       </LinkContainer>
+      <LinkContainer to="/regulars">
+        <NavLink>Regulars</NavLink>
+      </LinkContainer>
       <AlertNavItem />
     </>
   );

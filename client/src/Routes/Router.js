@@ -26,8 +26,10 @@ import BrowseSpecialMeals from "../Components/Meals/Render/BrowseSpecialMeals";
 import RegularOrCookShield from "./Shields/RegularOrCookShield";
 import Alerts from "../Components/Alerts/Alerts";
 import EditOrderRegular from "../Components/Orders/Regular/EditOrderRegular";
-import MealMainPage from "../Components/Meals/MealMainPage"
+import MealMainPage from "../Components/Meals/MealMainPage";
 import FavouritesMainPage from "../Components/Meals/Favourites/FavouritesMainPage";
+import BrowseRegulars from "../Components/Regulars/Render/BrowseRegulars";
+import RegularsMainPage from "../Components/Regulars/RegularsMainPage";
 
 export default function Router(props) {
   return (
@@ -93,7 +95,12 @@ export default function Router(props) {
             ></Route>
             <Route path="/cooks" element={<BrowseCooks />} />
             <Route path="/cooks/:username" element={<CookProfile />}></Route>
-            <Route path="/favourites/:username" element={<FavouritesMainPage />}></Route>
+            <Route
+              path="/favourites/:username"
+              element={<FavouritesMainPage />}
+            ></Route>
+            <Route path="/regulars" element={<RegularsMainPage />} />
+            <Route path="/regulars/browse" element={<BrowseRegulars />} />
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route

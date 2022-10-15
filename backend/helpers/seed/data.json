@@ -15,6 +15,17 @@
   ],
   "cooks":[
     {
+      "name": "grra cook name",
+      "username": "cookregular",
+      "password": "password",
+      "email": "ing.ut@mail.com",
+      "edit_time_allowance": 2,
+      "allowed_order_times": [
+        3,
+        1
+      ]
+    },
+    {
       "name": "sint cook name",
       "username": "cook601",
       "password": "password",

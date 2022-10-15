@@ -74,6 +74,10 @@ const addCook = async (cook) => {
   console.log(`${cook.username} saved`);
 };
 
+const addCookToRegular = async (userId) => {
+
+}
+
 const writeOperators = async (operators) => {
   operators.forEach(async (operator) => {
     await addOperator(operator);

@@ -18,6 +18,9 @@ export default function RegularNavList() {
       <LinkContainer to="/cooks">
         <NavLink>Cooks</NavLink>
       </LinkContainer>
+      <LinkContainer to="/regulars">
+        <NavLink>Regulars</NavLink>
+      </LinkContainer>
       <AlertNavItem />
     </>
   );
