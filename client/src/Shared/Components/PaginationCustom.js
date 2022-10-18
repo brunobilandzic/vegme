@@ -16,6 +16,7 @@ function PaginationCustom({
   updatePageNumber,
   type,
   alerts,
+  regulars,
 }) {
   const { pageNumber, pageSize, totalPages } =
     type == "meals"
@@ -30,6 +31,8 @@ function PaginationCustom({
       ? alerts
       : type == "favouriteMeals"
       ? favouriteMeals
+      : type == "regulars"
+      ? regulars
       : {
           pageNumber: 1,
           pageSize: 5,
@@ -153,6 +156,7 @@ PaginationCustom.propTypes = {
   specialMeals: propTypes.object,
   alerts: propTypes.object,
   favouriteMeals: propTypes.object,
+  regulars: propTypes.object,
 };
 
 const mapStateToProps = (state) => ({
@@ -162,6 +166,7 @@ const mapStateToProps = (state) => ({
   specialMeals: state.pagination.specialMeals,
   alerts: state.pagination.alerts,
   favouriteMeals: state.pagination.favouriteMeals,
+  regulars: state.pagination.regulars,
 });
 
 export default connect(mapStateToProps, {

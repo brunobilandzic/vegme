@@ -6,6 +6,7 @@ import cooksReducer from "./cooks/cooksReducer";
 import mealsReducer from "./meals/mealsReducer";
 import ordersReducer from "./orders/ordersReducer";
 import paginationReducer from "./pagination/paginationReducer";
+import regularsReducer from "./regulars/regularsReducer"
 
 export default combineReducers(
 {
@@ -15,6 +16,7 @@ export default combineReducers(
     orders: ordersReducer,
     api: apiReducer,
     cooks: cooksReducer,
-    alerts: alertsReducer
+    alerts: alertsReducer,
+    regulars: regularsReducer
 }
 )

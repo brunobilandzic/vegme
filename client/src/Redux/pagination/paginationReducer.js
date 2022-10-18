@@ -45,7 +45,13 @@ const initialState = {
     pageSize: 5,
     totalItems: null,
     totalPages: null
-  }
+  },
+  regulars: {
+    pageNumber: 1,
+    pageSize: 5,
+    totalItems: null,
+    totalPages: null
+  },
 };
 
 export default function paginationReducer(state = initialState, action) {

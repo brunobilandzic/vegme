@@ -17,3 +17,15 @@ export const getFavourites = async (username, pageNumber = 1, pageSize = 5) => {
   });
   return response.data;
 };
+
+export const getPaginatedRegulars = async (pageNumber = 1, pageSize = 5) => {
+  const urlWithPagination = buildUrlWithPagination(
+    `${process.env.REACT_APP_ROOT_URL}/regulars`,
+    pageNumber,
+    pageSize
+  );
+  const response = await axios.get(urlWithPagination.href, {
+    withCredentials: true,
+  });
+  return response.data;
+};

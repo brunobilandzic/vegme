@@ -38,6 +38,10 @@
   width: 9rem;
 }
 
+.hover:hover {
+  cursor: pointer;
+}
+
 .hover-box {
   position: relative;
 }
@@ -61,5 +65,11 @@
 
 .clickable-icon:hover {
   cursor: pointer;
+}
+
+.item-box {
+  padding: 1rem;
+  border: 1px solid black;
+  margin: 1rem 0;
 }
 

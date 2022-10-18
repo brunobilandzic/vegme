@@ -70,7 +70,7 @@ function MealItem({
 
   return (
     <>
-      <div className={mealStyles.wrap} onClick={openMeal}>
+      <div className={`item-box d-flex justify-content-between hover`} onClick={openMeal}>
         <div className="d-flex flex-row justify-content-start">
           <div className="flex-row-item">
             <h6>{meal?.name}</h6>

@@ -12,7 +12,7 @@ const MealOrdersItem = ({ meal, orders }) => {
     setShowOrders((prevShowOrders) => !prevShowOrders);
   };
   return (
-    <div className={mealsStyles.mealOrders}>
+    <div className={`item-box`}>
       <div>Meal: {meal.name}</div>
       {meal.ingredients?.length != 0 && (
         <IngredientList ingredients={meal.ingredients} />

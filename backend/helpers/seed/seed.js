@@ -71,12 +71,11 @@ const addCook = async (cook) => {
   const userId = await createNewUserManually(cook);
   cook.allowed_order_times = [...new Set(cook.allowed_order_times)];
   await addToCook(userId, cook);
+  if (cook.username == "cookregular") addToRegularRole(userId);
   console.log(`${cook.username} saved`);
 };
 
-const addCookToRegular = async (userId) => {
-
-}
+const addCookToRegular = async (userId) => {};
 
 const writeOperators = async (operators) => {
   operators.forEach(async (operator) => {

@@ -10,7 +10,7 @@ const getAllRegularUsers = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
 
   const regularsPaginatedList = await PaginatedList.getPaginatedResult(
-    RegularRoleUser.find(),
+    RegularRoleUser.find().populate({path: "user"}),
     Number(queryObject.pageNumber),
     Number(queryObject.pageSize)
   );
