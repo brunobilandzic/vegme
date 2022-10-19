@@ -29,3 +29,8 @@ export const getPaginatedRegulars = async (pageNumber = 1, pageSize = 5) => {
   });
   return response.data;
 };
+
+export const getRegularByUsername = async (username) => {
+  const response = await axiosInstance.get(`/username/${username}`);
+  return response.data;
+};

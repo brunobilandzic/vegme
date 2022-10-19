@@ -10,7 +10,7 @@ const getAllRegularUsers = async (req, res) => {
   const queryObject = url.parse(req.url, true).query;
 
   const regularsPaginatedList = await PaginatedList.getPaginatedResult(
-    RegularRoleUser.find().populate({path: "user"}),
+    RegularRoleUser.find().populate({ path: "user" }),
     Number(queryObject.pageNumber),
     Number(queryObject.pageSize)
   );
@@ -19,13 +19,19 @@ const getAllRegularUsers = async (req, res) => {
 };
 
 const getRegularByUsername = async (req, res, next) => {
-  const allRegulars = await RegularRoleUser.find().populate({
-    path: "user",
-  });
-  console.log(allRegulars);
-  const regular = allRegulars.find(
-    (r) => r.user.username === req.params.username
-  );
+  const baseUser = await BaseUser.findOne({ username: req.params.username });
+  if (!baseUser) {
+    return next(
+      new HttpError(
+        `Could not find regular with username ${req.params.username}`,
+        404
+      )
+    );
+  }
+  const regularId = baseUser.roles.find((r) => r.name === REGULAR).id;
+  const regular = await RegularRoleUser.findById(regularId)
+    .populate({ path: "favourite_meals" })
+    .populate({ path: "orders" });
 
   if (regular) {
     res.json(regular);

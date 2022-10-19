@@ -7,7 +7,7 @@ export default function CookListItem({ cook }) {
     <div className={`item-box`}>
       <Link
         to={`/cooks/${cook?.user.username}`}
-        className={`${cookStyles.anchor}`}
+        className={`anchor`}
       >
         <div className={cookStyles.listLink}>
           <div className={cookStyles.username}>{cook?.user.username}</div>

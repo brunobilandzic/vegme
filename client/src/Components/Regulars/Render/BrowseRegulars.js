@@ -16,18 +16,15 @@ export const BrowseRegulars = ({
   }, []);
 
   const getItems = () => {
-    return regulars?.items[pageNumber + "-" + pageSize]?.map((r) => (
-      <RegularItem regular={r} />
+    return regulars?.items[pageNumber + "-" + pageSize]?.map((r, i) => (
+      <RegularItem key={i} regular={r} />
     ));
   };
 
   return (
     <div>
       {getItems()}
-      <PaginationCustom
-        type="regulars"
-        loadItems={loadAllRegulars}
-      />
+      <PaginationCustom type="regulars" loadItems={loadAllRegulars} />
     </div>
   );
 };

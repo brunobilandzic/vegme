@@ -30,6 +30,7 @@ import MealMainPage from "../Components/Meals/MealMainPage";
 import FavouritesMainPage from "../Components/Meals/Favourites/FavouritesMainPage";
 import BrowseRegulars from "../Components/Regulars/Render/BrowseRegulars";
 import RegularsMainPage from "../Components/Regulars/RegularsMainPage";
+import RegularProfile from "../Components/Regulars/Profile/RegularProfile";
 
 export default function Router(props) {
   return (
@@ -101,6 +102,7 @@ export default function Router(props) {
             ></Route>
             <Route path="/regulars" element={<RegularsMainPage />} />
             <Route path="/regulars/browse" element={<BrowseRegulars />} />
+            <Route path="/regulars/:username" element={<RegularProfile />} />
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route

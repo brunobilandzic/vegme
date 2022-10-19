@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { GUEST } from "../../Shared/Constants/Roles";
 import Modal from "../../Shared/UserInterface/Modal";
 
-export const RegularsMainPage = ({  }) => {
+export const RegularsMainPage = ({  }) => {  
 
   return (
     <div>
