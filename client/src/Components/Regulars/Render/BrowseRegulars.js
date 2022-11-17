@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { loadAllRegulars } from "../../../Redux/regulars/regularsActions";
 import PaginationCustom from "../../../Shared/Components/PaginationCustom";
+import SearchBox from "../../../Shared/Components/SearchBox";
 import RegularItem from "./RegularItem";
 
 export const BrowseRegulars = ({
@@ -23,6 +24,7 @@ export const BrowseRegulars = ({
 
   return (
     <div>
+      <SearchBox placeholder="Search regular users" />
       {getItems()}
       <PaginationCustom type="regulars" loadItems={loadAllRegulars} />
     </div>
