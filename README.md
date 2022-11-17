@@ -19,7 +19,7 @@ Backend:
 - create .env file with values shown in .env.example
 - you can ignore email_password, email and verification_hash_key
 - create a mongoDb account if you dont have one
-- put *mongodb+srv://<username>:<password>@custer0.5teiq.mongodb.net/<db_name>?retryWrites=true&w=majority* in mongo_connection_string with your username, password and db_name
+- put *mongodb+srv://[username]:[password]@custer0.5teiq.mongodb.net/[db_name]?retryWrites=true&w=majority* in mongo_connection_string with your username, password and wished db_name
 - seed the database, you will have to run npm start 3 times
 - After first npm start, wait up to 30 sec for logging to start.
 - After stop of console logging, restart the app 
