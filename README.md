@@ -3,12 +3,6 @@
 
 Vegme is an *peer-to-peer* meal subscriptions app. It allows cooks to make different meals and users to subscribe to them on a weekly basis.
 
-## Public demo
-
-The static demo lets visitors browse fictional meals, save a practice weekly plan, and switch to the cook workspace to add or remove meals from the demo menu. It stores changes in the current browser. The portfolio demo does not require a server or service credentials.
-
-For a local preview, install the client dependencies and start React with `REACT_APP_PUBLIC_DEMO=true`. Build it with the same environment variable to publish `client/build`. The root `render.yaml` defines a free Render Static Site.
-
 ## Roles
 
 - **Cook** - CRUD upon meals and orders
