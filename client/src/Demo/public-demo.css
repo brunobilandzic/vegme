@@ -1,0 +1,112 @@
+.vegme-demo {
+  --paper: #f8f7f0;
+  --ink: #253127;
+  --muted: #536053;
+  --leaf: #365a3d;
+  --line: #dce2d7;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: system-ui, sans-serif;
+}
+
+.vegme-demo *, .vegme-demo *::before, .vegme-demo *::after { box-sizing: border-box; }
+.vegme-header, .vegme-main { width: min(1120px, calc(100% - 3rem)); margin-inline: auto; }
+.vegme-header {
+  min-height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.vegme-brand { color: var(--ink); font-family: Georgia, serif; font-size: 2.2rem; letter-spacing: -.055em; text-decoration: none; }
+.vegme-brand:hover { color: var(--leaf); }
+.vegme-brand span { color: #73905b; }
+.vegme-views { display: flex; gap: .25rem; }
+.vegme-views button {
+  color: var(--muted);
+  padding: .55rem .8rem;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 6px;
+}
+.vegme-views button[aria-pressed="true"] { color: var(--ink); background: #e8eee2; border-color: #d6e1d0; }
+.vegme-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4.5rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+.vegme-hero h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-weight: 400;
+  letter-spacing: -.05em;
+  line-height: 1.02;
+  margin: 0 0 1.1rem;
+  max-width: 10ch;
+}
+.vegme-hero p, .vegme-about p { max-width: 59ch; color: var(--muted); line-height: 1.65; }
+.vegme-hero img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 12px; }
+.vegme-workspace { display: grid; grid-template-columns: minmax(0, 2fr) minmax(250px, 1fr); gap: 1.5rem; align-items: start; }
+.vegme-section-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.vegme-main h2 { margin: 0 0 .75rem; font-size: 1.35rem; font-weight: 650; }
+.vegme-section-head h2 { margin: 0; }
+.vegme-section-head label { display: flex; align-items: center; gap: .5rem; color: var(--muted); font-size: .9rem; }
+.vegme-meals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.vegme-card, .vegme-panel { border: 1px solid var(--line); border-radius: 10px; padding: 1rem; }
+.vegme-card { display: flex; flex-direction: column; align-items: flex-start; gap: .45rem; background: #fff; }
+.vegme-card h3 { font-size: 1.02rem; margin: 0; font-weight: 650; }
+.vegme-card p, .vegme-panel p { margin: 0; color: var(--muted); line-height: 1.5; font-size: .92rem; }
+.vegme-card .vegme-cook { font-size: .8rem; }
+.vegme-card .vegme-button { margin-top: auto; }
+.vegme-panel { padding: 1.15rem; background: #ebf0e7; }
+.vegme-panel .vegme-empty { margin: 1rem 0; }
+.vegme-form { display: grid; gap: .75rem; margin-top: 1rem; }
+.vegme-form label { display: grid; gap: .25rem; font-size: .9rem; font-weight: 600; }
+.vegme-demo input, .vegme-demo select, .vegme-demo textarea {
+  min-width: 0;
+  color: var(--ink);
+  font: inherit;
+  background: white;
+  border: 1px solid #aebdad;
+  border-radius: 5px;
+  padding: .5rem .55rem;
+}
+.vegme-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding: .5rem .7rem;
+  border: 1px solid var(--leaf);
+  border-radius: 6px;
+  color: white;
+  background: var(--leaf);
+  font-size: .88rem;
+  font-weight: 600;
+  min-height: 42px;
+}
+.vegme-button.secondary { color: var(--leaf); background: #f7faf5; border-color: #b6c6ae; }
+.vegme-button:disabled { opacity: .52; }
+.vegme-demo :focus-visible { outline: 2px solid #345f35; outline-offset: 2px; }
+.vegme-selection { padding: 0; margin: .8rem 0; list-style: none; }
+.vegme-selection li { display: flex; justify-content: space-between; align-items: center; gap: .5rem; border-top: 1px solid #ccd9c6; padding-block: .4rem; }
+.vegme-selection button { color: var(--leaf); background: transparent; border: 0; text-decoration: underline; font-size: .85rem; }
+.vegme-panel .vegme-saved { border-top: 1px solid #ccd9c6; padding-top: .75rem; margin-top: .8rem; }
+.vegme-status { padding: .62rem .8rem; border-left: .2rem solid #73905b; background: #ecf1e9; }
+.vegme-about { margin-top: 3rem; padding: 1.35rem 0 2.5rem; border-top: 1px solid var(--line); }
+.vegme-about p:last-child { margin-bottom: 0; }
+
+@media (max-width: 760px) {
+  .vegme-header, .vegme-main { width: calc(100% - 2rem); }
+  .vegme-hero, .vegme-workspace { grid-template-columns: minmax(0, 1fr); }
+  .vegme-hero h1 { max-width: 14ch; }
+}
+@media (max-width: 420px) {
+  .vegme-header { gap: .3rem; }
+  .vegme-views button { padding: .5rem .45rem; font-size: .82rem; }
+  .vegme-meals { grid-template-columns: minmax(0, 1fr); }
+}
