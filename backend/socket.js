@@ -1,9 +1,9 @@
 const { Server } = require("socket.io");
 
-const createIo = (httpsServer) => {
-  const io = new Server(httpsServer, {
+const createIo = (server, clientUrl) => {
+  const io = new Server(server, {
     cors: {
-      origin: "https://localhost:3000",
+      origin: clientUrl,
     },
   });
 

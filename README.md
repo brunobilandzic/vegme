@@ -35,6 +35,34 @@ Frontend:
 - npm start
 - proceed to localhost
 
+## Vercel demo
+
+Set the Vercel project's **Root Directory** to `client`. The included
+`client/vercel.json` runs the production build, serves `build`, and lets React
+Router handle direct visits and refreshes on nested routes. Vercel
+automatically provides HTTPS for the frontend. The demo build uses
+`CI=false` so Create React App reports existing lint warnings without
+failing the build.
+
+Set `REACT_APP_ROOT_URL=https://api.example.com/api` for each Vercel
+environment used for the demo. Replace the example host with the public
+HTTPS URL of the backend and omit the trailing slash. The frontend uses
+that URL for API requests and its origin for Socket.IO. Vercel embeds the
+variable at build time, so redeploy after changing it. `HTTPS=true` is
+used by the local development server.
+
+Run the Express and Socket.IO backend on a separate host with public
+HTTPS. Set `NODE_ENV=production`, `MONGO_CONNECTION_STRING`,
+`COOKIE_KEY` (a private random value), and `CLIENT_URL` (the exact
+frontend origin, for example `https://vegme.vercel.app`, without a
+trailing slash). Use a stable frontend origin for the demo because the
+backend permits that origin in its CORS settings.
+
+Use the local demo accounts below. Google OAuth still uses localhost
+callbacks and redirects. If the frontend and API are on different sites,
+demo sign-in also requires a browser that permits cross-site cookies for
+the API.
+
 #Authorization
 
 Regular Role User:

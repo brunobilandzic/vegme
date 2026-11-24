@@ -45,7 +45,7 @@ export default function Signup() {
     formData.append("password", formState.inputs.password.value);
     formData.append("username", formState.inputs.username.value);
     const response = await sendRequest(
-      process.env.REACT_APP_ROOT_URL + "auth/local/signup",
+      process.env.REACT_APP_ROOT_URL + "/auth/local/signup",
       "POST",
       formData
     );
@@ -116,7 +116,7 @@ export default function Signup() {
         Authorize with google
       </a>{" "}
       <br />
-      <a href="http://localhost:5000/auth/test">Test</a>
+      <a href={`${process.env.REACT_APP_ROOT_URL}/auth/test`}>Test</a>
     </>
   );
 }

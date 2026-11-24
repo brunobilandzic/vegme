@@ -6,7 +6,10 @@ import { newAlert } from "../Redux/alerts/alertsActions";
 
 const SocketComponent = ({ user, newAlert, alertsPageSize }) => {
   useEffect(() => {
-    const socket = io("https://localhost:5000");
+    const apiUrl = process.env.REACT_APP_ROOT_URL;
+    if (!apiUrl) return;
+
+    const socket = io(new URL(apiUrl).origin);
 
     // receive a message from the server
     if (user) {
