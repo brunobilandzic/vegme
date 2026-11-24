@@ -26,6 +26,7 @@ it("opens the catalog and completes a guest order without API requests", async (
   try {
     const mealName = "Roasted Vegetable and Lentil Bowl";
     expect(await screen.findByText(mealName)).toBeInTheDocument();
+    expect(window.location.pathname).toBe("/");
     expect(screen.queryByRole("link", { name: /login|signup/i })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("link", { name: "Cooks" }));

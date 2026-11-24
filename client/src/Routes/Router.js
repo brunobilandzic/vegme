@@ -139,7 +139,10 @@ export default function Router({ navbar }) {
         <Routes>
           {catalogRoutes}
           {isStaticDemo ? (
-            <Route path="*" element={<Navigate to="/meals/browse" replace />} />
+            <>
+              <Route path="/" element={<BrowseMeals />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </>
           ) : accountRoutes}
         </Routes>
       </Container>
