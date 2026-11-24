@@ -7,8 +7,9 @@ import { loadUser } from "./Redux/auth/authActions.js";
 import { useEffect } from "react";
 import SocketComponent from "./Socket/SocketComponent";
 import { setUneradAlertsCount } from "./Redux/alerts/alertsActions";
+import { isStaticDemo } from "./Demo/catalog";
 
-function App({ loadUser, user , setUneradAlertsCount}) {
+function LiveApp({ loadUser, user , setUneradAlertsCount}) {
   useEffect(() => {
     loadUser();
   }, []);
@@ -25,7 +26,7 @@ function App({ loadUser, user , setUneradAlertsCount}) {
   );
 }
 
-App.propTypes = {
+LiveApp.propTypes = {
   loadUser: propTypes.func.isRequired,
   setUneradAlertsCount: propTypes.func.isRequired,
   user: propTypes.object,
@@ -35,4 +36,11 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { loadUser, setUneradAlertsCount })(App);
+const ConnectedLiveApp = connect(mapStateToProps, {
+  loadUser,
+  setUneradAlertsCount,
+})(LiveApp);
+
+export default function App() {
+  return isStaticDemo ? <Router navbar={<NavBar />} /> : <ConnectedLiveApp />;
+}

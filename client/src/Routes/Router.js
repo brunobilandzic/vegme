@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Login from "../Components/Authorization/Login";
 import OperatorShield from "./Shields/OperatorShield";
@@ -30,109 +30,119 @@ import MealMainPage from "../Components/Meals/MealMainPage";
 import FavouritesMainPage from "../Components/Meals/Favourites/FavouritesMainPage";
 import BrowseRegulars from "../Components/Regulars/Render/BrowseRegulars";
 import RegularsMainPage from "../Components/Regulars/RegularsMainPage";
+import { isStaticDemo } from "../Demo/catalog";
 
-export default function Router(props) {
+const catalogRoutes = (
+  <>
+    <Route path="/meals" element={<MealsMainPage />} />
+    <Route path="/meals/browse" element={<BrowseMeals />} />
+    <Route path="/meals/special" element={<BrowseSpecialMeals />} />
+    <Route path="/meals/:mealId" element={<MealMainPage />} />
+    <Route path="/cooks" element={<BrowseCooks />} />
+    <Route path="/cooks/:username" element={<CookProfile />} />
+    <Route path="/cart" element={<Cart />} />
+  </>
+);
+
+const accountRoutes = (
+  <>
+    <Route
+      path="/operators/new"
+      element={
+        <AdministratorShield>
+          <NewOperator />
+        </AdministratorShield>
+      }
+    ></Route>
+    <Route
+      path="/meals/new"
+      element={
+        <CookShield>
+          <NewMeal />
+        </CookShield>
+      }
+    ></Route>
+    <Route
+      path="/mymeals"
+      element={
+        <CookShield>
+          <CookMeals />
+        </CookShield>
+      }
+    ></Route>
+    <Route
+      path="/orders/my"
+      element={
+        <RegularShield>
+          <BrowseOrders />
+        </RegularShield>
+      }
+    ></Route>
+    <Route
+      path="/order/:orderId"
+      element={
+        <RegularOrCookShield>
+          <OrderPage />
+        </RegularOrCookShield>
+      }
+    ></Route>
+    <Route
+      path="/order/edit"
+      element={
+        <RegularOrCookShield>
+          <EditOrderRegular />
+        </RegularOrCookShield>
+      }
+    ></Route>
+    <Route
+      path="/favourites/:username"
+      element={<FavouritesMainPage />}
+    ></Route>
+    <Route path="/regulars" element={<RegularsMainPage />} />
+    <Route path="/regulars/browse" element={<BrowseRegulars />} />
+    <Route path="/login" element={<Login />}></Route>
+    <Route path="/signup" element={<Signup />}></Route>
+    <Route
+      path="/auth/success"
+      element={
+        <AuthorizationShield>
+          <AuthSuccess />
+        </AuthorizationShield>
+      }
+    ></Route>
+    <Route path="/auth/failure">Failed to log in</Route>
+    <Route
+      path="/auth/google/username"
+      element={<UsernamePrompt />}
+    ></Route>
+    <Route
+      path="/auth/google/success"
+      element={<GoogleAuthSuccess />}
+    ></Route>
+    <Route
+      path="/alerts"
+      element={
+        <AuthorizationShield>
+          <Alerts />
+        </AuthorizationShield>
+      }
+    />
+    <Route path="/" element={<MainPage />}></Route>
+  </>
+);
+
+export default function Router({ navbar }) {
   return (
-    <>
-      <BrowserRouter>
-        {props.navbar}
-        <Container>
-          <Routes>
-            <Route
-              path="/operators/new"
-              element={
-                <AdministratorShield>
-                  <NewOperator />
-                </AdministratorShield>
-              }
-            ></Route>
-            <Route path="/meals" element={<MealsMainPage />}></Route>
-            <Route
-              path="/meals/new"
-              element={
-                <CookShield>
-                  <NewMeal />
-                </CookShield>
-              }
-            ></Route>
-            <Route path="/meals/browse" element={<BrowseMeals />}></Route>
-            <Route
-              path="/mymeals"
-              element={
-                <CookShield>
-                  <CookMeals />
-                </CookShield>
-              }
-            ></Route>
-            <Route
-              path="/meals/special"
-              element={<BrowseSpecialMeals />}
-            ></Route>
-            <Route path="/meals/:mealId" element={<MealMainPage />} />
-            <Route
-              path="/orders/my"
-              element={
-                <RegularShield>
-                  <BrowseOrders />
-                </RegularShield>
-              }
-            ></Route>
-            <Route
-              path="/order/:orderId"
-              element={
-                <RegularOrCookShield>
-                  <OrderPage />
-                </RegularOrCookShield>
-              }
-            ></Route>
-            <Route
-              path="/order/edit"
-              element={
-                <RegularOrCookShield>
-                  <EditOrderRegular />
-                </RegularOrCookShield>
-              }
-            ></Route>
-            <Route path="/cooks" element={<BrowseCooks />} />
-            <Route path="/cooks/:username" element={<CookProfile />}></Route>
-            <Route
-              path="/favourites/:username"
-              element={<FavouritesMainPage />}
-            ></Route>
-            <Route path="/regulars" element={<RegularsMainPage />} />
-            <Route path="/regulars/browse" element={<BrowseRegulars />} />
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
-            <Route
-              path="/auth/success"
-              element={
-                <AuthorizationShield>
-                  <AuthSuccess />
-                </AuthorizationShield>
-              }
-            ></Route>
-            <Route path="/auth/failure">Failed to log in</Route>
-            <Route
-              path="/auth/google/username"
-              element={<UsernamePrompt />}
-            ></Route>
-            <Route
-              path="/auth/google/success"
-              element={<GoogleAuthSuccess />}
-            ></Route>
-            <Route
-              path="/alerts"
-              element={
-                <AuthorizationShield>
-                  <Alerts />
-                </AuthorizationShield>
-              }
-            />
-            <Route path="/cart" element={<Cart />}></Route>
-            <Route path="/" element={<MainPage />}></Route>
-          </Routes>
-        </Container>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      {navbar}
+      <Container>
+        <Routes>
+          {catalogRoutes}
+          {isStaticDemo ? (
+            <Route path="*" element={<Navigate to="/meals/browse" replace />} />
+          ) : accountRoutes}
+        </Routes>
+      </Container>
+    </BrowserRouter>
   );
 }

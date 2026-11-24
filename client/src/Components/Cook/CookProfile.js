@@ -8,6 +8,7 @@ import cookStyles from "./cook.module.css";
 import MealItem from "../Meals/Render/MealItem";
 import { v4 as uuid } from "uuid";
 import { getOrderTimes } from "../../util/helper";
+import { isStaticDemo } from "../../Demo/catalog";
 
 const CookProfile = ({ isLoggedin }) => {
   const { username } = useParams();
@@ -18,11 +19,15 @@ const CookProfile = ({ isLoggedin }) => {
       setCook(await loadSingleCookByUsername(username));
     };
     fetchCook();
-  }, []);
+  }, [username]);
 
   const handleShowMealsClick = () => {
     setShowMeals((prevShowMeals) => !prevShowMeals);
   };
+
+  if (isStaticDemo && !cook) {
+    return cook === null ? <p>Cook not found.</p> : null;
+  }
 
   return (
     <div>
@@ -45,7 +50,7 @@ const CookProfile = ({ isLoggedin }) => {
             meal={meal}
             cookUsername={username}
             key={uuid()}
-            showAdd={isLoggedin}
+            showAdd={isStaticDemo || isLoggedin}
           />
         ))}
       </div>

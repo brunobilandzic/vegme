@@ -36,11 +36,11 @@ export const capitalizeString = (string) => {
 };
 
 export  const getOrderTimes = (orderTimesNumbers) => {
-  orderTimesNumbers?.sort();
+  const sortedOrderTimes = orderTimesNumbers?.slice().sort();
   let orderTimesString = "";
-  orderTimesNumbers?.forEach((orderTimeNumber, index) => {
+  sortedOrderTimes?.forEach((orderTimeNumber, index) => {
     orderTimesString +=
-      index != orderTimesNumbers?.length - 1
+      index != sortedOrderTimes.length - 1
         ? `${capitalizeString(dayOfWeek[orderTimeNumber])}, `
         : `${capitalizeString(dayOfWeek[orderTimeNumber])}`;
   });

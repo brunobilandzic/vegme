@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getDemoMeal, getDemoMeals, isStaticDemo } from "../../Demo/catalog";
 import { buildUrlWithPagination } from "../../util/helper";
 
 const axiosInstance = axios.create({
@@ -10,6 +11,8 @@ export const loadPaginatedMealsFromServer = async (
   pageNumber = 1,
   pageSize = 5
 ) => {
+  if (isStaticDemo) return getDemoMeals(pageNumber, pageSize);
+
   const urlWithPagination = buildUrlWithPagination(
     process.env.REACT_APP_ROOT_URL + "/meals",
     pageNumber,
@@ -42,6 +45,8 @@ export const loadPaginatedSpecialMealsFromServer = async (
   pageNumber = 1,
   pageSize = 5
 ) => {
+  if (isStaticDemo) return getDemoMeals(pageNumber, pageSize, true);
+
   const urlWithPagination = buildUrlWithPagination(
     process.env.REACT_APP_ROOT_URL + "/meals/special",
     pageNumber,
@@ -54,6 +59,8 @@ export const loadPaginatedSpecialMealsFromServer = async (
 };
 
 export const getMealById = async (mealId) => {
+  if (isStaticDemo) return getDemoMeal(mealId);
+
   const response = await axiosInstance.get(`/single/${mealId}`);
   return response.data;
 };

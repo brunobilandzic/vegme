@@ -35,33 +35,29 @@ Frontend:
 - npm start
 - proceed to localhost
 
-## Vercel demo
+## Public demo on Vercel
 
 Set the Vercel project's **Root Directory** to `client`. The included
 `client/vercel.json` runs the production build, serves `build`, and lets React
 Router handle direct visits and refreshes on nested routes. Vercel
-automatically provides HTTPS for the frontend. The demo build uses
-`CI=false` so Create React App reports existing lint warnings without
-failing the build.
+automatically provides HTTPS for the frontend. The build command sets
+`REACT_APP_STATIC_DEMO=true` and uses `CI=false` to keep existing lint
+warnings visible.
 
-Set `REACT_APP_ROOT_URL=https://api.example.com/api` for each Vercel
-environment used for the demo. Replace the example host with the public
-HTTPS URL of the backend and omit the trailing slash. The frontend uses
-that URL for API requests and its origin for Socket.IO. Vercel embeds the
-variable at build time, so redeploy after changing it. `HTTPS=true` is
-used by the local development server.
+The demo opens the meal catalog immediately. Visitors can browse sample
+meals and cooks, add meals to the cart, and complete a simulated order in
+their browser. The build includes the sample data and needs no login,
+backend, database, or Vercel dashboard environment variables.
 
-Run the Express and Socket.IO backend on a separate host with public
-HTTPS. Set `NODE_ENV=production`, `MONGO_CONNECTION_STRING`,
-`COOKIE_KEY` (a private random value), and `CLIENT_URL` (the exact
-frontend origin, for example `https://vegme.vercel.app`, without a
-trailing slash). Use a stable frontend origin for the demo because the
-backend permits that origin in its CORS settings.
+To preview the same mode in PowerShell from `client`:
 
-Use the local demo accounts below. Google OAuth still uses localhost
-callbacks and redirects. If the frontend and API are on different sites,
-demo sign-in also requires a browser that permits cross-site cookies for
-the API.
+```powershell
+$env:REACT_APP_STATIC_DEMO = 'true'
+npm.cmd start
+```
+
+For the full application, leave `REACT_APP_STATIC_DEMO` unset or set it
+to `false` and configure the API as shown in `client/.env.example`.
 
 #Authorization
 

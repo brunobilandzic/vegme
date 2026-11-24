@@ -1,6 +1,5 @@
 import PropTypes, { string } from "prop-types";
 import React, { useEffect } from "react";
-import { propTypes } from "react-bootstrap/esm/Image";
 import { connect } from "react-redux";
 import PaginationCustom from "../../../Shared/Components/PaginationCustom";
 import { loadPaginatedMeals } from "../../../Redux/meals/mealsActions";

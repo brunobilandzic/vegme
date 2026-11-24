@@ -6,6 +6,7 @@ import { getMealById } from "../../Shared/Api/meals";
 import { COOK, REGULAR } from "../../Shared/Constants/Roles";
 import MealForCook from "./Cook/MealForCook";
 import MealForRegular from "./MealForRegular";
+import { isStaticDemo } from "../../Demo/catalog";
 
 export const MealMainPage = ({ user }) => {
   const { mealId } = useParams();
@@ -18,7 +19,12 @@ export const MealMainPage = ({ user }) => {
     };
 
     setMealAsync();
-  }, []);
+  }, [mealId]);
+
+  if (isStaticDemo) {
+    if (meal === null) return <p>Meal not found.</p>;
+    return meal ? <MealForRegular meal={meal} /> : null;
+  }
 
   return (
     <>

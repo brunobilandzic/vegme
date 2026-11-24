@@ -8,6 +8,7 @@ import cartStyles from "./cart.module.css";
 import { SPECIAL } from "../../Shared/Constants/MealTypes";
 import PickOrder from "./PickOrder";
 import NewOrder from "./NewOrder";
+import { isStaticDemo } from "../../Demo/catalog";
 function Cart({ mealsToOrder }) {
   const [allSpecialPrompt, setAllSpecialPrompt] = useState();
   const [pickOrder, setPickOrder] = useState(false);
@@ -17,6 +18,8 @@ function Cart({ mealsToOrder }) {
   }, []);
 
   const getIsAllSpecial = () => {
+    if (isStaticDemo) return;
+
     if (mealsToOrder.length == 0) {
       setPickOrder(false);
       return;

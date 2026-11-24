@@ -4,15 +4,16 @@ import { connect } from "react-redux";
 import MealList from "../Meals/Render/MealList";
 import { Button, Form, FormCheck } from "react-bootstrap";
 import Modal from "../../Shared/UserInterface/Modal";
-import { sendOrder } from "../../Redux/orders/ordersActions.js";
+import { emptyTheCart, sendOrder } from "../../Redux/orders/ordersActions.js";
 import { useForm } from "../../Shared/CustomHooks/form-hook";
 import Input from "../../Shared/Form/Input";
 import { VALIDATOR_REQUIRED } from "../../util/validators";
 import cartStyles from "./cart.module.css";
 import { loadSingleCookById } from "../../Shared/Api/cooks";
 import { capitalizeString, dayOfWeek } from "../../util/helper";
+import { isStaticDemo } from "../../Demo/catalog";
 
-function NewOrder({ mealsToOrder, sendOrder }) {
+function NewOrder({ mealsToOrder, sendOrder, emptyTheCart }) {
   const [showConfirmOrder, setShowConfirmOrder] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [cook, setCook] = useState();
@@ -22,7 +23,7 @@ function NewOrder({ mealsToOrder, sendOrder }) {
     {
       remark: {
         value: "",
-        isValid: false,
+        isValid: isStaticDemo,
       },
       deliveryAddress: {
         value: "",
@@ -58,15 +59,19 @@ function NewOrder({ mealsToOrder, sendOrder }) {
   };
 
   const handleOrderConfirm = async () => {
-    await sendOrder(
-      formState.inputs.remark.value,
-      formState.inputs.deliveryAddress.value,
-      formState.inputs.orderTime.value
-    );
+    if (isStaticDemo) {
+      emptyTheCart();
+    } else {
+      await sendOrder(
+        formState.inputs.remark.value,
+        formState.inputs.deliveryAddress.value,
+        formState.inputs.orderTime.value
+      );
+    }
     setShowConfirmOrder(false);
     setOrderSuccess(true);
     clearForm();
-    orderTime.current.value = 0;
+    orderTime.current.value = "";
   };
 
   const handleOrderCancel = (e) => {
@@ -78,8 +83,7 @@ function NewOrder({ mealsToOrder, sendOrder }) {
   };
 
   const getOptions = () => {
-    cook?.allowed_order_times.sort();
-    return cook?.allowed_order_times.map((orderTime, i) => (
+    return cook?.allowed_order_times.slice().sort().map((orderTime, i) => (
       <option key={i} value={orderTime}>
         {capitalizeString(dayOfWeek[orderTime])}
       </option>
@@ -106,7 +110,7 @@ function NewOrder({ mealsToOrder, sendOrder }) {
       ></Modal>
       <Modal
         show={orderSuccess}
-        content={`You've successfully made an order!`}
+        content={isStaticDemo ? "Demo order complete." : "You've successfully made an order!"}
         header="Success"
         footer={
           <div className="modal-footer-buttons">
@@ -131,15 +135,15 @@ function NewOrder({ mealsToOrder, sendOrder }) {
         type="text"
         id="deliveryAddress"
         label="Delivery Address"
-        placeholder="Enter delivery address"
+        placeholder={isStaticDemo ? "Enter a sample delivery address" : "Enter delivery address"}
         validators={[VALIDATOR_REQUIRED()]}
         onInput={inputHandler}
         value={formState.inputs.deliveryAddress.value}
       />
-      <Form.Group>
+      <Form.Group controlId="delivery-time">
         <Form.Label>Choose delivery time:</Form.Label>
         <Form.Select onChange={handleSelectChange} ref={orderTime}>
-          <option default hidden></option>
+          <option value="" hidden></option>
           {getOptions()}
         </Form.Select>
       </Form.Group>
@@ -161,10 +165,11 @@ function NewOrder({ mealsToOrder, sendOrder }) {
 NewOrder.propTypes = {
   mealsToOrder: propTypes.array,
   sendOrder: propTypes.func.isRequired,
+  emptyTheCart: propTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   mealsToOrder: state.meals.mealsToOrder,
 });
 
-export default connect(mapStateToProps, { sendOrder })(NewOrder);
+export default connect(mapStateToProps, { sendOrder, emptyTheCart })(NewOrder);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormCheck, FormGroup } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
-import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import { connect } from "react-redux";
 import ingredientsStyles from "./ingredients.module.css";
 
@@ -41,7 +40,7 @@ export const NewIngredient = ({ addIngredient }) => {
           ></input>
         </FormGroup>
         <div className={`checkboxContainer ${ingredientsStyles.checkbox}`}>
-          <FormCheckLabel>Allergen</FormCheckLabel>
+          <FormCheck.Label>Allergen</FormCheck.Label>
           <FormCheck
             onChange={handleAlllergenCheck}
             checked={isAllergen}
