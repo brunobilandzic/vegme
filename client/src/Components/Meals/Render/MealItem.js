@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { isArrayNullOrEmpty } from "../../../util/helper";
 import IngredientList from "../Ingredients/IngredientList";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
@@ -12,6 +12,8 @@ import {
 } from "../../../Redux/meals/mealsActions";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
+import { isStaticDemo } from "../../../Demo/catalog";
+import DemoMealCard from "../../../Demo/DemoMealCard";
 
 function MealItem({
   meal,
@@ -22,7 +24,7 @@ function MealItem({
   cookUsername
 }) {
   const navigate = useNavigate();
-  const handleMealAddClick = (e) => {
+  const handleMealAddClick = () => {
     isMealInCart() ? removeMealFromCart(meal._id) : addMealToCart(meal);
   };
 
@@ -44,14 +46,10 @@ function MealItem({
     return mealsToOrder?.map((meal) => meal._id).includes(meal._id);
   };
 
+  const canAdd = !showAdd || mealsToOrder.every((cartMeal) => cartMeal.cook._id == meal.cook._id);
+
   const determineIcon = () => {
-    if (mealsToOrder.length == 0) return getIcon();
-    if (
-      mealsToOrder
-        .map((meal) => meal.cook._id)
-        .every((cookId) => cookId == meal.cook._id)
-    )
-      return getIcon();
+    if (canAdd) return getIcon();
     return (
       <div className="hover-box">
         <RiForbid2Line className={mealStyles.forbidIcon} />
@@ -67,6 +65,19 @@ function MealItem({
     )
       navigate(`/meals/${meal._id}`);
   };
+
+  if (isStaticDemo) {
+    return (
+      <DemoMealCard
+        meal={meal}
+        showAdd={showAdd}
+        isInCart={isMealInCart()}
+        canAdd={canAdd}
+        onCartClick={handleMealAddClick}
+        cookUsername={cookUsername}
+      />
+    );
+  }
 
   return (
     <>

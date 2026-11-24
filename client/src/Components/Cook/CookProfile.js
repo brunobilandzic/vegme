@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom";
 import { loadSingleCookByUsername } from "../../Shared/Api/cooks";
 import classnames from "classnames";
 import cookStyles from "./cook.module.css";
-import MealItem from "../Meals/Render/MealItem";
-import { v4 as uuid } from "uuid";
+import MealList from "../Meals/Render/MealList";
 import { getOrderTimes } from "../../util/helper";
 import { isStaticDemo } from "../../Demo/catalog";
 
@@ -45,14 +44,11 @@ const CookProfile = ({ isLoggedin }) => {
         Cooked {cook?.cooks.length} meals
       </div>
       <div className={classnames({ hidden: !showMeals })}>
-        {cook?.cooks.map((meal) => (
-          <MealItem
-            meal={meal}
-            cookUsername={username}
-            key={uuid()}
-            showAdd={isStaticDemo || isLoggedin}
-          />
-        ))}
+        <MealList
+          meals={cook?.cooks}
+          cookUsername={username}
+          showAdd={isStaticDemo || isLoggedin}
+        />
       </div>
     </div>
   );

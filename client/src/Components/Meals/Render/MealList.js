@@ -1,14 +1,14 @@
 import React from "react";
 import MealItem from "./MealItem";
-import { v4 as uuid} from "uuid"
-import mealStyles from "../meal.module.css";
-export default function MealList({ meals, showAdd }) {
-  const getMealList = () => {
-    return meals?.map((meal) => <MealItem key={uuid()} showAdd meal={meal}></MealItem>);
-  };
+import { isStaticDemo } from "../../../Demo/catalog";
+import styles from "../../../Demo/demoMeals.module.css";
+
+export default function MealList({ meals, showAdd, cookUsername }) {
   return (
-    <>
-      <div className="meal-list-container">{getMealList()}</div>
-    </>
+    <div className={isStaticDemo ? styles.grid : "meal-list-container"}>
+      {meals?.map((meal) => (
+        <MealItem key={meal._id} showAdd={showAdd} meal={meal} cookUsername={cookUsername} />
+      ))}
+    </div>
   );
 }

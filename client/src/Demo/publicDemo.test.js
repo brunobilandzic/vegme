@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -25,14 +25,19 @@ it("opens the catalog and completes a guest order without API requests", async (
 
   try {
     const mealName = "Roasted Vegetable and Lentil Bowl";
-    expect(await screen.findByText(mealName)).toBeInTheDocument();
+    const mealLink = await screen.findByRole("link", { name: mealName });
+    const mealCard = within(mealLink.closest("article"));
+    expect(mealCard.getByText("Allergens")).toBeInTheDocument();
+    expect(mealCard.getByText("Tahini")).toBeInTheDocument();
+    fireEvent.click(mealCard.getByRole("button", { name: "Add to cart" }));
+    fireEvent.click(mealCard.getByRole("button", { name: "Remove from cart" }));
     expect(screen.getByRole("heading", { name: "About this demo" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "What the full app includes" })).toBeInTheDocument();
     expect(window.location.pathname).toBe("/");
     expect(screen.queryByRole("link", { name: /login|signup/i })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("link", { name: "Cooks" }));
-    fireEvent.click(await screen.findByRole("link", { name: /mia/i }));
+    fireEvent.click(await screen.findByRole("link", { name: /mia.*meals cooked/i }));
     expect(await screen.findByText("Mia Kovač")).toBeInTheDocument();
     fireEvent.click(screen.getByText("Cooked 3 meals"));
 
