@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import SocketComponent from "./Socket/SocketComponent";
 import { setUneradAlertsCount } from "./Redux/alerts/alertsActions";
 import { isStaticDemo } from "./Demo/catalog";
+import DemoNavigation from "./Demo/DemoNavigation";
+import demoStyles from "./Demo/demoLayout.module.css";
 
 function LiveApp({ loadUser, user , setUneradAlertsCount}) {
   useEffect(() => {
@@ -42,5 +44,9 @@ const ConnectedLiveApp = connect(mapStateToProps, {
 })(LiveApp);
 
 export default function App() {
-  return isStaticDemo ? <Router navbar={<NavBar />} /> : <ConnectedLiveApp />;
+  return isStaticDemo ? (
+    <div className={demoStyles.shell}>
+      <Router navbar={<DemoNavigation />} />
+    </div>
+  ) : <ConnectedLiveApp />;
 }

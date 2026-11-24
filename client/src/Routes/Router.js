@@ -32,6 +32,7 @@ import BrowseRegulars from "../Components/Regulars/Render/BrowseRegulars";
 import RegularsMainPage from "../Components/Regulars/RegularsMainPage";
 import { isStaticDemo } from "../Demo/catalog";
 import DemoHome from "../Demo/DemoHome";
+import demoStyles from "../Demo/demoLayout.module.css";
 
 const catalogRoutes = (
   <>
@@ -136,7 +137,7 @@ export default function Router({ navbar }) {
   return (
     <BrowserRouter>
       {navbar}
-      <Container>
+      <Container as={isStaticDemo ? "main" : "div"} className={isStaticDemo ? demoStyles.main : undefined}>
         <Routes>
           {catalogRoutes}
           {isStaticDemo ? (

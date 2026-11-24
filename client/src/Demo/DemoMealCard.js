@@ -44,7 +44,7 @@ export default function DemoMealCard({
         <div className={styles.actions}>
           <button
             type="button"
-            className="btn btn-sm btn-outline-dark"
+            className={styles.cartButton}
             disabled={!canAdd}
             onClick={onCartClick}
           >

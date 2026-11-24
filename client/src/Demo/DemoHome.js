@@ -1,43 +1,68 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import BrowseMeals from "../Components/Meals/Render/BrowseMeals";
+import bowl from "./vegme-bowl.jpg";
+import styles from "./demoLayout.module.css";
 
 export default function DemoHome() {
   return (
     <>
-      <section className="py-4 mb-4 border-bottom" aria-labelledby="about-demo">
-        <div className="col-lg-9">
-          <h1 id="about-demo" className="h3">About this demo</h1>
+      <section className={styles.hero} aria-labelledby="demo-title">
+        <div className={styles.heroCopy}>
+          <h1 id="demo-title">Weekly meals from independent cooks</h1>
           <p>
-            VegMe connects people who want weekly meals with cooks who prepare
-            them. In this public demo, you can browse sample dishes and cook
-            profiles, add meals to your cart, and place a simulated order
-            without signing in.
+            Browse sample dishes, meet the cooks, and try placing an order
+            without creating an account.
           </p>
-          <h2 className="h5">What the full app includes</h2>
-          <ul className="mb-0">
-            <li>
-              <strong>Meal publishing.</strong> Cooks can publish regular and
-              special meals with ingredients and allergen labels.
-            </li>
-            <li>
-              <strong>Order management.</strong> Customers can choose from a
-              cook's available delivery days, view their orders, and make
-              changes before the editing deadline.
-            </li>
-            <li>
-              <strong>Accounts and roles.</strong> The full app supports
-              password and Google sign-in, with role-specific access for
-              customers, cooks, operators, and administrators.
-            </li>
-            <li>
-              <strong>Live notifications.</strong> Socket.IO delivers order
-              updates, with an in-app inbox and unread count.
-            </li>
-          </ul>
+          <a className={styles.primaryLink} href="#meal-catalog">Browse the menu</a>
+        </div>
+        <img
+          src={bowl}
+          alt="Grain bowl with roasted vegetables, chickpeas and avocado"
+          width="1536"
+          height="1024"
+          className={styles.heroImage}
+        />
+      </section>
+
+      <section className={styles.menu} aria-labelledby="meal-catalog">
+        <div className={styles.sectionHeading}>
+          <h2 id="meal-catalog">Meal catalog</h2>
+          <Link to="/meals/special">See special meals <span aria-hidden="true">→</span></Link>
+        </div>
+        <BrowseMeals />
+      </section>
+
+      <section className={styles.about} aria-labelledby="about-demo">
+        <div>
+          <h2 id="about-demo">About this demo</h2>
+          <p>
+            The public demo uses sample dishes and cook profiles. You can try
+            the cart and simulate checkout in your browser.
+          </p>
+        </div>
+        <div>
+          <h3>What the full app includes</h3>
+          <dl className={styles.features}>
+            <div>
+              <dt>Meal publishing</dt>
+              <dd>Cooks publish regular and special meals with ingredients and allergens.</dd>
+            </div>
+            <div>
+              <dt>Order management</dt>
+              <dd>Customers pick an available delivery day and can edit orders before the cook's deadline.</dd>
+            </div>
+            <div>
+              <dt>Accounts and roles</dt>
+              <dd>Password and Google sign-in with separate permissions for customers, cooks, operators, and administrators.</dd>
+            </div>
+            <div>
+              <dt>Live notifications</dt>
+              <dd>Socket.IO sends order updates to an inbox with an unread count.</dd>
+            </div>
+          </dl>
         </div>
       </section>
-      <h2 className="h5">Meal catalog</h2>
-      <BrowseMeals />
     </>
   );
 }

@@ -44,7 +44,7 @@ it("opens the catalog and completes a guest order without API requests", async (
     fireEvent.click(screen.getByText(mealName));
     await screen.findByText(mealName);
     fireEvent.click(container.querySelector("svg"));
-    fireEvent.click(screen.getByRole("link", { name: "Cart" }));
+    fireEvent.click(screen.getByRole("link", { name: /^Cart/ }));
 
     await screen.findByRole("option", { name: "Monday" });
     fireEvent.change(screen.getByLabelText("Delivery Address"), {
