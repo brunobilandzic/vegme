@@ -39,6 +39,7 @@ it("opens the catalog and completes a guest order without API requests", async (
     fireEvent.click(screen.getByRole("link", { name: "Cooks" }));
     fireEvent.click(await screen.findByRole("link", { name: /mia.*meals cooked/i }));
     expect(await screen.findByText("Mia Kovač")).toBeInTheDocument();
+    expect(screen.getByText("Edit orders up to 2 days before delivery.")).toBeInTheDocument();
     fireEvent.click(screen.getByText("Cooked 3 meals"));
 
     fireEvent.click(screen.getByText(mealName));

@@ -28,12 +28,16 @@ const CookProfile = ({ isLoggedin }) => {
     return cook === null ? <p>Cook not found.</p> : null;
   }
 
+  const daysToEdit = cook?.edit_time_allowance ?? cook?.min_days_to_edit_order;
+
   return (
     <div>
       <div className={cookStyles.name}>{cook?.user.name}</div>
-      <div className={cookStyles.daysToEdit}>
-        Minimum {cook?.min_days_to_edit_order} to edit order
-      </div>
+      {daysToEdit != null && (
+        <div className={cookStyles.daysToEdit}>
+          {`Edit orders up to ${daysToEdit} ${daysToEdit === 1 ? "day" : "days"} before delivery.`}
+        </div>
+      )}
       <div className={cookStyles.orderTimes}>
         Order delivery on: {getOrderTimes(cook?.order_times)}{" "}
       </div>
