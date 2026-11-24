@@ -31,6 +31,7 @@ import FavouritesMainPage from "../Components/Meals/Favourites/FavouritesMainPag
 import BrowseRegulars from "../Components/Regulars/Render/BrowseRegulars";
 import RegularsMainPage from "../Components/Regulars/RegularsMainPage";
 import { isStaticDemo } from "../Demo/catalog";
+import DemoHome from "../Demo/DemoHome";
 
 const catalogRoutes = (
   <>
@@ -140,7 +141,7 @@ export default function Router({ navbar }) {
           {catalogRoutes}
           {isStaticDemo ? (
             <>
-              <Route path="/" element={<BrowseMeals />} />
+              <Route path="/" element={<DemoHome />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           ) : accountRoutes}
